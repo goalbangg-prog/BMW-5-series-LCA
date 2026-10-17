@@ -637,15 +637,7 @@ footer .cols { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 
           </table>
         </div>
         <p class="note"><b>검증 상태</b> 확인: 원자료에서 값과 단위까지 대조함 · 부분 확인: 출처는 확인했으나 쪽수·표 위치를 기록하지 못했거나 언론 보도 등 2차 경로로 확인함 · 추정·가정: 이 분석에서 정한 값. 모든 입력은 공개된 2차 자료이며, 직접 측정한 1차 자료는 없습니다.</p>
-        <details class="more"><summary>전체 입력값 <span id="regN"></span>개와 품질 평가 보기</summary>
-        <div class="tablewrap">
-          <table class="reg">
-            <thead><tr><th>입력값</th><th class="n">값</th><th>출처</th><th>어떻게 썼나</th><th>유형</th><th>검증</th><th>시간</th><th>지역</th><th>기술</th></tr></thead>
-            <tbody id="regBody"></tbody>
-          </table>
-        </div>
-        <p class="note">유형은 자료를 어떻게 얻었는지, 시간·지역·기술은 데이터 품질(대표성, 3칸 만점)입니다.<br>국가 LCI DB 데이터셋은 KEITI soda4LCA 노드(133.186.241.65)에서 ILCD 형식으로 내려받았습니다(무료, 등록 후 사용). 데이터셋 이름을 누르면 원본 페이지가 열립니다.</p>
-        </details>
+        <p class="note"><a href="#appendix" class="tolink" data-tab="t-reg">전체 입력값 <span id="regN"></span>개와 품질 평가는 부록에 있습니다 →</a></p>
       </div>
 
       <div class="gap-l rv">
@@ -932,15 +924,25 @@ footer .cols { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 
     <div class="wrap">
       <div class="head rv">
         <div><span class="idx">부록</span><h2>계산 세부 내용</h2></div>
-        <p>차량 제원, 계산식, 전력 계수, 검증 결과입니다.</p>
+        <p>숫자의 출처는 02에, 계산 과정과 전체 자료는 여기에 모았습니다.<br>전체 입력값, 차량 제원, 계산식, 전력 계수, 검증 결과입니다.</p>
       </div>
       <div class="tabs" role="tablist" aria-label="부록">
-        <button type="button" role="tab" id="t-inv" aria-controls="p-inv" aria-selected="true">차량 데이터</button>
+        <button type="button" role="tab" id="t-reg" aria-controls="p-reg" aria-selected="true">입력값 전체</button>
+        <button type="button" role="tab" id="t-inv" aria-controls="p-inv" aria-selected="false">차량 데이터</button>
         <button type="button" role="tab" id="t-calc" aria-controls="p-calc" aria-selected="false">계산식</button>
         <button type="button" role="tab" id="t-grid" aria-controls="p-grid" aria-selected="false">전력</button>
         <button type="button" role="tab" id="t-val" aria-controls="p-val" aria-selected="false">검증</button>
       </div>
-      <div class="tabpanel" role="tabpanel" id="p-inv" aria-labelledby="t-inv">
+      <div class="tabpanel" role="tabpanel" id="p-reg" aria-labelledby="t-reg">
+        <div class="tablewrap">
+          <table class="reg">
+            <thead><tr><th>입력값</th><th class="n">값</th><th>출처</th><th>어떻게 썼나</th><th>유형</th><th>검증</th><th>시간</th><th>지역</th><th>기술</th></tr></thead>
+            <tbody id="regBody"></tbody>
+          </table>
+        </div>
+        <p class="note">유형은 자료를 어떻게 얻었는지, 시간·지역·기술은 데이터 품질(대표성, 3칸 만점)입니다.<br>국가 LCI DB 데이터셋은 KEITI soda4LCA 노드(133.186.241.65)에서 ILCD 형식으로 내려받았습니다(무료, 등록 후 사용). 데이터셋 이름을 누르면 원본 페이지가 열립니다.</p>
+      </div>
+      <div class="tabpanel" role="tabpanel" id="p-inv" aria-labelledby="t-inv" hidden>
         <div class="tablewrap">
           <table>
             <thead><tr><th>차종</th><th>구동</th><th class="n">DIN 공차중량</th><th class="n">배터리 kWh (총/사용)</th><th class="n">연비 km/L</th><th class="n">전비 km/kWh</th><th class="n">제조 배출 t</th><th>국내 공인 제원 · 무게 출처</th></tr></thead>
@@ -1273,17 +1275,17 @@ function buildData() {
   const r = (k, v, src, how, t, a, b, ty, vs) => `<tr><td><b>${k}</b></td><td class="n">${v}</td><td>${src}</td><td><span class="src" style="margin:0">${how}</span></td><td><span class="src" style="margin:0">${ty}</span></td><td><span class="badge ${VB[vs]}">${vs}</span></td><td>${q3(t)}</td><td>${q3(a)}</td><td>${q3(b)}</td></tr>`;
   $("regBody").innerHTML =
     g("제조") +
-    r("제조 배출 (520i·530e·i5)", "11.1 · 14.2 · 17.0 t", "BMW Vehicle Footprint (2023 MY)<span class=\"src\">ISO 14040/44, TÜV Rheinland 검토</span>", "그대로 사용(BMW의 온실가스 환산 기준 그대로). 공장(0.7t)·물류(0.4~1.0t) 구분도 원문 값", 3, 3, 3, "인용", "부분 확인") +
-    r("제조 배출 (M5·i5 M60)", `${fmt(FX.a_body * 1000, 2)} kg/kg · ${fmt(FX.b_bev, 1)} kg/kWh`, "위 세 차종으로 구한 계수", "무게·배터리 용량에 곱해 추정", 3, 3, 2, "추정", "추정") +
+    r("제조 배출 (520i·530e·i5)", "11.1 · 14.2 · 17.0 t", "BMW Vehicle Footprint (2023 MY)<span class=\"src\">ISO 14040/44, TÜV Rheinland 검토</span>", "원문 값 그대로 (공장·물류 구분 포함)", 3, 3, 3, "인용", "부분 확인") +
+    r("제조 배출 (M5·i5 M60)", `${fmt(FX.a_body * 1000, 2)} kg/kg · ${fmt(FX.b_bev, 1)} kg/kWh`, "위 세 차종으로 구한 계수", "무게·배터리 용량에 곱해 추정 (차량 데이터 탭)", 3, 3, 2, "추정", "추정") +
     r("차량 무게", "DIN 공차중량", "BMW 미디어 제원표", "BMW LCA와 같은 기준으로 통일", 3, 2, 3, "인용", "부분 확인") +
     g("사용") +
     r("국내 공인 연비·전비", "12.1 km/L 등", "한국에너지공단 표시연비 원자료 (2026.04)", "기준흐름 계산", 3, 3, 3, "공식 통계", "부분 확인") +
     r("휘발유 순발열량", "30.1 MJ/L", "에너지법 시행규칙 열량 환산기준 (2022)", "연소 계수의 단위 환산", 3, 3, 3, "공식 기준값", "확인") +
-    r("휘발유 연소", `${fmt(FX.gas_comb, 3)} kg/L`, "2006 IPCC Vol.2 Ch.3 Table 3.2.1·3.2.2", "CO₂ 69,300 · CH₄ 3.8 · N₂O 5.7 kg/TJ × 30.1 MJ/L, AR6로 환산", 2, 2, 3, "공식 기본값", "확인") +
-    r("휘발유 생산", `${fmt(gs.ar6_short, 4)} kg/kg`, link(gs) + `<span class="src">국가 LCI DB · ${gs.data_year}년 자료 · 외부 검토</span>`, `대기 배출 물질을 AR6로 다시 특성화. × 밀도 0.74 → ${fmt(FX.gas_wtt_lcidb, 3)} kg/L`, 2, 3, 3, "데이터셋 재계산", "확인") +
+    r("휘발유 연소", `${fmt(FX.gas_comb, 3)} kg/L`, "2006 IPCC Vol.2 Ch.3 Table 3.2.1·3.2.2", "IPCC 계수 × 순발열량 (계산식 탭)", 2, 2, 3, "공식 기본값", "확인") +
+    r("휘발유 생산", `${fmt(gs.ar6_short, 4)} kg/kg`, link(gs) + `<span class="src">국가 LCI DB · ${gs.data_year}년 자료 · 외부 검토</span>`, `AR6로 다시 특성화 × 밀도 0.74 = ${fmt(FX.gas_wtt_lcidb, 3)} kg/L (계산식 탭)`, 2, 3, 3, "데이터셋 재계산", "확인") +
     r("휘발유 밀도", "0.74 kg/L", "가정", "국내 휘발유 일반 범위의 중간값. 0.72~0.76 민감도 확인", 2, 2, 2, "가정", "가정") +
-    r("충전 전력 (기준)", `${fmt(FX.grid.lcidb.base, 4)} kg/kWh`, link(em) + `<span class="src">국가 LCI DB · ${em.data_year}년 자료 · 송배전 손실 포함</span>`, "대기 배출 물질을 AR6로 다시 특성화. 보정 없이 그대로 사용", 2, 3, 3, "데이터셋 재계산", "확인") +
-    r("충전 전력 (2030·2038년)", `${fmt(FX.grid.lcidb["2030"], 3)} · ${fmt(FX.grid.lcidb["2038"], 3)}`, "기준 계수 × 발전소 직접배출 변화 비율<span class=\"src\">제11차 전력수급기본계획, EPSIS 2023 발전 실적, IPCC 2006 고정연소</span>", "비율 = 그해 직접배출 ÷ 2021년 국가 전력배출계수 0.4509 (부록 참조)", 1, 3, 2, "직접 계산", "부분 확인") +
+    r("충전 전력 (기준)", `${fmt(FX.grid.lcidb.base, 4)} kg/kWh`, link(em) + `<span class="src">국가 LCI DB · ${em.data_year}년 자료 · 송배전 손실 포함</span>`, "AR6로 다시 특성화, 보정 없이 사용 (전력 탭)", 2, 3, 3, "데이터셋 재계산", "확인") +
+    r("충전 전력 (2030·2038년)", `${fmt(FX.grid.lcidb["2030"], 3)} · ${fmt(FX.grid.lcidb["2038"], 3)}`, "제11차 전력수급기본계획<span class=\"src\">EPSIS 2023 발전 실적, IPCC 2006 고정연소</span>", "기준 계수 × 변화 비율 (전력 탭)", 1, 3, 2, "직접 계산", "부분 확인") +
     r("국가 전력배출계수", "0.4173 · 0.4509", "2023년 · 2021년 단년도 계수 (국가 온실가스 통계 관리위원회)", "미래 전력 비율 계산, Cat 11 필수 범위의 발전소 직접배출", 3, 3, 3, "공식 통계", "부분 확인") +
     r("PHEV 전기 주행 비율", "45.5%", "Energies 2026, 유럽 PHEV 457,303대 OBFCM 기록", "기준흐름의 휘발유·전기 배분", 3, 1, 2, "문헌", "부분 확인") +
     g("폐기 · 공시 · 비교") +
@@ -1704,6 +1706,7 @@ tabs.forEach((t, i) => {
   t.tabIndex = i ? -1 : 0;
   t.addEventListener("click", () => selectTab(t));
   t.addEventListener("keydown", (e) => { if (e.key === "ArrowRight" || e.key === "ArrowLeft") { const n = tabs[(i + (e.key === "ArrowRight" ? 1 : tabs.length - 1)) % tabs.length]; selectTab(n); n.focus(); e.preventDefault(); } });
+document.querySelectorAll(".tolink").forEach(a => a.addEventListener("click", () => selectTab($(a.dataset.tab))));
 });
 
 /* ---------- 시작 ---------- */
