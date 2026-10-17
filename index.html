@@ -74,7 +74,7 @@ b, strong { font-weight: 700; }
 .js .rv.in { opacity: 1; transform: none; }
 .js .rv.d1 { transition-delay: .08s; } .js .rv.d2 { transition-delay: .16s; } .js .rv.d3 { transition-delay: .24s; }
 /* 묶음 안의 항목이 차례로 떠오름 */
-.js .stg > * { opacity: 0; transform: translateY(16px); transition: opacity .65s var(--ease), transform .65s var(--ease), border-color .2s, box-shadow .25s; transition-delay: calc(var(--i, 0) * 70ms); }
+.js .stg > * { opacity: 0; transform: translateY(16px); transition: opacity .65s var(--ease), transform .65s var(--ease), border-color .2s, box-shadow .25s; transition-delay: calc(min(var(--i, 0), 14) * 55ms); }
 .js .stg.in > * { opacity: 1; transform: none; }
 /* 섹션 번호 옆 선이 그려짐 */
 .idx { display: inline-flex !important; align-items: center; gap: 10px; }
@@ -86,6 +86,43 @@ b, strong { font-weight: 700; }
 .panel:hover { box-shadow: 0 8px 26px rgba(16, 24, 40, 0.06); }
 .seg button { transition: background .25s var(--ease), color .25s var(--ease); }
 .tabpanel { animation: fade .45s var(--ease); }
+/* 첫 화면 제목: 줄마다 아래에서 밀려 올라옴 */
+.hero h1 .ln { display: block; overflow: hidden; padding-bottom: 0.06em; }
+.hero h1 .ln > span { display: inline-block; }
+.js .hero h1.rv { opacity: 1; transform: none; }
+.js .hero h1 .ln > span { transform: translateY(110%); transition: transform 1s var(--ease); }
+.js .hero h1.in .ln > span { transform: none; }
+.js .hero h1.in .ln:nth-child(2) > span { transition-delay: .14s; }
+.hero h1 em { background: linear-gradient(var(--accent-soft), var(--accent-soft)) no-repeat 0 88% / 0% 0.22em; transition: background-size 1s .9s var(--ease); }
+.js .hero h1.in em, html:not(.js) .hero h1 em { background-size: 100% 0.22em; }
+/* 섹션 제목: 왼쪽에서 오른쪽으로 드러남 */
+.js .head.rv h2 { clip-path: inset(-12% 100% -12% 0); transition: clip-path 1.1s .12s var(--ease); }
+.js .head.rv.in h2 { clip-path: inset(-12% -4% -12% 0); }
+/* 차량 카드: 차례로 떠오르고 사진이 살짝 당겨짐 */
+.js .cards .car.rv { opacity: 1; transform: none; transition: border-color .2s, box-shadow .25s var(--ease), transform .25s var(--ease); }
+.js .cards .car.rv:not(.in) { opacity: 0; }
+.js .cards .car.rv.in { animation: rise .8s var(--ease) backwards; animation-delay: calc(var(--i, 0) * 90ms); }
+.js .cards .car.rv.in:hover { transform: translateY(-3px); }
+.js .cards .car.rv.in .ph img { animation: settle 1.4s var(--ease) backwards; animation-delay: calc(var(--i, 0) * 90ms); }
+@keyframes rise { from { opacity: 0; transform: translateY(26px); } to { opacity: 1; transform: none; } }
+@keyframes settle { from { transform: scale(1.14); } to { transform: scale(1); } }
+/* 막대: 처음 나타날 때 줄마다 차례로 자람 */
+.sbars.intro .s-seg { transition-delay: calc(var(--r, 0) * 90ms); }
+/* 분포 그래프: 아래에서 솟아오름 */
+.js .chart .grow { transform-box: fill-box; transform-origin: 50% 100%; transform: scaleY(0); transition: transform 1.1s var(--ease); }
+.js .chart.play .grow { transform: scaleY(1); }
+/* 시스템 경계 화살표: 흐름 방향으로 살짝 움직임 */
+.bx > div::after { animation: nudge 1.8s var(--ease) infinite; }
+@keyframes nudge { 0%, 100% { transform: translate(0, -50%); opacity: .55; } 50% { transform: translate(4px, -50%); opacity: 1; } }
+/* 값이 바뀌면 잠깐 강조 */
+.flash { animation: flash .9s var(--ease); }
+@keyframes flash { 0% { background: var(--accent-soft); box-shadow: 0 0 0 4px var(--accent-soft); } 100% { background: transparent; box-shadow: 0 0 0 4px transparent; } }
+/* 상단 메뉴: 현재 위치 밑줄이 미끄러지듯 이동 */
+.top nav { position: relative; }
+.top nav .ind { position: absolute; left: 0; bottom: 0; height: 2px; width: 0; background: var(--accent); transition: transform .45s var(--ease), width .45s var(--ease), opacity .3s; opacity: 0; pointer-events: none; }
+/* 선택한 차 카드 테두리가 부드럽게 강조 */
+.car[aria-pressed="true"] { animation: pick .6s var(--ease); }
+@keyframes pick { 0% { box-shadow: inset 0 0 0 1px var(--accent), 0 0 0 0 var(--accent-soft); } 60% { box-shadow: inset 0 0 0 1px var(--accent), 0 0 0 8px var(--accent-soft); } 100% { box-shadow: inset 0 0 0 1px var(--accent), 0 0 0 0 transparent; } }
 
 /* 상단 바 */
 .top { position: sticky; top: 0; z-index: 30; background: var(--nav); color: var(--nav-ink); }
@@ -99,7 +136,7 @@ body { min-width: 1000px; }
 .top nav::-webkit-scrollbar { display: none; }
 .top nav a { text-decoration: none; font-size: 0.84rem; color: var(--nav-ink-2); white-space: nowrap; padding: 6px 10px; transition: color .2s, background .2s; }
 .top nav a:hover { color: #fff; background: rgba(255,255,255,0.08); }
-.top nav a[aria-current="true"] { color: #fff; box-shadow: inset 0 -2px 0 var(--accent); }
+.top nav a[aria-current="true"] { color: #fff; }
 
 /* 요약 */
 .hero { padding-block: 64px 48px; }
@@ -479,7 +516,7 @@ footer .cols { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 
 <header class="top gut"><div class="progress" id="progress"></div>
   <div class="wrap">
     <a class="wordmark" href="#top" aria-label="맨 위로"><i aria-hidden="true"></i>5 SERIES <span>CARBON LCA</span></a>
-    <nav aria-label="목차" id="nav">
+    <nav aria-label="목차" id="nav"><span class="ind" id="navInd" aria-hidden="true"></span>
       <a href="#define">목표·범위</a>
       <a href="#data">데이터</a>
       <a href="#result">결과</a>
@@ -497,7 +534,7 @@ footer .cols { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 
     <div class="wrap">
       <div>
         <span class="kicker rv">BMW 5시리즈 사례 · 제품 LCA에서 기업 공시까지</span>
-        <h1 class="rv d1">같은 5시리즈,<br><em>다른 탄소.</em></h1>
+        <h1 class="rv d1"><span class="ln"><span>같은 5시리즈,</span></span><span class="ln"><span><em>다른 탄소.</em></span></span></h1>
         <p class="lede rv d2">BMW 5시리즈가 생애주기 동안 얼마나 많은 온실가스를 배출하는지 비교했습니다. 가솔린, 하이브리드, 전기차의 배출량을 비교하고, 그 결과가 기후공시에 어떻게 쓰이는지 확인해보세요.</p>
         <div class="cta rv d3">
           <a class="btn" href="#define">처음부터 읽기 <span class="arr" aria-hidden="true">→</span></a>
@@ -505,7 +542,7 @@ footer .cols { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 
         </div>
       </div>
       <div class="rv d2">
-        <div class="finds" id="finds"></div>
+        <div class="finds stg" id="finds"></div>
         <p class="finds-cap">기본 조건: 한국 전력 2021년 값 고정(국가 LCI DB), 20만 km, 플러그인 하이브리드 전기 주행 45.5%</p>
       </div>
     </div>
@@ -541,12 +578,12 @@ footer .cols { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 
     <div class="wrap">
       <div class="head rv">
         <div><span class="idx">01 목표와 범위</span><h2>계산하기 전에<br>먼저 정한 것들</h2></div>
-        <p>전과정평가(LCA)는 계산 전에 비교 대상과 범위를 먼저 정합니다. ISO 14044의 목표·범위 항목과 ISO 14067(탄소발자국)의 추가 항목을 채웠습니다.</p>
+        <p>전과정평가(LCA)는 계산 전에 비교 대상과 범위를 먼저 정합니다.<br>ISO 14044의 목표·범위 항목을 채웠습니다.</p>
       </div>
       <div class="tablewrap rv">
         <table class="deftable">
           <thead><tr><th>항목</th><th>이 분석에서는</th></tr></thead>
-          <tbody id="defBody"></tbody>
+          <tbody class="stg" id="defBody"></tbody>
         </table>
       </div>
       <details class="more"><summary>나머지 항목 보기 <span id="defMoreN"></span></summary>
@@ -558,7 +595,7 @@ footer .cols { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 
         <div class="tablewrap">
           <table>
             <thead><tr><th>차종</th><th class="n">차</th><th class="n">무게 (DIN)</th><th class="n">배터리</th><th class="n">휘발유</th><th class="n">전기</th><th>근거</th></tr></thead>
-            <tbody id="rfBody"></tbody>
+            <tbody class="stg" id="rfBody"></tbody>
           </table>
         </div>
         <p class="note">휘발유 = 20만 km × (1 − 전기 주행 비율) ÷ 공인 연비. 전기 = 20만 km × 전기 주행 비율 ÷ 공인 전비. 플러그인 하이브리드의 전기 주행 비율은 45.5%, 휘발유 밀도는 0.74 kg/L(가정)입니다.</p>
@@ -602,7 +639,7 @@ footer .cols { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 
         <div class="tablewrap">
           <table class="reg">
             <thead><tr><th>입력값</th><th class="n">값</th><th>출처</th><th>어떻게 썼나</th><th>유형</th><th>검증</th><th>시간</th><th>지역</th><th>기술</th></tr></thead>
-            <tbody id="regBody"></tbody>
+            <tbody class="stg" id="regBody"></tbody>
           </table>
         </div>
         <p class="note"><b>검증 상태</b> 확인: 원자료에서 값과 단위까지 대조함 · 부분 확인: 출처는 확인했으나 쪽수·표 위치를 기록하지 못했거나 언론 보도 등 2차 경로로 확인함 · 추정·가정: 이 분석에서 정한 값. 모든 입력은 공개된 2차 자료이며, 직접 측정한 1차 자료는 없습니다.<br>국가 LCI DB 데이터셋은 KEITI soda4LCA 노드(133.186.241.65)에서 ILCD 형식으로 내려받았습니다(무료, 등록 후 사용). 데이터셋 이름을 누르면 원본 페이지가 열립니다.</p>
@@ -610,7 +647,7 @@ footer .cols { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 
 
       <div class="gap-l rv">
         <h3 class="sub-h">찾았지만 쓰지 않은 데이터<small>뺀 데이터와 이유도 기록해야 다른 사람이 같은 계산을 재현할 수 있습니다.</small></h3>
-        <ul class="unused" id="unusedList"></ul>
+        <ul class="unused stg" id="unusedList"></ul>
       </div>
     </div>
   </section>
@@ -792,7 +829,7 @@ footer .cols { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 
         </div>
         <div class="rv d1">
           <h3 class="sub-h">회피배출을 공개할 때 함께 밝혀야 할 것</h3>
-          <ul class="checks" id="checks"></ul>
+          <ul class="checks stg" id="checks"></ul>
         </div>
       </div>
 
@@ -1146,6 +1183,7 @@ function setNum(el, v, f, from) {
   el._v = v;
   cancelAnimationFrame(el._raf);
   if (RM || a == null || !isFinite(a) || !isFinite(v) || Math.abs(a - v) < 1e-9) { el.textContent = f(v); return; }
+  if (from == null) { el.classList.remove("flash"); void el.offsetWidth; el.classList.add("flash"); }
   const t0 = performance.now(), dur = 600;
   const step = (t) => { const k = Math.min(1, (t - t0) / dur), e = 1 - Math.pow(1 - k, 3); el.textContent = f(a + (v - a) * e); if (k < 1) el._raf = requestAnimationFrame(step); };
   el._raf = requestAnimationFrame(step);
@@ -1263,7 +1301,7 @@ function buildCards() {
   $("cards").innerHTML = ALL.map(id => {
     const v = V[id];
     const eff = v.powertrain === "ICE" ? `<span>${v.kr_fuel_km_l} km/L</span>` : v.powertrain === "BEV" ? `<span><span data-eff="${id}">${id === "i5_40" ? S.i5 : v.kr_elec_km_kwh}</span> km/kWh</span>` : `<span>${v.kr_elec_km_kwh} km/kWh</span><span>${v.kr_fuel_km_l} km/L</span>`;
-    return `<button type="button" class="car rv" data-id="${id}" aria-pressed="false">
+    return `<button type="button" class="car rv" data-id="${id}" aria-pressed="false" style="--i:${ALL.indexOf(id)}">
       <span class="ph"><img src="${IMG[id]}" alt="BMW ${v.name}" width="784" height="441" loading="lazy"><span class="tag"><i style="background:var(${PTV[v.powertrain]})"></i>${PT[v.powertrain]}</span><span class="grpt">${v.group === "daily" ? "일상형" : "고성능"}</span></span>
       <span class="bd"><span class="nm">${v.name}</span><span class="feat">${FEAT[id].split(" · ").join("<br>")}</span><span class="eff"><span>${fmt0(v.mass_din_kg)} kg</span>${eff}</span>
         <span class="res"><small>생애주기 배출</small><span class="t" data-t="${id}"></span><span class="d" data-d="${id}"></span></span></span></button>`;
@@ -1294,13 +1332,13 @@ function buildBars(el, rows, segs, opts) {
   for (const r of rows) {
     if (r.group) { h += `<div class="s-grp">${r.group}</div>`; continue; }
     const tagName = opts.clickable ? "button" : "div";
-    h += `<${tagName} ${opts.clickable ? 'type="button" aria-pressed="false"' : ""} class="srow" data-id="${r.id}">
+    h += `<${tagName} ${opts.clickable ? 'type="button" aria-pressed="false"' : ""} class="srow" data-id="${r.id}" style="--r:${el._n = (el._n || 0) + 1}">
       <span class="s-name"><b>${V[r.id].name}</b><small>${PTS[V[r.id].powertrain]}</small></span>
       <span class="s-track">${segs.map(s => `<span class="s-seg" data-k="${s.k}" style="background:var(${s.v})"></span>`).join("")}</span>
       <span class="s-val"><b data-tot></b><small data-sub></small></span></${tagName}>`;
   }
   h += `<div class="s-axis"><span></span><span class="ticks" data-ticks></span><span></span></div>`;
-  el.innerHTML = h;
+  el.innerHTML = h; el.classList.add("intro");
 }
 function setBars(el, vals, segs, step, sub) {
   const max = nice(Math.max(...Object.values(vals).map(v => segs.reduce((a, s) => a + v[s.k], 0)), step * 2), step);
@@ -1500,7 +1538,7 @@ function drawMC() {
     let d = `M${sx(Math.max(x0, ed[0]))},${sy(0)}`;
     h.forEach((k, i) => { if (ed[i] < x0) return; d += `L${sx(ed[i])},${sy(k / n)}L${sx(Math.min(x1, ed[i + 1]))},${sy(k / n)}`; });
     d += `L${sx(Math.min(x1, ed[ed.length - 1]))},${sy(0)}`;
-    s += `<path d="${d}Z" fill="${c}" fill-opacity="0.13"></path><path d="${d}" fill="none" stroke="${c}" stroke-width="2"></path>`;
+    s += `<g class="grow"><path d="${d}Z" fill="${c}" fill-opacity="0.13"></path><path d="${d}" fill="none" stroke="${c}" stroke-width="2"></path></g>`;
     s += `<line x1="${sx(mc.pct[id]["50"])}" x2="${sx(mc.pct[id]["50"])}" y1="${m.t}" y2="${H - m.b}" stroke="${c}" stroke-width="1.5" stroke-dasharray="4 3"></line>`;
   });
   s += `<line class="axis" x1="${m.l}" x2="${w - m.r}" y1="${sy(0)}" y2="${sy(0)}"></line><rect id="mhit" x="${m.l}" y="${m.t}" width="${w - m.l - m.r}" height="${H - m.t - m.b}" fill="transparent"></rect></svg>`;
@@ -1656,12 +1694,13 @@ tabs.forEach((t, i) => {
 buildFinds(); buildDefs(); buildRF(); buildData(); buildCards(); buildStack(); buildScope3(); buildAvoided(); fillStatic(); buildTornado();
 renderAll(); drawMC();
 
-const targets = [$("stack"), $("scBars"), $("lineChart"), $("tornado"), $("ufChart"), $("finds"), $("bmwBars"), $("refs")];
+const targets = [$("stack"), $("scBars"), $("lineChart"), $("tornado"), $("ufChart"), $("finds"), $("bmwBars"), $("refs"), $("mcChart")];
 const play = (el) => {
   if (el.id === "lineChart") setTimeout(() => { lineDrawn = true; }, 1600);
   if (el.id === "ufChart") setTimeout(() => { ufDrawn = true; }, 1600);
   if (el.id === "finds") el.querySelectorAll("[data-f]").forEach(n => setNum(n, n._target, n._fmt, 0));
   el.classList.add("play");
+  if (el.classList.contains("intro")) setTimeout(() => el.classList.remove("intro"), 1800);
 };
 $("bmwBars").classList.add("hbar");
 $("bmwMore").addEventListener("toggle", () => { if ($("bmwMore").open) requestAnimationFrame(() => $("bmwBars").classList.add("play")); });
@@ -1688,7 +1727,10 @@ const onScroll = () => { const h = document.documentElement.scrollHeight - inner
 addEventListener("scroll", onScroll, { passive: true }); onScroll();
 const links = [...document.querySelectorAll("#nav a")];
 if ("IntersectionObserver" in window) {
-  const spy = new IntersectionObserver((es) => es.forEach(e => { if (!e.isIntersecting) return; links.forEach(a => a.setAttribute("aria-current", String(a.getAttribute("href") === "#" + e.target.id))); }), { rootMargin: "-45% 0px -50% 0px" });
+  const ind = $("navInd");
+  const moveInd = () => { const cur = links.find(a => a.getAttribute("aria-current") === "true"); if (!cur) { ind.style.opacity = 0; return; } ind.style.opacity = 1; ind.style.width = cur.offsetWidth + "px"; ind.style.transform = `translateX(${cur.offsetLeft}px)`; };
+  const spy = new IntersectionObserver((es) => es.forEach(e => { if (!e.isIntersecting) return; links.forEach(a => a.setAttribute("aria-current", String(a.getAttribute("href") === "#" + e.target.id))); moveInd(); }), { rootMargin: "-45% 0px -50% 0px" });
+  addEventListener("resize", moveInd);
   links.forEach(a => { const s = document.querySelector(a.getAttribute("href")); if (s) spy.observe(s); });
 }
 let rt; addEventListener("resize", () => { clearTimeout(rt); rt = setTimeout(() => { renderAll(); drawMC(); }, 150); });
