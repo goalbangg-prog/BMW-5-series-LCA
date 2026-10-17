@@ -1,9 +1,15 @@
 {
  "_note": "모든 입력 계수와 출처. 값을 바꾸면 analysis/lca_model.py 결과가 바뀝니다.",
  "gwp": {
-  "basis": "IPCC 2차 평가보고서(SAR) GWP100 — 국내 배출권거래제 배출량 보고·인증 지침, 환경성적표지 국가 LCI DB와 같은 기준",
-  "CH4": 21,
-  "N2O": 310,
+  "basis": "IPCC 6차 평가보고서(AR6) GWP100 — ISO 14067:2018 6.4.? '최신 IPCC GWP100' 요구",
+  "CH4_fossil": 29.8,
+  "CH4_nonfossil": 27.0,
+  "N2O": 273,
+  "alt_SAR": {
+   "CH4": 21,
+   "N2O": 310,
+   "note": "국내 배출권거래제 보고 지침 기준(비교용)"
+  },
   "alt_AR5": {
    "CH4": 28,
    "N2O": 265
@@ -139,13 +145,13 @@
  "lifetime": {
   "km": 200000,
   "years": 15,
-  "start_year": 2026,
-  "source": "BMW Vehicle Footprint와 같은 20만 km"
+  "start_year": 2025,
+  "source": "BMW Vehicle Footprint와 같은 20만 km. 2025년 판매분이 2025년부터 15년 사용된다고 가정"
  },
  "eol_t": 0.6,
  "keiti_lcidb": {
   "source": "한국환경산업기술원(KEITI) 국가 LCI DB, soda4LCA 노드 http://133.186.241.65 (ILCD 1.1, LCI result). 원소 흐름(대기 배출)을 내려받아 IPCC 2차 보고서 GWP로 직접 특성화. 100년 이후 장기 배출(long-term)은 제외",
-  "gwp_method_note": "CO2(화석·토지이용변화) 1, CH4 21, N2O 310, SF6 23,900, HFC·PFC는 SAR 값. 생물기원 CO2 제외",
+  "gwp_method_note": "기본: IPCC AR6 GWP100 (ISO 14067). CO₂ 1, CH₄ 화석 29.8 · 비화석 27.0, N₂O 273, SF₆ 25,200, HFC·PFC·NF₃는 AR6 표 값. 대기 배출(단기)만 합산, 100년 이후 장기 배출 제외. 생물기원 CO₂는 흡수와 상쇄되는 것으로 보고 0 처리, 생물기원 CH₄는 포함. 비교: SAR(CH₄ 21, N₂O 310)",
   "datasets": {
    "gasoline": {
     "name": "Gasoline; Production mix, at plant",
@@ -159,12 +165,16 @@
     "boundary": "cradle-to-gate (원유 채굴~정제, 원유 52.8 MJ/kg 투입)",
     "coverage_pct": 100.0,
     "review": "Independent external review",
-    "sar_short": 0.7586,
+    "sar_short": 0.75908,
     "sar_longterm": 0.1407,
     "ef_reported": 0.9173,
     "co2": 0.6736,
-    "ch4": 0.00381,
-    "n2o": 1.374e-05
+    "n2o": 1.3738e-05,
+    "sar_short_old": 0.7586,
+    "ar6_short": 0.79229,
+    "ar6_longterm": 0.12488,
+    "ch4_fossil": 0.00381,
+    "ch4_biogenic": 2.3671e-05
    },
    "elec_market": {
     "name": "Electricity, market mix, including transmission and distribution losses; Consumption mix, to consumer",
@@ -178,10 +188,16 @@
     "boundary": "cradle-to-gate, 송배전 손실 포함, 소비자 공급 기준",
     "coverage_pct": 57.78,
     "review": "Independent external review",
-    "sar_short": 0.5202,
+    "sar_short": 0.52305,
     "sar_longterm": 0.0018,
     "ef_reported": 0.5304,
-    "co2": 0.5076
+    "co2": 0.5076,
+    "sar_short_old": 0.5202,
+    "ar6_short": 0.52876,
+    "ar6_longterm": 0.0016,
+    "ch4_fossil": 0.00056181,
+    "ch4_biogenic": 0.00013768,
+    "n2o": 2.1523e-06
    },
    "elec_prodmix": {
     "name": "Electricity production Mix; Production mix, at plant",
@@ -190,64 +206,91 @@
     "ref_year": 2022,
     "data_year": 2021,
     "unit": "kWh",
-    "sar_short": 0.5018,
-    "ef_reported": 0.5117
+    "sar_short": 0.50457,
+    "ef_reported": 0.5117,
+    "sar_short_old": 0.5018,
+    "ar6_short": 0.51007,
+    "ar6_longterm": 0.00154
    },
    "elec_coal": {
     "name": "Electricity production, hard coal; Production mix, at plant",
     "uuid": "3ed94f3f-8002-4512-9e96-8bf901428231",
     "data_year": 2021,
     "unit": "kWh",
-    "sar_short": 1.3681
+    "sar_short": 1.36831,
+    "sar_short_old": 1.3681,
+    "ar6_short": 1.40925,
+    "ar6_longterm": 0.00525
    },
    "elec_ngcc": {
     "name": "Electricity production, natural gas, combined cycle power plant",
     "uuid": "b09cd113-5813-45ee-8990-e107133bc25d",
     "data_year": 2021,
     "unit": "kWh",
-    "sar_short": 0.4661
+    "sar_short": 0.46658,
+    "sar_short_old": 0.4661,
+    "ar6_short": 0.47952,
+    "ar6_longterm": 0.0002
    },
    "elec_oil": {
     "name": "Electricity production, heavy oil",
     "uuid": "3b1b303a-9ef0-4bb2-b014-e9aea1b1dda2",
     "data_year": 2021,
     "unit": "kWh",
-    "sar_short": 1.2533
+    "sar_short": 1.25285,
+    "sar_short_old": 1.2533,
+    "ar6_short": 1.26751,
+    "ar6_longterm": 0.00125
    },
    "elec_nuclear": {
     "name": "Electricity production, nuclear power",
     "uuid": "108ed1a9-f9bf-44cb-bcf7-ec46990a6188",
     "data_year": 2021,
     "unit": "kWh",
-    "sar_short": 0.0146
+    "sar_short": 0.01469,
+    "sar_short_old": 0.0146,
+    "ar6_short": 0.01498,
+    "ar6_longterm": 1e-05
    },
    "elec_pv": {
     "name": "Electricity production, photovoltaic, open ground, multi-Si",
     "uuid": "20162042-0dfc-41f2-bdc5-018848726b92",
     "data_year": 2021,
     "unit": "kWh",
-    "sar_short": 0.123
+    "sar_short": 0.12364,
+    "sar_short_old": 0.123,
+    "ar6_short": 0.12713,
+    "ar6_longterm": 4e-05
    },
    "elec_wind": {
     "name": "Electricity production, wind, 1-3MW, onshore",
     "uuid": "5b97eb28-2884-400a-bdee-0a588323ff9a",
     "data_year": 2021,
     "unit": "kWh",
-    "sar_short": 0.0177
+    "sar_short": 0.01776,
+    "sar_short_old": 0.0177,
+    "ar6_short": 0.01827,
+    "ar6_longterm": 2e-05
    },
    "elec_hydro": {
     "name": "Electricity production, hydro, reservoir",
     "uuid": "feefad35-c9ec-4676-8f9f-7b78e3cee05c",
     "data_year": 2021,
     "unit": "kWh",
-    "sar_short": 0.0308
+    "sar_short": 0.03084,
+    "sar_short_old": 0.0308,
+    "ar6_short": 0.03165,
+    "ar6_longterm": 0
    },
    "elec_fuelcell": {
     "name": "Electricity production, fuel cell",
     "uuid": "dbf531ed-c900-4244-a7ea-71a1561681e4",
     "data_year": 2021,
     "unit": "kWh",
-    "sar_short": 0.5603
+    "sar_short": 0.56087,
+    "sar_short_old": 0.5603,
+    "ar6_short": 0.57936,
+    "ar6_longterm": 0
    },
    "car_carrier": {
     "name": "Marine transportation_Car Carrier",
@@ -255,8 +298,11 @@
     "version": "00.00.001",
     "data_year": 2022,
     "unit": "tkm",
-    "sar_short": 0.0429,
-    "review": "Accredited third party review"
+    "sar_short": 0.04293,
+    "review": "Accredited third party review",
+    "sar_short_old": 0.0429,
+    "ar6_short": 0.04368,
+    "ar6_longterm": 0
    },
    "al_recycled_ingot": {
     "name": "Aluminium Ingot_Raw material of Recycle",
@@ -264,9 +310,12 @@
     "version": "00.00.001",
     "data_year": 2021,
     "unit": "kg",
-    "sar_short": 0.9297,
+    "sar_short": 0.93115,
     "coverage_pct": 11.0,
-    "review": "Accredited third party review"
+    "review": "Accredited third party review",
+    "sar_short_old": 0.9297,
+    "ar6_short": 0.94821,
+    "ar6_longterm": 0.00098
    },
    "al_alloy": {
     "name": "Aluminium alloy (잉곳·스크랩·합금원소 혼합)",
@@ -274,9 +323,12 @@
     "version": "00.00.001",
     "data_year": 2021,
     "unit": "kg",
-    "sar_short": 13.3625,
+    "sar_short": 13.3765,
     "coverage_pct": 17.0,
-    "review": "Accredited third party review"
+    "review": "Accredited third party review",
+    "sar_short_old": 13.3625,
+    "ar6_short": 13.82778,
+    "ar6_longterm": 0.00073
    }
   },
   "gasoline_density_kg_per_L": 0.74,

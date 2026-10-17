@@ -74,9 +74,23 @@ b, strong { font-weight: 700; }
 .js .rv { opacity: 0; transform: translateY(18px); transition: opacity .7s var(--ease), transform .7s var(--ease); }
 .js .rv.in { opacity: 1; transform: none; }
 .js .rv.d1 { transition-delay: .08s; } .js .rv.d2 { transition-delay: .16s; } .js .rv.d3 { transition-delay: .24s; }
+/* 묶음 안의 항목이 차례로 떠오름 */
+.js .stg > * { opacity: 0; transform: translateY(16px); transition: opacity .65s var(--ease), transform .65s var(--ease), border-color .2s, box-shadow .25s; transition-delay: calc(var(--i, 0) * 70ms); }
+.js .stg.in > * { opacity: 1; transform: none; }
+/* 섹션 번호 옆 선이 그려짐 */
+.idx { display: inline-flex !important; align-items: center; gap: 10px; }
+.idx::after { content: ""; height: 2px; width: 28px; background: var(--accent); transform-origin: left; transition: transform .8s .2s var(--ease); }
+.js .head.rv:not(.in) .idx::after { transform: scaleX(0); }
+/* 읽은 위치 표시 */
+.progress { position: absolute; left: 0; bottom: 0; height: 2px; width: 100%; background: var(--accent); transform-origin: left; transform: scaleX(0); will-change: transform; }
+.panel { transition: box-shadow .3s var(--ease), border-color .3s; }
+.panel:hover { box-shadow: 0 8px 26px rgba(16, 24, 40, 0.06); }
+.seg button { transition: background .25s var(--ease), color .25s var(--ease); }
+.tabpanel { animation: fade .45s var(--ease); }
 
 /* 상단 바 */
-.top { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 30; background: var(--nav); color: var(--nav-ink); }
+.top { position: sticky; top: 0; z-index: 30; background: var(--nav); color: var(--nav-ink); }
+body { min-width: 1000px; }
 .top .wrap { display: flex; align-items: center; gap: 24px; height: 56px; }
 .wordmark { display: inline-flex; align-items: center; gap: 10px; font-weight: 700; letter-spacing: 0.12em; font-size: 0.8rem; white-space: nowrap; text-decoration: none; flex: none; }
 .wordmark i { width: 4px; height: 18px; background: var(--accent); display: inline-block; flex: none; }
@@ -87,7 +101,6 @@ b, strong { font-weight: 700; }
 .top nav a { text-decoration: none; font-size: 0.84rem; color: var(--nav-ink-2); white-space: nowrap; padding: 6px 10px; transition: color .2s, background .2s; }
 .top nav a:hover { color: #fff; background: rgba(255,255,255,0.08); }
 .top nav a[aria-current="true"] { color: #fff; box-shadow: inset 0 -2px 0 var(--accent); }
-@media (max-width: 520px) { .wordmark span { display: none; } .top .wrap { gap: 12px; } }
 
 /* 요약 */
 .hero { padding-block: 64px 48px; }
@@ -107,7 +120,6 @@ b, strong { font-weight: 700; }
 .btn.ghost:hover { border-color: var(--ink); }
 .finds { display: grid; border-top: 2px solid var(--ink); }
 .find { display: grid; grid-template-columns: minmax(0, 150px) minmax(0, 1fr); gap: 4px 20px; align-items: center; padding: 16px 0; border-bottom: 1px solid var(--rule); }
-@media (max-width: 420px) { .find { grid-template-columns: minmax(0, 1fr); } }
 .find .v { font-size: clamp(1.8rem, 3.6vw, 2.4rem); font-weight: 700; letter-spacing: -0.02em; line-height: 1.1; font-variant-numeric: tabular-nums; color: var(--accent); white-space: nowrap; }
 .find .v small { font-size: 0.5em; font-weight: 500; margin-left: 2px; }
 .find .v.neutral { color: var(--ink); }
@@ -119,11 +131,9 @@ b, strong { font-weight: 700; }
 .meta { border-top: 1px solid var(--rule); }
 .meta dl { margin: 0; display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.7fr) minmax(0, 0.9fr) minmax(0, 1.5fr); }
 @media (max-width: 900px) { .meta dl { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-@media (max-width: 520px) { .meta dl { grid-template-columns: minmax(0, 1fr); } }
 .meta dl > div { padding: 14px 16px 14px 0; display: grid; gap: 2px; }
 .meta dl > div + div { padding-left: 16px; border-left: 1px solid var(--rule); }
 @media (max-width: 900px) { .meta dl > div:nth-child(3) { border-left: 0; padding-left: 0; } }
-@media (max-width: 520px) { .meta dl > div + div { border-left: 0; padding-left: 0; border-top: 1px solid var(--rule); } }
 .meta dt { font-size: 0.72rem; font-weight: 700; color: var(--ink-3); letter-spacing: 0.04em; }
 .meta dd { margin: 0; font-size: 0.86rem; color: var(--ink); }
 
@@ -131,7 +141,6 @@ b, strong { font-weight: 700; }
 .steps { border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); background: var(--bg-2); }
 .steps ol { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); }
 @media (max-width: 900px) { .steps ol { grid-template-columns: repeat(4, minmax(0, 1fr)); } .steps li a { border-bottom: 1px solid var(--rule); } }
-@media (max-width: 520px) { .steps ol { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 .steps li a { display: grid; gap: 2px; padding: 16px 14px; text-decoration: none; height: 100%; border-right: 1px solid var(--rule); transition: background .2s; }
 .steps li:last-child a { border-right: 0; }
 .steps li a:hover { background: var(--bg); }
@@ -141,7 +150,6 @@ b, strong { font-weight: 700; }
 
 /* 섹션 */
 section.block { padding-block: 84px; scroll-margin-top: 56px; }
-@media (max-width: 700px) { section.block { padding-block: 56px; } }
 section.alt { background: var(--bg-2); }
 .head { display: grid; gap: 14px; margin-bottom: 36px; max-width: 760px; }
 @media (max-width: 900px) { .head { margin-bottom: 28px; } }
@@ -160,7 +168,6 @@ section.alt { background: var(--bg-2); }
 .note { font-size: 0.82rem; color: var(--ink-3); margin-top: 12px; line-height: 1.65; }
 .note b { color: var(--ink); }
 .panel { background: var(--bg); border: 1px solid var(--rule); padding: 24px; min-width: 0; }
-@media (max-width: 520px) { .panel { padding: 18px 16px; } }
 .two { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 28px 48px; align-items: start; }
 @media (max-width: 960px) { .two { grid-template-columns: minmax(0, 1fr); } }
 .two > * { min-width: 0; }
@@ -197,11 +204,6 @@ section.alt .formula { background: var(--bg); }
 .deftable td:first-child b { display: block; }
 .deftable td .en { display: block; font-size: 0.72rem; color: var(--ink-3); font-weight: 400; }
 .deftable td .plain { display: block; font-size: 0.8rem; color: var(--ink-2); margin-top: 2px; line-height: 1.55; }
-@media (max-width: 760px) {
-  .deftable thead { display: none; }
-  .deftable tr:not(.grp) { display: grid; gap: 4px; padding: 12px 0; border-bottom: 1px solid var(--rule); }
-  .deftable td { border: 0; padding: 0 !important; width: auto !important; }
-}
 .boundary { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 220px); gap: 16px; align-items: stretch; }
 @media (max-width: 860px) { .boundary { grid-template-columns: minmax(0, 1fr); } }
 .bx { border: 2px dashed var(--accent); padding: 34px 16px 16px; position: relative; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
@@ -221,20 +223,8 @@ section.alt .formula { background: var(--bg); }
 
 /* 02 데이터 대장 */
 .reg td:nth-child(2) { white-space: nowrap; }
-@media (max-width: 760px) {
-  .tablewrap table:not(.deftable):not(.reg) { min-width: 620px; }
-  .reg thead { display: none; }
-  .reg tr.grp { display: block; }
-  .reg tr:not(.grp) { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px 12px; padding: 14px 0; border-bottom: 1px solid var(--rule); }
-  .reg td { border: 0; padding: 0 !important; }
-  .reg td:nth-child(-n+4) { grid-column: 1 / -1; }
-  .reg td:nth-child(2) { text-align: left; white-space: normal; color: var(--accent); font-weight: 700; }
-  .reg td[data-l]::before { content: attr(data-l); display: block; font-size: 0.7rem; color: var(--ink-3); }
-  .reg .src.mono { word-break: break-all; }
-}
 .reg a { color: var(--accent); }
 .unused li { display: grid; grid-template-columns: minmax(0, 220px) minmax(0, 1fr); gap: 4px 20px; padding: 12px 0; border-bottom: 1px solid var(--rule); }
-@media (max-width: 760px) { .unused li { grid-template-columns: minmax(0, 1fr); } }
 .unused { list-style: none; margin: 0; padding: 0; border-top: 2px solid var(--ink); }
 .unused b { font-size: 0.9rem; }
 .unused span { font-size: 0.88rem; color: var(--ink-2); }
@@ -252,7 +242,6 @@ section.alt .formula { background: var(--bg); }
 .cards { display: grid; gap: 16px; }
 .cards.five { grid-template-columns: repeat(5, minmax(0, 1fr)); }
 @media (max-width: 1100px) { .cards.five { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
-@media (max-width: 760px) { .cards.five { grid-template-columns: minmax(0, 1fr); } }
 .car { display: flex; flex-direction: column; text-align: left; font: inherit; color: inherit; padding: 0; cursor: pointer; border-radius: 0; background: var(--bg); border: 1px solid var(--rule); position: relative; transition: border-color .2s, box-shadow .25s var(--ease), transform .25s var(--ease), opacity .7s var(--ease); }
 .car:hover { transform: translateY(-3px); box-shadow: 0 10px 28px rgba(16, 24, 40, 0.10); }
 .car[aria-pressed="true"] { border-color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent); }
@@ -272,13 +261,6 @@ section.alt .formula { background: var(--bg); }
 .car .res .t { font-size: 1.4rem; font-weight: 700; font-variant-numeric: tabular-nums; letter-spacing: -0.01em; line-height: 1.2; }
 .car .res small { font-size: 0.74rem; color: var(--ink-3); }
 .car .res .d { font-size: 0.8rem; font-weight: 500; font-variant-numeric: tabular-nums; }
-@media (max-width: 760px) {
-  .car { flex-direction: row; }
-  .car .ph { aspect-ratio: auto; width: 38%; flex: none; min-height: 120px; }
-  .car .grpt { display: none; }
-  .car .bd { padding: 12px 14px; gap: 4px; min-width: 0; }
-  .car .res .t { font-size: 1.2rem; }
-}
 
 /* 계산기 */
 .lab { display: grid; grid-template-columns: minmax(0, 320px) minmax(0, 1fr); gap: 24px; align-items: start; margin-top: 28px; }
@@ -338,7 +320,6 @@ section.alt .s-seg { box-shadow: inset -2px 0 0 var(--bg); }
 .s-axis { display: grid; grid-template-columns: minmax(0, 118px) minmax(0, 1fr) minmax(0, 92px); gap: 12px; height: 18px; }
 .ticks { position: relative; font-size: 0.7rem; color: var(--ink-3); font-variant-numeric: tabular-nums; line-height: 1.4; }
 .ticks span { position: absolute; top: 0; transform: translateX(-50%); white-space: nowrap; }
-@media (max-width: 520px) { .srow, .s-axis { grid-template-columns: minmax(0, 84px) minmax(0, 1fr) minmax(0, 64px); gap: 8px; } .s-name b { font-size: 0.82rem; } .s-val b { font-size: 0.86rem; } }
 
 .chart { width: 100%; position: relative; }
 .chart svg { display: block; width: 100%; height: auto; overflow: visible; }
@@ -374,16 +355,13 @@ section.alt .s-seg { box-shadow: inset -2px 0 0 var(--bg); }
 .s3.na .nm, .s3.na .no { color: var(--ink-3); }
 .s3key { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 0.8rem; color: var(--ink-2); margin-bottom: 18px; align-items: center; }
 .kpis3 { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-top: 2px solid var(--ink); }
-@media (max-width: 760px) { .kpis3 { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 .kpis3 > div { padding: 14px 14px 12px 0; display: grid; gap: 2px; align-content: start; border-bottom: 1px solid var(--rule); }
 .kpis3 > div + div { padding-left: 14px; border-left: 1px solid var(--rule); }
-@media (max-width: 760px) { .kpis3 > div:nth-child(3) { border-left: 0; padding-left: 0; } }
 .kpis3 .v { font-size: 1.6rem; font-weight: 700; font-variant-numeric: tabular-nums; line-height: 1.2; }
 .kpis3 .v small { font-size: 0.55em; font-weight: 500; color: var(--ink-3); }
 .kpis3 .l { font-size: 0.8rem; color: var(--ink-2); line-height: 1.45; }
 .hbar { display: grid; gap: 6px; }
 .hb { display: grid; grid-template-columns: minmax(0, 170px) minmax(0, 1fr) minmax(0, 120px); gap: 12px; align-items: center; font-size: 0.84rem; }
-@media (max-width: 520px) { .hb { grid-template-columns: minmax(0, 92px) minmax(0, 1fr) minmax(0, 92px); font-size: 0.76rem; } }
 .hb .tr { height: 18px; background: var(--bg-2); position: relative; }
 section.alt .hb .tr { background: var(--card); }
 .hb .fill { position: absolute; inset: 0 auto 0 0; background: var(--accent); width: 0; transition: width .9s var(--ease); }
@@ -406,20 +384,17 @@ section.alt .hb .tr { background: var(--card); }
 .mark.part { background: var(--warn); color: #fff; }
 .refs { display: grid; gap: 10px; }
 .refrow { display: grid; grid-template-columns: minmax(0, 220px) minmax(0, 1fr) minmax(0, 150px); gap: 12px; align-items: center; padding: 12px 0; border-bottom: 1px solid var(--rule); }
-@media (max-width: 760px) { .refrow { grid-template-columns: minmax(0, 1fr); } }
 .refrow b { font-size: 0.92rem; }
 .refrow small { display: block; font-size: 0.76rem; color: var(--ink-3); }
 .refrow .bars { display: grid; gap: 4px; }
 .refrow .bl { display: grid; grid-template-columns: 70px minmax(0, 1fr); gap: 8px; align-items: center; font-size: 0.74rem; color: var(--ink-3); }
 .refrow .bl .tr { height: 12px; position: relative; }
-.refrow .bl .fill { position: absolute; inset: 0 auto 0 0; transition: width .9s var(--ease); }
+.refrow .bl .fill { position: absolute; inset: 0 auto 0 0; transition: width .7s var(--ease); }
 .js .refs:not(.play) .fill { width: 0 !important; }
 .refrow .av { text-align: right; }
 .refrow .av b { font-size: 1.3rem; color: var(--accent); font-variant-numeric: tabular-nums; display: block; line-height: 1.2; }
 .refrow .av small { font-size: 0.74rem; }
-@media (max-width: 760px) { .refrow .av { text-align: left; } }
 .dodont { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 16px; }
-@media (max-width: 760px) { .dodont { grid-template-columns: minmax(0, 1fr); } }
 .dodont > div { padding: 16px 18px; display: grid; gap: 8px; align-content: start; border-top: 3px solid var(--warn); background: var(--bg); }
 .dodont > div.ok { border-top-color: var(--accent); }
 .dodont b { font-size: 0.84rem; }
@@ -427,7 +402,6 @@ section.alt .hb .tr { background: var(--card); }
 .dodont small { font-size: 0.78rem; color: var(--ink-3); }
 .checks { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; border-top: 2px solid var(--ink); }
 .checks li { display: grid; grid-template-columns: 24px minmax(0, 1fr) minmax(0, 1.2fr); gap: 4px 12px; padding: 11px 0; border-bottom: 1px solid var(--rule); font-size: 0.88rem; align-items: start; }
-@media (max-width: 760px) { .checks li { grid-template-columns: 24px minmax(0, 1fr); } .checks li > span:last-child { grid-column: 2; } }
 .checks li > span:last-child { color: var(--ink-2); }
 
 /* 06 신뢰도 */
@@ -444,12 +418,9 @@ section.alt .hb .tr { background: var(--card); }
 .js .torn:not(.play) .t-bar { transform: scaleX(0); }
 .t-base { position: absolute; top: -4px; bottom: -4px; width: 2px; background: var(--ink); margin-left: -1px; }
 .t-axis { display: grid; grid-template-columns: minmax(0, 150px) minmax(0, 1fr); gap: 12px; height: 20px; margin-top: 4px; }
-@media (max-width: 520px) { .t-row, .t-axis { grid-template-columns: minmax(0, 104px) minmax(0, 1fr); } .t-row > span:first-child { font-size: 0.78rem; } }
 .probs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-top: 2px solid var(--ink); }
-@media (max-width: 520px) { .probs { grid-template-columns: minmax(0, 1fr); } }
 .probs > div { padding: 14px 14px 12px 0; display: grid; gap: 4px; align-content: start; }
 .probs > div + div { border-left: 1px solid var(--rule); padding-left: 14px; }
-@media (max-width: 520px) { .probs > div + div { border-left: 0; padding-left: 0; border-top: 1px solid var(--rule); } }
 .probs .v { font-size: 1.9rem; font-weight: 700; font-variant-numeric: tabular-nums; line-height: 1.1; color: var(--accent); }
 .probs .v.neutral { color: var(--ink); }
 .probs .l { font-size: 0.8rem; color: var(--ink-2); line-height: 1.5; }
@@ -457,7 +428,6 @@ section.alt .hb .tr { background: var(--card); }
 /* 07 결론 */
 .verdict { display: grid; border-top: 2px solid var(--ink); }
 .verdict > div { display: grid; grid-template-columns: minmax(0, 200px) minmax(0, 1fr); gap: 6px 32px; padding-block: 20px; border-bottom: 1px solid var(--rule); }
-@media (max-width: 700px) { .verdict > div { grid-template-columns: minmax(0, 1fr); } }
 .verdict h3 { font-size: 1.02rem; font-weight: 700; }
 .verdict h3 small { display: block; font-size: 0.8rem; color: var(--ink-3); font-weight: 400; margin-top: 2px; }
 .verdict p { color: var(--ink-2); max-width: 70ch; }
@@ -488,7 +458,6 @@ section.alt .hb .tr { background: var(--card); }
 .sumbar .fig span { font-size: 0.7rem; color: var(--ink-3); white-space: nowrap; }
 .sumbar .go { flex: none; font-size: 0.8rem; color: var(--accent); text-decoration: none; font-weight: 500; white-space: nowrap; border: 1px solid var(--accent); padding: 6px 12px; }
 .sumbar .go:hover { background: var(--accent); color: var(--accent-ink); }
-@media (max-width: 760px) { .sumbar .thumb, .sumbar .fig.opt, .sumbar .who span, .sumbar .go { display: none; } .sumbar .figs { gap: 16px; } .sumbar .wrap { gap: 12px; min-height: 60px; } }
 
 footer { background: var(--nav); color: #c9ced6; padding-block: 56px 48px; font-size: 0.86rem; }
 footer a { color: #ffffff; }
@@ -507,7 +476,7 @@ footer .cols { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 
 
 </head>
 <body>
-<header class="top gut">
+<header class="top gut"><div class="progress" id="progress"></div>
   <div class="wrap">
     <a class="wordmark" href="#top" aria-label="맨 위로"><i aria-hidden="true"></i>5 SERIES <span>CARBON LCA</span></a>
     <nav aria-label="목차" id="nav">
@@ -589,16 +558,16 @@ footer .cols { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 
             <tbody id="rfBody"></tbody>
           </table>
         </div>
-        <p class="note">휘발유 = 20만 km × (1 − 전기 주행 비율) ÷ 공인 연비. 전기 = 20만 km × 전기 주행 비율 ÷ 공인 전비. 플러그인 하이브리드의 전기 주행 비율은 45.5%, 휘발유 밀도는 0.74 kg/L(가정)입니다.</p>
+        <p class="note">휘발유 = 20만 km × (1 − 전기 주행 비율) ÷ 공인 연비. 전기 = 20만 km × 전기 주행 비율 ÷ 공인 전비. 플러그인 하이브리드의 전기 주행 비율은 45.5%, 휘발유 밀도는 0.74 kg/L(가정)입니다. 국내 공인 전비는 시험 후 외부 전원에서 다시 충전한 교류 전력량으로 계산하므로(KS R 1135), 충전 손실이 포함된 값으로 보았습니다.</p>
       </div>
 
       <div class="gap-l rv">
         <h3 class="sub-h">시스템 경계: 요람에서 무덤까지<small>네 단계는 계산기의 막대 색과 같습니다.</small></h3>
         <div class="boundary">
-          <div class="bx">
+          <div class="bx stg">
             <div><span class="sw" style="background:var(--st-body)"></span><b>차체 제조</b><span>원료 채굴, 부품, 조립, 물류. 폐차·재활용 처리도 이 색에 포함</span><em>BMW 공개 자료</em></div>
             <div><span class="sw" style="background:var(--st-batt)"></span><b>배터리 제조</b><span>셀 원료와 셀·팩 생산</span><em>BMW 자료로 계수 산출</em></div>
-            <div><span class="sw" style="background:var(--st-energy)"></span><b>연료·전기 생산</b><span>원유 채굴~정제, 발전·송배전</span><em>국가 LCI DB 데이터셋</em></div>
+            <div><span class="sw" style="background:var(--st-energy)"></span><b>연료·전기 생산</b><span>원유 채굴~정제, 발전·송배전 (충전 손실은 공인 전비에 포함)</span><em>국가 LCI DB 데이터셋</em></div>
             <div><span class="sw" style="background:var(--st-tail)"></span><b>주행 배기</b><span>휘발유 연소. 전기 주행은 0</span><em>IPCC 2006 + 국내 발열량</em></div>
           </div>
           <div class="out">
@@ -624,10 +593,10 @@ footer .cols { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 
         <p>배경 데이터는 한국환경산업기술원의 국가 LCI DB에서 데이터셋을 직접 내려받아 썼습니다. 데이터셋 표시값을 그대로 옮기지 않고, 배출 물질 목록을 꺼내 국내 지침 기준으로 다시 계산했습니다.</p>
       </div>
 
-      <div class="peek rv">
+      <div class="peek rv stg">
         <div><span class="v tnum" id="pk1"></span><p><b>휘발유 생산</b><br>휘발유 1kg에 원유 52.8 MJ가 들어가는, 원유 채굴부터 정제까지 포함한 데이터셋입니다. 영국 정부 값과 2% 안에서 맞습니다.</p></div>
         <div><span class="v tnum" id="pk2"></span><p><b>충전 전력</b><br>발전부터 송배전 손실까지 포함한 소비자 기준 데이터셋입니다. 국가 LCI DB에 공개된 전력 데이터셋 중 가장 최신(2021년 자료)이며, 값을 보정하지 않고 그대로 썼습니다.</p></div>
-        <div><span class="v tnum" id="pk3"></span><p><b>표시값 대신 다시 계산한 이유</b><br>데이터셋 표시값(<span id="pk3r"></span>)은 유럽 EF 방식이라 메탄·아산화질소 환산 기준이 국내 지침과 다릅니다. 배출 물질별 양에 IPCC 2차 보고서 값을 다시 곱했습니다.</p></div>
+        <div><span class="v tnum" id="pk3"></span><p><b>표시값 대신 다시 계산한 이유</b><br>데이터셋 표시값(<span id="pk3r"></span>)은 유럽 EF 방식이고 100년 이후 장기 배출까지 들어 있습니다. 배출 물질별 양을 꺼내 ISO 14067이 요구하는 IPCC 6차 보고서 값(메탄 29.8, 아산화질소 273)으로 다시 곱했습니다.</p></div>
       </div>
 
       <div class="gap-l rv">
@@ -675,7 +644,7 @@ footer .cols { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 
               <button type="button" data-g="2038">2038년<small>고정</small></button>
             </div>
             <input type="range" id="grid" min="0.10" max="1.10" step="0.005" aria-label="전력 배출계수 직접 조정">
-            <div class="hint"><b>고정</b>: 15년 내내 그해 배출계수로 충전.<br><b>전력계획 반영</b>: 제11차 전력수급기본계획대로 해마다 낮아지는 계수의 2026~2040년 평균.</div>
+            <div class="hint"><b>고정</b>: 15년 내내 그해 배출계수로 충전.<br><b>전력계획 반영</b>: 제11차 전력수급기본계획대로 해마다 낮아지는 계수의 2025~2039년 평균.</div>
           </div>
           <div class="ctl">
             <div class="lbl">플러그인 하이브리드 충전 습관 <span class="val" id="ufVal"></span></div>
@@ -757,8 +726,8 @@ footer .cols { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 
         <h3 class="sub-h">Scope 3 15개 항목<small>1~8은 회사로 들어오기까지(업스트림), 9~15는 판매 이후(다운스트림)입니다. BMW 코리아 기준으로 설명했습니다.</small></h3>
         <div class="s3key"><span><span class="badge b">산정</span> 이 분석에서 계산한 항목</span><span><span class="badge">BMW 그룹 보고</span> 제조사 BMW 그룹이 2025년에 값을 공개한 항목 (전 세계)</span><span style="color:var(--ink-3)">흐린 칸: 수입·판매사에는 해당이 적음</span></div>
         <div class="s3grid">
-          <div class="s3col"><h4><span>업스트림 (1~8)</span></h4><div class="s3list" id="s3Up"></div></div>
-          <div class="s3col"><h4><span>다운스트림 (9~15)</span></h4><div class="s3list" id="s3Down"></div></div>
+          <div class="s3col"><h4><span>업스트림 (1~8)</span></h4><div class="s3list stg" id="s3Up"></div></div>
+          <div class="s3col"><h4><span>다운스트림 (9~15)</span></h4><div class="s3list stg" id="s3Down"></div></div>
         </div>
       </div>
 
@@ -770,15 +739,16 @@ footer .cols { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 
         </div>
         <div class="prose rv d1">
           <h3>Cat 11(판매한 제품의 사용)은 필수 범위와 선택 범위로 나뉩니다</h3>
-          <p><strong>필수 범위</strong>는 차 사용자의 Scope 1·2, 즉 배기가스와 충전 전기의 발전소 배출입니다. 전기는 발전소 직접배출만 넣습니다(<span class="tnum" id="gridOfficial"></span>).</p>
-          <p>원유 채굴·정제와 발전 연료 채굴 배출은 <strong>선택 범위</strong>입니다(연한 파랑). 두 범위를 섞으면 다른 회사와 비교할 수 없습니다.</p>
+          <p><strong>필수 범위</strong>는 차 사용자의 Scope 1·2, 즉 배기가스와 충전 전기의 발전소 배출입니다. 전기에는 <strong>2023년 국가 전력배출계수 0.4173 kg/kWh</strong>를 곱합니다.</p>
+          <p>2025년 판매분을 보고하는 시점의 최신 공표값이 2023년 계수라서 이 값을 썼습니다. 공시용 값이라 계산기의 전력 조건과 관계없이 고정입니다. LCA 결과(03)는 국가 LCI DB 2021년 데이터셋을 그대로 씁니다.</p>
+          <p>원유 채굴·정제와 발전 연료 채굴·송배전 배출은 <strong>선택 범위</strong>입니다(연한 파랑). 두 범위를 섞으면 다른 회사와 비교할 수 없습니다.</p>
           <p>같은 차라도 보고하는 회사에 따라 항목이 달라집니다. 제조사 BMW 그룹이라면 공장 배출(0.7 t)은 Scope 1·2, 부품·소재만 Cat 1입니다. 수입사 BMW 코리아에게는 공장 배출까지 포함한 차량 전체가 Cat 1입니다.</p>
         </div>
       </div>
 
       <div class="gap-l rv">
         <h3 class="sub-h">예시 산정: 5시리즈 2025년 상반기 판매분<small>판매 대수 × 차 한 대 값. GHG Protocol에 따라 판매한 해에 생애주기 전체 배출을 보고합니다.</small></h3>
-        <div class="kpis3" id="invKpis"></div>
+        <div class="kpis3 stg" id="invKpis"></div>
         <div class="tablewrap gap-m">
           <table>
             <thead><tr><th>모델</th><th class="n">판매 대수</th><th class="n">Cat 1 차량 구매</th><th class="n">Cat 4 운송</th><th class="n">Cat 11 필수</th><th class="n">Cat 11 선택</th><th class="n">Cat 12 폐기</th><th class="n">합계</th></tr></thead>
@@ -815,8 +785,8 @@ footer .cols { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 
 
       <div class="rv">
         <h3 class="sub-h">회피배출을 주장하기 위한 3가지 조건</h3>
-        <div class="gates">
-          <div class="gate"><span class="gn">조건 1 · 회사</span><h4>기후 목표를 공개하고 지키는가</h4><p>Scope 1~3 전체에 대한 감축 목표와 진행 상황을 정기적으로 공개해야 합니다. BMW는 Scope 3를 2019년 1억 4,890만 t에서 2030년 1억 800만 t으로 줄이는 목표와 매년 실적을 공개합니다.</p><div class="res"><span class="mark part">△</span>공개 목표는 확인, 과학기반 검증 여부는 원문 확인 필요</div></div>
+        <div class="gates stg">
+          <div class="gate"><span class="gn">조건 1 · 회사</span><h4>기후 목표를 공개하고 지키는가</h4><p>Scope 1~3 전체에 과학기반 감축 목표가 있고 진행 상황을 공개해야 합니다. BMW는 2030년 감축 목표가 SBTi(과학기반 감축목표 이니셔티브)의 검증을 받았다고 밝혔고(2021년), Scope 3 실적(2019년 1억 4,890만 t → 2025년 1억 1,870만 t)을 매년 공개합니다.</p><div class="res"><span class="mark ok">✓</span>SBTi 검증 목표 보유, 실적 매년 공개</div></div>
           <div class="gate"><span class="gn">조건 2 · 제품</span><h4>최신 기후과학에 맞는 제품인가</h4><p>IPCC 6차 보고서나 EU 택소노미가 감축 수단으로 인정해야 합니다. 배기가스가 없는 전기 승용차는 EU 택소노미의 저탄소 운송 활동에 해당합니다.</p><div class="res"><span class="mark ok">✓</span>i5 해당. 530e는 2026년부터 기준 밖</div></div>
           <div class="gate"><span class="gn">조건 3 · 기여</span><h4>직접적이고 의미 있게 줄이는가</h4><p>완성차는 사용 단계에서 연료를 대체하는 최종 제품이라 직접 기여에 해당합니다. 부품만 납품하는 회사는 이 조건을 충족하지 못할 수 있습니다.</p><div class="res"><span class="mark ok">✓</span>완성차는 직접 기여</div></div>
         </div>
@@ -826,7 +796,7 @@ footer .cols { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 
       <div class="gap-l rv">
         <h3 class="sub-h">비교 대상(기준 시나리오)에 따라 숫자가 달라집니다<small>"i5를 사지 않았다면 무엇을 샀을까". 1대의 생애주기 기준이며, 2025년 상반기 i5 판매 대수를 곱했습니다.</small></h3>
         <div class="refs" id="refs"></div>
-        <p class="note">WBCSD는 새 수요의 기준으로 그해 시장 평균을 권합니다. R1은 특정 고객의 대안, R2는 시장 평균에 가깝습니다. R2 평균에서는 i5 자신을 뺐습니다. 판매한 해에 생애주기 전체를 계상했고, i5 판매 대수는 트림 구분 없는 합계라 모두 eDrive40 값을 썼습니다.</p>
+        <p class="note">WBCSD는 새 수요의 기준으로 같은 차급 신차의 시장 평균을 권합니다. 국내 준대형 세단 전체(E클래스, G80 등)의 생애주기 배출 자료가 없어 R2는 i5를 뺀 5시리즈 판매 평균으로 대신했습니다. R1은 특정 고객의 대안입니다. 판매한 해에 생애주기 전체를 계상했고, i5 판매 대수는 트림 구분 없는 합계라 모두 eDrive40 값을 썼습니다.</p>
       </div>
 
       <div class="gap-l two">
@@ -883,12 +853,12 @@ footer .cols { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 
           </div>
           <div class="legend" id="mcLegend" style="margin-bottom:10px"></div>
           <div class="chart" id="mcChart" role="img" aria-label="무작위 계산 2만 번의 결과 분포"></div>
-          <p class="note">왼쪽일수록 적게 배출합니다. 점선은 중앙값입니다. 주행거리 등의 범위가 한쪽으로 치우쳐 있어 중앙값이 기본 조건 결과와 조금 다릅니다.</p>
+          <p class="note">왼쪽일수록 적게 배출합니다. 점선은 중앙값입니다. 주행거리·실제 연비의 범위가 늘어나는 쪽으로 넓게 잡혀 있어 중앙값이 기본 조건 결과보다 조금 높습니다.</p>
         </div>
         <div class="prose rv d1">
           <h3>무작위 계산 <span class="tnum" data-fill="mcN"></span>번</h3>
           <p>배경 데이터, 배터리·차체 제조, 실제 연비, 충전 습관, 주행거리를 각자의 범위에서 무작위로 골랐습니다. 전력은 보수적으로 2021~2023년 수준 사이로 두었습니다.</p>
-          <div class="probs" id="probs"></div>
+          <div class="probs stg" id="probs"></div>
           <p id="mcText"></p>
         </div>
       </div>
@@ -915,7 +885,7 @@ footer .cols { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 
         <p>문장 속 숫자는 계산기 조건에 따라 바뀝니다.</p>
       </div>
       <div class="cond rv" data-cond></div>
-      <div class="verdict rv">
+      <div class="verdict rv stg">
         <div><h3>제품<small>차 한 대의 생애주기</small></h3><p id="vDaily"></p></div>
         <div><h3>고성능<small>M5 · i5 M60</small></h3><p id="vPerf"></p></div>
         <div><h3>공시<small>Scope 3</small></h3><p id="vScope"></p></div>
@@ -925,6 +895,8 @@ footer .cols { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 
             <li>기후변화(온실가스)만 계산했습니다. 물 사용, 미세먼지 같은 다른 환경 영향은 넣지 않았습니다.</li>
             <li>제조 단계는 BMW가 공개한 결과값이라, 부품별 투입물을 직접 모은 것은 아닙니다. M5와 i5 M60은 다른 세 차종 자료로 추정했습니다.</li>
             <li>국가 LCI DB 데이터셋은 2020~2022년 자료이고 유효기간(2024~2025년)이 지난 공개 최신본입니다. 전력은 2021년 값을 그대로 써서, 이후 낮아진 전력 배출만큼 전기차에 다소 불리하게 계산됐습니다.</li>
+            <li>폐차 처리는 BMW 자료대로 세 차종 모두 0.6 t입니다. 큰 배터리의 해체·재활용 부담 차이는 따로 반영하지 못했습니다.</li>
+            <li>제조 단계는 BMW 보고서의 기후변화 값을 그대로 써서, 사용 단계(IPCC 6차 보고서 값)와 온실가스 환산 기준이 다를 수 있습니다. 메탄·아산화질소 비중이 작아 영향은 1% 미만으로 봅니다.</li>
             <li>Scope 3는 BMW 코리아의 실제 운임 부담 조건과 트림별 판매 대수를 모르는 상태의 예시입니다.</li>
             <li>충전 습관은 국내 통계가 없어 유럽 자료를 썼습니다.</li>
             <li>공개 비교를 하는 LCA는 ISO 14044상 외부 전문가 검토를 받아야 하지만, 이 분석은 검토를 받지 않은 개인 연구입니다.</li>
@@ -1049,7 +1021,7 @@ footer .cols { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 
 
 <script>
 document.documentElement.classList.add("js");
-const DATA = {"factors":{"gas_comb":2.14151868,"gas_comb_co2_only":2.08593,"gas_wtt_lcidb":0.5613640000000001,"gas_wtt_desnz":0.55083,"k_cal":1.053970059815558,"raw_direct_2023":0.3959315505347718,"direct":{"coal":0.8848800990520821,"gas":0.4022933570104331,"oil":0.7716315789473682},"upstream":{"coal":0.15355069762488016,"gas":0.14328727632512933,"oil":0.18185498711814502},"fuel_MJ_per_kWh":{"coal":9.306102886356374,"gas":7.164363816256468,"oil":9.937430990062568},"share":{"2023":{"coal":0.3167812770481636,"gas":0.2825378759481766,"oil":0.002533582318423761},"2030":{"coal":0.17195767195767195,"gas":0.2689075630252101,"oil":0.0},"2038":{"coal":0.10065303804656446,"gas":0.15502555366269163,"oil":0.0}},"grid":{"lcidb":{"base":0.5202,"2023":0.48143592814371255,"2030":0.3165643727910089,"2038":0.1841344109981342},"desnz":{"base":0.5117218190446065,"2023":0.5117218190446065,"2030":0.33647861993584693,"2038":0.1957178312553053}},"grid_ratio":{"2023":0.925482368596141,"2030":0.6085435847578026,"2038":0.35396849480610193},"official_by_year":{"2021":0.4509,"2022":0.4312,"2023":0.4173},"direct_share":{"lcidb":0.8667820069204153,"desnz":0.8154821320285041},"logistics":{"520i":1.0,"530e":0.4,"i5_40":1.0,"M5":0.4,"i5_M60":1.0},"grid_direct":{"2023":0.4173,"2030":0.2743923023672932,"2038":0.15960439430807136},"grid_life_avg":{"lcidb":0.26732536626692105,"desnz":0.28414211467416634},"grid_direct_official":0.4173,"a_body":0.006299659477866061,"b_bev":63.744336468878835,"b_phev":85.05683073019651,"gasoline_density":0.74},"meta":{"km":200000,"years":15,"start_year":2026,"source":"BMW Vehicle Footprint와 같은 20만 km","uf":0.455,"eol":0.6},"vehicles":[{"id":"520i","name":"520i","group":"daily","powertrain":"ICE","drive":"RWD","mass_din_kg":1762,"mass_source":"BMW Vehicle Footprint 520i (2023 MY)","battery_gross_kwh":0.0,"battery_net_kwh":0.0,"cell_mass_kg":0.0,"kr_fuel_km_l":12.1,"kr_elec_km_kwh":null,"kr_elec_low":null,"kr_elec_high":null,"kr_ev_range_km":null,"kr_cert":"에너지공단 표시연비: BMW 520i 복합 12.1 km/L (3등급)","bmw_production_t":11.1,"production_source":"BMW Vehicle Footprint 520i (TÜV Rheinland 2023-08-02)"},{"id":"530e","name":"530e","group":"daily","powertrain":"PHEV","drive":"RWD","mass_din_kg":2050,"mass_source":"BMW Vehicle Footprint 530e (2023 MY)","battery_gross_kwh":22.1,"battery_net_kwh":19.4,"cell_mass_kg":94.3,"kr_fuel_km_l":11.3,"kr_elec_km_kwh":3.2,"kr_elec_low":3.2,"kr_elec_high":3.2,"kr_ev_range_km":73.0,"kr_cert":"에너지공단 표시연비: BMW 530e 복합 3.2 km/kWh / 11.3 km/L (전기 주행 70~73 km 3건)","bmw_production_t":14.2,"production_source":"BMW Vehicle Footprint 530e (TÜV Rheinland 2023-12-01)"},{"id":"i5_40","name":"i5 eDrive40","group":"daily","powertrain":"BEV","drive":"RWD","mass_din_kg":2176,"mass_source":"BMW Vehicle Footprint i5 eDrive40 (2023 MY)","battery_gross_kwh":83.9,"battery_net_kwh":81.2,"cell_mass_kg":326.4,"kr_fuel_km_l":null,"kr_elec_km_kwh":4.6,"kr_elec_low":4.1,"kr_elec_high":4.8,"kr_ev_range_km":441.0,"kr_cert":"에너지공단 표시연비: BMW i5 eDrive40 4.6 km/kWh(19·20인치 공통 인증; 다른 인증 4.1·4.8)","bmw_production_t":17.0,"production_source":"BMW Vehicle Footprint i5 eDrive40 (TÜV Rheinland 2023-08-02)"},{"id":"M5","name":"M5","group":"performance","powertrain":"PHEV","drive":"AWD","mass_din_kg":2435,"mass_source":"BMW Media Information M5 Technical specifications (06/2024)","battery_gross_kwh":22.1,"battery_net_kwh":18.6,"cell_mass_kg":94.3,"kr_fuel_km_l":8.6,"kr_elec_km_kwh":2.7,"kr_elec_low":2.4,"kr_elec_high":2.7,"kr_ev_range_km":59.0,"kr_cert":"에너지공단 표시연비: BMW M5 복합 2.7 km/kWh / 8.6 km/L (다른 인증 2.4 km/kWh)","bmw_production_t":null,"production_source":"추정: BMW 3개 차종으로 보정한 질량·배터리 계수"},{"id":"i5_M60","name":"i5 M60","group":"performance","powertrain":"BEV","drive":"AWD","mass_din_kg":2305,"mass_source":"BMW Media Information 5 Series Sedan Technical specifications (05/2023)","battery_gross_kwh":83.9,"battery_net_kwh":81.2,"cell_mass_kg":326.4,"kr_fuel_km_l":null,"kr_elec_km_kwh":3.9,"kr_elec_low":3.8,"kr_elec_high":3.9,"kr_ev_range_km":371.0,"kr_cert":"에너지공단 표시연비: BMW i5 M60 xDrive 3.9 km/kWh (다른 인증 3.8)","bmw_production_t":null,"production_source":"추정: BMW 3개 차종으로 보정한 질량·배터리 계수"}],"sensitivity":{"base_saving":16.15835547251168,"rows":[{"label":"생애주기 주행거리","lo_txt":"12만 km","hi_txt":"30만 km","saving_lo":7.335,"saving_hi":27.188,"swing":19.853},{"label":"실제 연비","lo_txt":"공인 0.95배","hi_txt":"공인 1.2배","saving_lo":13.925,"saving_hi":25.094,"swing":11.169},{"label":"충전 전력","lo_txt":"2021년 고정","hi_txt":"전력계획 반영","saving_lo":16.158,"saving_hi":27.153,"swing":10.995},{"label":"실제 전비","lo_txt":"공인 1.25배","hi_txt":"공인 0.95배","saving_lo":10.504,"saving_hi":17.289,"swing":6.785},{"label":"배터리 제조 배출","lo_txt":"115 kg/kWh","hi_txt":"59 kg/kWh","saving_lo":11.858,"saving_hi":16.556,"swing":4.698},{"label":"i5 공인 전비","lo_txt":"4.1 km/kWh","hi_txt":"4.8 km/kWh","saving_lo":13.4,"saving_hi":17.101,"swing":3.701},{"label":"휘발유 장기 배출 포함","lo_txt":"제외(기본)","hi_txt":"포함","saving_lo":16.158,"saving_hi":17.879,"swing":1.721},{"label":"휘발유 밀도","lo_txt":"0.72 kg/L","hi_txt":"0.76 kg/L","saving_lo":15.908,"saving_hi":16.409,"swing":0.502},{"label":"배경 데이터 출처","lo_txt":"영국 DESNZ+IPCC","hi_txt":"국가 LCI DB","saving_lo":16.353,"saving_hi":16.158,"swing":0.195},{"label":"차체 제조 배출","lo_txt":"+15%","hi_txt":"−15%","saving_lo":16.076,"saving_hi":16.241,"swing":0.166},{"label":"온실가스 환산 기준","lo_txt":"5차 보고서","hi_txt":"2차 보고서","saving_lo":16.044,"saving_hi":16.158,"swing":0.114}]},"monte_carlo":{"n":20000,"prob":{"i5_40_lt_520i":1.0,"530e_lt_520i":0.60645,"i5_40_lt_530e":1.0,"i5_M60_lt_M5":1.0},"hist_edges":[10.0,12.5,15.0,17.5,20.0,22.5,25.0,27.5,30.0,32.5,35.0,37.5,40.0,42.5,45.0,47.5,50.0,52.5,55.0,57.5,60.0,62.5,65.0,67.5,70.0,72.5,75.0,77.5,80.0,82.5,85.0,87.5,90.0],"hist":{"520i":[0,0,0,0,0,0,0,0,0,0,1,30,184,447,790,1106,1358,1689,1931,2177,2096,1852,1573,1388,1117,867,640,388,204,105,38,16],"530e":[0,0,0,0,0,0,0,0,0,0,1,18,155,460,843,1190,1547,1978,2168,2251,2148,1905,1524,1230,1054,698,426,241,105,40,12,5],"i5_40":[0,0,0,0,0,0,0,6,105,703,1739,2796,3552,3569,2940,2175,1328,683,279,96,23,6,0,0,0,0,0,0,0,0,0,0],"M5":[0,0,0,0,0,0,0,0,0,0,0,0,0,4,11,61,204,368,565,850,1091,1246,1548,1587,1811,1647,1637,1528,1222,1130,928,833],"i5_M60":[0,0,0,0,0,0,0,0,12,128,453,1140,1973,2659,3252,3081,2651,1960,1389,746,385,129,34,7,1,0,0,0,0,0,0,0]},"pct":{"520i":{"5":46.22097384071934,"50":60.364653087213426,"95":76.42611586872171},"530e":{"5":46.27872897009221,"50":59.32579768704423,"95":74.23567723251254},"i5_40":{"5":35.33048070979734,"50":43.256379094116106,"95":52.72417774208702},"M5":{"5":56.72065949859671,"50":73.48623051794593,"95":93.18129293283408},"i5_M60":{"5":38.69496824113708,"50":47.80525476895924,"95":58.27371311115265}},"avoided_pct":{"5":8.49426441126437,"50":16.83571816756723,"95":27.155427818913708}},"validation":[{"case":"휘발유 연소 CO₂ vs 국가 LCI DB 평가계수(휘발유 육상수송)","ref":2.085,"model":2.08593,"unit":"kgCO₂/L","diff_pct":0.04460431654675661},{"case":"휘발유 생산: 국가 LCI DB 데이터셋 vs 영국 DESNZ 2026","ref":0.55083,"model":0.5613640000000001,"unit":"kgCO₂e/L","diff_pct":1.912386761795843},{"case":"전력: 국가 LCI DB 소비 믹스(2021년 자료) vs IPCC 2006 + DESNZ 재계산(2023년)","ref":0.5117218190446065,"model":0.5202,"unit":"kgCO₂e/kWh","diff_pct":1.6567948912599537},{"case":"2023 전력 직접배출 재현 vs 공식 0.4173 (보정 전)","ref":0.4173,"model":0.3959315505347718,"unit":"kgCO₂e/kWh","diff_pct":-5.120644492026887},{"case":"BMW 520i 유럽 사용단계 재현 (WLTP 6.2 L/100km, 20만 km)","ref":34.0,"model":33.515745232,"unit":"tCO₂e","diff_pct":-1.4242787294117634},{"case":"발전원별 데이터셋 합산(2023 비중) vs 생산 믹스 데이터셋","ref":0.5018,"model":0.5939950536017209,"unit":"kgCO₂e/kWh","diff_pct":18.372868394125323}],"reference_flows":{"520i":{"vehicle":1,"mass_kg":1762,"battery_kwh":0.0,"gasoline_L":16528.92561983471,"gasoline_kg":12231.404958677685,"electricity_kWh":0.0},"530e":{"vehicle":1,"mass_kg":2050,"battery_kwh":22.1,"gasoline_L":9646.017699115044,"gasoline_kg":7138.053097345132,"electricity_kWh":28437.5},"i5_40":{"vehicle":1,"mass_kg":2176,"battery_kwh":83.9,"gasoline_L":0.0,"gasoline_kg":0.0,"electricity_kWh":43478.26086956522},"M5":{"vehicle":1,"mass_kg":2435,"battery_kwh":22.1,"gasoline_L":12674.41860465116,"gasoline_kg":9379.069767441859,"electricity_kWh":33703.7037037037},"i5_M60":{"vehicle":1,"mass_kg":2305,"battery_kwh":83.9,"gasoline_L":0.0,"gasoline_kg":0.0,"electricity_kWh":51282.05128205129}},"datasets":{"gasoline":{"name":"Gasoline; Production mix, at plant","uuid":"c6a62851-83b8-41c5-8e5d-aba03b2b3332","version":"00.00.001","ref_year":2021,"data_year":2020,"valid_until":2024,"revised":"2024-08-22","unit":"kg","boundary":"cradle-to-gate (원유 채굴~정제, 원유 52.8 MJ/kg 투입)","coverage_pct":100.0,"review":"Independent external review","sar_short":0.7586,"sar_longterm":0.1407,"ef_reported":0.9173,"co2":0.6736,"ch4":0.00381,"n2o":1.374e-05},"elec_market":{"name":"Electricity, market mix, including transmission and distribution losses; Consumption mix, to consumer","uuid":"01a4869d-1556-4f7d-ae9a-4eab3f2f27bf","version":"00.00.001","ref_year":2022,"data_year":2021,"valid_until":2025,"revised":"2024-07-05","unit":"kWh","boundary":"cradle-to-gate, 송배전 손실 포함, 소비자 공급 기준","coverage_pct":57.78,"review":"Independent external review","sar_short":0.5202,"sar_longterm":0.0018,"ef_reported":0.5304,"co2":0.5076},"elec_prodmix":{"name":"Electricity production Mix; Production mix, at plant","uuid":"e475dd1c-85c1-4d21-a1a0-447636f6014c","version":"00.00.001","ref_year":2022,"data_year":2021,"unit":"kWh","sar_short":0.5018,"ef_reported":0.5117},"elec_coal":{"name":"Electricity production, hard coal; Production mix, at plant","uuid":"3ed94f3f-8002-4512-9e96-8bf901428231","data_year":2021,"unit":"kWh","sar_short":1.3681},"elec_ngcc":{"name":"Electricity production, natural gas, combined cycle power plant","uuid":"b09cd113-5813-45ee-8990-e107133bc25d","data_year":2021,"unit":"kWh","sar_short":0.4661},"elec_oil":{"name":"Electricity production, heavy oil","uuid":"3b1b303a-9ef0-4bb2-b014-e9aea1b1dda2","data_year":2021,"unit":"kWh","sar_short":1.2533},"elec_nuclear":{"name":"Electricity production, nuclear power","uuid":"108ed1a9-f9bf-44cb-bcf7-ec46990a6188","data_year":2021,"unit":"kWh","sar_short":0.0146},"elec_pv":{"name":"Electricity production, photovoltaic, open ground, multi-Si","uuid":"20162042-0dfc-41f2-bdc5-018848726b92","data_year":2021,"unit":"kWh","sar_short":0.123},"elec_wind":{"name":"Electricity production, wind, 1-3MW, onshore","uuid":"5b97eb28-2884-400a-bdee-0a588323ff9a","data_year":2021,"unit":"kWh","sar_short":0.0177},"elec_hydro":{"name":"Electricity production, hydro, reservoir","uuid":"feefad35-c9ec-4676-8f9f-7b78e3cee05c","data_year":2021,"unit":"kWh","sar_short":0.0308},"elec_fuelcell":{"name":"Electricity production, fuel cell","uuid":"dbf531ed-c900-4244-a7ea-71a1561681e4","data_year":2021,"unit":"kWh","sar_short":0.5603},"car_carrier":{"name":"Marine transportation_Car Carrier","uuid":"92f83e29-2967-4788-911e-355889b30428","version":"00.00.001","data_year":2022,"unit":"tkm","sar_short":0.0429,"review":"Accredited third party review"},"al_recycled_ingot":{"name":"Aluminium Ingot_Raw material of Recycle","uuid":"2d684aac-eb3b-4778-8dcc-19bbd4a02341","version":"00.00.001","data_year":2021,"unit":"kg","sar_short":0.9297,"coverage_pct":11.0,"review":"Accredited third party review"},"al_alloy":{"name":"Aluminium alloy (잉곳·스크랩·합금원소 혼합)","uuid":"55751a1d-b8d1-4212-8c4f-c8f709c55e4f","version":"00.00.001","data_year":2021,"unit":"kg","sar_short":13.3625,"coverage_pct":17.0,"review":"Accredited third party review"}},"scope3":{"per_vehicle":{"520i":{"cat1":10.1,"cat4":1.0,"cat11_min":35.39700297520661,"cat11_optional":9.278743801652894,"cat12":0.6,"total":56.37574677685951},"530e":{"cat1":13.799999999999999,"cat4":0.4,"cat11_min":33.47959584026549,"cat11_optional":7.385645829646009,"cat12":0.6,"total":55.665241669911495},"i5_40":{"cat1":16.0,"cat4":1.0,"cat11_min":19.60434782608696,"cat11_optional":3.0130434782608653,"cat12":0.6,"total":40.21739130434783},"M5":{"cat1":16.22536889897843,"cat4":0.4,"cat11_min":42.33950419999999,"cat11_optional":9.450628992248056,"cat12":0.6,"total":69.01550209122648},"i5_M60":{"cat1":16.81265607264472,"cat4":1.0,"cat11_min":23.12307692307693,"cat11_optional":3.553846153846152,"cat12":0.6,"total":45.089579149567804}},"korea_h1_2025":[{"id":"520i","units":7116,"cat1":71871.59999999999,"cat4":7116.0,"cat11_min":251885.07317157026,"cat11_optional":66027.540892562,"cat12":4269.599999999999,"total":401169.8140641323},{"id":"530e","units":1512,"cat1":20865.6,"cat4":604.8000000000001,"cat11_min":50621.14891048142,"cat11_optional":11167.096494424766,"cat12":907.1999999999999,"total":84165.84540490618},{"id":"i5_40","units":828,"cat1":13248.0,"cat4":828.0,"cat11_min":16232.400000000003,"cat11_optional":2494.7999999999965,"cat12":496.79999999999995,"total":33300.0}],"korea_h1_2025_life_grid":[{"id":"520i","units":7116,"cat1":71871.59999999999,"cat4":7116.0,"cat11_min":251885.07317157026,"cat11_optional":66027.540892562,"cat12":4269.599999999999,"total":401169.8140641323},{"id":"530e","units":1512,"cat1":20865.6,"cat4":604.8000000000001,"cat11_min":41196.64802980154,"cat11_optional":9718.620311166589,"cat12":907.1999999999999,"total":73292.86834096813},{"id":"i5_40","units":828,"cat1":13248.0,"cat4":828.0,"cat11_min":8341.66142904877,"cat11_optional":1282.0517565603893,"cat12":496.79999999999995,"total":24196.51318560916}],"sales":{"source":"BMW 코리아 보도자료 'BMW 5시리즈, 2025년 상반기 누적 판매 1만 대 돌파' (2025.7.7)","series_total":12786,"520i":7116,"530e":1512,"i5_all":828,"note":"530e는 xDrive 포함, i5는 트림 구분 없이 합계. 모델링한 3종 합계 9,456대(74%)만 산정, 나머지(523d·550e·M5 등) 제외. 교차 확인: KAIDA 2025년 연간 BMW 520 14,579대"},"bmw_group":{"source":"BMW Group ESG Overview FY2025 (p.127~128)","scope1":667275,"scope2_market":144145,"scope2_location":1241512,"scope3_total":127541482,"scope3":{"1":31709908,"4":2451399,"6":63456,"7":171959,"11":89538674,"12":1425073,"14":556061},"deliveries_2025":2463681,"deliveries_bev_2025":442059,"fleet_wtw_g_per_km":175.7,"targets":"Scope 3 2019년 148.9 Mt → 2030년 108.0 Mt 목표, 2025년 118.7 Mt(목표 대상 범위)"},"bmw_per_vehicle_use":36.34345274408497},"avoided":{"base":{"R1":{"label":"같은 차급 가솔린 (520i)","ref":56.37574677685951,"solution":"i5_40","solution_total":40.21739130434783,"per_unit":16.15835547251168,"fleet_h1_2025":13379.118331239672},"R2":{"label":"i5를 뺀 5시리즈 판매 평균 (520i·530e)","ref":56.25123545074623,"solution":"i5_40","solution_total":40.21739130434783,"per_unit":16.0338441463984,"fleet_h1_2025":13276.022953217876},"R3":{"label":"고성능 PHEV (M5)","ref":69.01550209122648,"solution":"i5_M60","solution_total":45.089579149567804,"per_unit":23.925922941658676,"fleet_h1_2025":null}},"life_grid":{"R1":{"label":"같은 차급 가솔린 (520i)","ref":56.37574677685951,"solution":"i5_40","solution_total":29.222842011605266,"per_unit":27.15290476525424,"fleet_h1_2025":22482.60514563051},"R2":{"label":"i5를 뺀 5시리즈 판매 평균 (520i·530e)","ref":54.99103875812476,"solution":"i5_40","solution_total":29.222842011605266,"per_unit":25.768196746519493,"fleet_h1_2025":21336.06690611814},"R3":{"label":"고성능 PHEV (M5)","ref":60.4926903617042,"solution":"i5_M60","solution_total":32.12164921453811,"per_unit":28.37104114716609,"fleet_h1_2025":null}}},"recycling":{"al_alloy":13.3625,"al_recycled":0.9297,"avoided_per_kg":12.4328,"bmw_i5_secondary_al_claim_t":1.2},"grid_bottom_up":{"value":0.5939950536017209,"coverage":0.9742620749817691},"breakeven":[{"ev":"i5_40","ref":"520i","static_km":53494.46840996255,"dynamic_km":41526.64546237369},{"ev":"530e","ref":"520i","static_km":162708.08793025985,"dynamic_km":71403.22374580224},{"ev":"i5_40","ref":"530e","static_km":30688.54625511404,"dynamic_km":27635.511429559898},{"ev":"i5_M60","ref":"M5","static_km":9455.479153911643,"dynamic_km":8736.245027151199}]};
+const DATA = {"factors":{"gas_comb":2.1361771340000004,"gas_comb_co2_only":2.08593,"gas_wtt_lcidb":0.5862946,"gas_wtt_desnz":0.55083,"k_cal":1.053970059815558,"raw_direct_2023":0.3959315505347718,"direct":{"coal":0.8844455040472894,"gas":0.4023298952658961,"oil":0.7716733161575265},"upstream":{"coal":0.15355069762488016,"gas":0.14328727632512933,"oil":0.18185498711814502},"fuel_MJ_per_kWh":{"coal":9.306102886356374,"gas":7.164363816256468,"oil":9.937430990062568},"share":{"2023":{"coal":0.3167812770481636,"gas":0.2825378759481766,"oil":0.002533582318423761},"2030":{"coal":0.17195767195767195,"gas":0.2689075630252101,"oil":0.0},"2038":{"coal":0.10065303804656446,"gas":0.15502555366269163,"oil":0.0}},"grid":{"lcidb":{"base":0.52876,"2023":0.4893580572188955,"2030":0.3217735058765357,"2038":0.18716438131367447},"desnz":{"base":0.5115877093911537,"2023":0.5115877093911537,"2030":0.33639043719781536,"2038":0.1956665384443535}},"grid_ratio":{"2023":0.925482368596141,"2030":0.6085435847578026,"2038":0.35396849480610193},"official_by_year":{"2021":0.4509,"2022":0.4312,"2023":0.4173},"direct_share":{"lcidb":0.8527498297904532,"desnz":0.8156959057844322},"logistics":{"520i":1.0,"530e":0.4,"i5_40":1.0,"M5":0.4,"i5_M60":1.0},"grid_direct":{"2023":0.4171658903465473,"2030":0.274323892825842,"2038":0.1595642602409022},"grid_life_avg":{"lcidb":0.28788039787786257,"desnz":0.3009576958146852},"grid_direct_official":0.4173,"a_body":0.006299659477866061,"b_bev":63.744336468878835,"b_phev":85.05683073019651,"gasoline_density":0.74},"meta":{"km":200000,"years":15,"start_year":2025,"source":"BMW Vehicle Footprint와 같은 20만 km. 2025년 판매분이 2025년부터 15년 사용된다고 가정","uf":0.455,"eol":0.6},"vehicles":[{"id":"520i","name":"520i","group":"daily","powertrain":"ICE","drive":"RWD","mass_din_kg":1762,"mass_source":"BMW Vehicle Footprint 520i (2023 MY)","battery_gross_kwh":0.0,"battery_net_kwh":0.0,"cell_mass_kg":0.0,"kr_fuel_km_l":12.1,"kr_elec_km_kwh":null,"kr_elec_low":null,"kr_elec_high":null,"kr_ev_range_km":null,"kr_cert":"에너지공단 표시연비: BMW 520i 복합 12.1 km/L (3등급)","bmw_production_t":11.1,"production_source":"BMW Vehicle Footprint 520i (TÜV Rheinland 2023-08-02)"},{"id":"530e","name":"530e","group":"daily","powertrain":"PHEV","drive":"RWD","mass_din_kg":2050,"mass_source":"BMW Vehicle Footprint 530e (2023 MY)","battery_gross_kwh":22.1,"battery_net_kwh":19.4,"cell_mass_kg":94.3,"kr_fuel_km_l":11.3,"kr_elec_km_kwh":3.2,"kr_elec_low":3.2,"kr_elec_high":3.2,"kr_ev_range_km":73.0,"kr_cert":"에너지공단 표시연비: BMW 530e 복합 3.2 km/kWh / 11.3 km/L (전기 주행 70~73 km 3건)","bmw_production_t":14.2,"production_source":"BMW Vehicle Footprint 530e (TÜV Rheinland 2023-12-01)"},{"id":"i5_40","name":"i5 eDrive40","group":"daily","powertrain":"BEV","drive":"RWD","mass_din_kg":2176,"mass_source":"BMW Vehicle Footprint i5 eDrive40 (2023 MY)","battery_gross_kwh":83.9,"battery_net_kwh":81.2,"cell_mass_kg":326.4,"kr_fuel_km_l":null,"kr_elec_km_kwh":4.6,"kr_elec_low":4.1,"kr_elec_high":4.8,"kr_ev_range_km":441.0,"kr_cert":"에너지공단 표시연비: BMW i5 eDrive40 4.6 km/kWh(19·20인치 공통 인증; 다른 인증 4.1·4.8)","bmw_production_t":17.0,"production_source":"BMW Vehicle Footprint i5 eDrive40 (TÜV Rheinland 2023-08-02)"},{"id":"M5","name":"M5","group":"performance","powertrain":"PHEV","drive":"AWD","mass_din_kg":2435,"mass_source":"BMW Media Information M5 Technical specifications (06/2024)","battery_gross_kwh":22.1,"battery_net_kwh":18.6,"cell_mass_kg":94.3,"kr_fuel_km_l":8.6,"kr_elec_km_kwh":2.7,"kr_elec_low":2.4,"kr_elec_high":2.7,"kr_ev_range_km":59.0,"kr_cert":"에너지공단 표시연비: BMW M5 복합 2.7 km/kWh / 8.6 km/L (다른 인증 2.4 km/kWh)","bmw_production_t":null,"production_source":"추정: BMW 3개 차종으로 보정한 질량·배터리 계수"},{"id":"i5_M60","name":"i5 M60","group":"performance","powertrain":"BEV","drive":"AWD","mass_din_kg":2305,"mass_source":"BMW Media Information 5 Series Sedan Technical specifications (05/2023)","battery_gross_kwh":83.9,"battery_net_kwh":81.2,"cell_mass_kg":326.4,"kr_fuel_km_l":null,"kr_elec_km_kwh":3.9,"kr_elec_low":3.8,"kr_elec_high":3.9,"kr_ev_range_km":371.0,"kr_cert":"에너지공단 표시연비: BMW i5 M60 xDrive 3.9 km/kWh (다른 인증 3.8)","bmw_production_t":null,"production_source":"추정: BMW 3개 차종으로 보정한 질량·배터리 계수"}],"sensitivity":{"base_saving":16.10996757599714,"rows":[{"label":"생애주기 주행거리","lo_txt":"12만 km","hi_txt":"30만 km","saving_lo":7.306,"saving_hi":27.115,"swing":19.809},{"label":"실제 연비","lo_txt":"공인 0.95배","hi_txt":"공인 1.2배","saving_lo":13.86,"saving_hi":25.11,"swing":11.25},{"label":"충전 전력","lo_txt":"2021년 고정","hi_txt":"전력계획 반영","saving_lo":16.11,"saving_hi":26.583,"swing":10.473},{"label":"실제 전비","lo_txt":"공인 1.25배","hi_txt":"공인 0.95배","saving_lo":10.363,"saving_hi":17.259,"swing":6.897},{"label":"배터리 제조 배출","lo_txt":"115 kg/kWh","hi_txt":"59 kg/kWh","saving_lo":11.81,"saving_hi":16.508,"swing":4.698},{"label":"i5 공인 전비","lo_txt":"4.1 km/kWh","hi_txt":"4.8 km/kWh","saving_lo":13.306,"saving_hi":17.068,"swing":3.762},{"label":"휘발유 장기 배출 포함","lo_txt":"제외(기본)","hi_txt":"포함","saving_lo":16.11,"saving_hi":17.637,"swing":1.527},{"label":"휘발유 밀도","lo_txt":"0.72 kg/L","hi_txt":"0.76 kg/L","saving_lo":15.848,"saving_hi":16.372,"swing":0.524},{"label":"차체 제조 배출","lo_txt":"+15%","hi_txt":"−15%","saving_lo":16.027,"saving_hi":16.193,"swing":0.166},{"label":"배경 데이터 출처","lo_txt":"영국 DESNZ+IPCC","hi_txt":"국가 LCI DB","saving_lo":16.27,"saving_hi":16.11,"swing":0.16},{"label":"온실가스 환산 기준","lo_txt":"2차 보고서","hi_txt":"6차 보고서","saving_lo":16.04,"saving_hi":16.11,"swing":0.07}]},"monte_carlo":{"n":20000,"prob":{"i5_40_lt_520i":1.0,"530e_lt_520i":0.60135,"i5_40_lt_530e":1.0,"i5_M60_lt_M5":1.0},"hist_edges":[10.0,12.5,15.0,17.5,20.0,22.5,25.0,27.5,30.0,32.5,35.0,37.5,40.0,42.5,45.0,47.5,50.0,52.5,55.0,57.5,60.0,62.5,65.0,67.5,70.0,72.5,75.0,77.5,80.0,82.5,85.0,87.5,90.0,92.5,95.0,97.5,100.0,102.5,105.0],"hist":{"520i":[0,0,0,0,0,0,0,0,0,0,1,28,171,443,768,1097,1325,1675,1937,2165,2092,1868,1581,1397,1139,868,647,419,200,110,50,16,3,0,0,0,0,0],"530e":[0,0,0,0,0,0,0,0,0,0,1,17,145,436,821,1172,1509,1953,2158,2232,2173,1905,1543,1253,1074,729,445,258,116,41,13,5,1,0,0,0,0,0],"i5_40":[0,0,0,0,0,0,0,5,89,655,1679,2732,3502,3598,2984,2224,1373,730,286,110,27,6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"M5":[0,0,0,0,0,0,0,0,0,0,0,0,0,4,10,58,194,353,547,831,1056,1233,1537,1576,1793,1641,1648,1539,1252,1143,953,830,618,441,301,200,119,68],"i5_M60":[0,0,0,0,0,0,0,0,11,111,425,1113,1900,2603,3211,3095,2700,2027,1424,787,400,147,36,9,1,0,0,0,0,0,0,0,0,0,0,0,0,0]},"pct":{"520i":{"5":46.31367233776416,"50":60.494843548591085,"95":76.60669956222218},"530e":{"5":46.39530362233759,"50":59.492181751211156,"95":74.4503652935622},"i5_40":{"5":35.44508335511499,"50":43.41509396137913,"95":52.904463752269166},"M5":{"5":56.863686006118265,"50":73.70039688055168,"95":93.44574541198855},"i5_M60":{"5":38.84764520583875,"50":48.000275307682145,"95":58.488908847819964}},"avoided_pct":{"5":8.486539486530102,"50":16.807996147619104,"95":27.118013243900073}},"validation":[{"case":"휘발유 연소 CO₂ vs 국가 LCI DB 평가계수(휘발유 육상수송)","ref":2.085,"model":2.08593,"unit":"kgCO₂/L","diff_pct":0.04460431654675661},{"case":"휘발유 생산: 국가 LCI DB 데이터셋 vs 영국 DESNZ 2026","ref":0.55083,"model":0.5862946,"unit":"kgCO₂e/L","diff_pct":6.438392970607984},{"case":"전력: 국가 LCI DB 소비 믹스(2021년 자료) vs IPCC 2006 + DESNZ 재계산(2023년)","ref":0.5115877093911537,"model":0.52876,"unit":"kgCO₂e/kWh","diff_pct":3.3566659819258016},{"case":"2023 전력 직접배출 재현 vs 공식 0.4173 (보정 전)","ref":0.4173,"model":0.3959315505347718,"unit":"kgCO₂e/kWh","diff_pct":-5.120644492026887},{"case":"BMW 520i 유럽 사용단계 재현 (WLTP 6.2 L/100km, 20만 km)","ref":34.0,"model":33.758649501600004,"unit":"tCO₂e","diff_pct":-0.7098544070588109},{"case":"발전원별 데이터셋 합산(2023 비중) vs 생산 믹스 데이터셋","ref":0.51007,"model":0.6116614837620887,"unit":"kgCO₂e/kWh","diff_pct":19.917165048344092}],"reference_flows":{"520i":{"vehicle":1,"mass_kg":1762,"battery_kwh":0.0,"gasoline_L":16528.92561983471,"gasoline_kg":12231.404958677685,"electricity_kWh":0.0},"530e":{"vehicle":1,"mass_kg":2050,"battery_kwh":22.1,"gasoline_L":9646.017699115044,"gasoline_kg":7138.053097345132,"electricity_kWh":28437.5},"i5_40":{"vehicle":1,"mass_kg":2176,"battery_kwh":83.9,"gasoline_L":0.0,"gasoline_kg":0.0,"electricity_kWh":43478.26086956522},"M5":{"vehicle":1,"mass_kg":2435,"battery_kwh":22.1,"gasoline_L":12674.41860465116,"gasoline_kg":9379.069767441859,"electricity_kWh":33703.7037037037},"i5_M60":{"vehicle":1,"mass_kg":2305,"battery_kwh":83.9,"gasoline_L":0.0,"gasoline_kg":0.0,"electricity_kWh":51282.05128205129}},"datasets":{"gasoline":{"name":"Gasoline; Production mix, at plant","uuid":"c6a62851-83b8-41c5-8e5d-aba03b2b3332","version":"00.00.001","ref_year":2021,"data_year":2020,"valid_until":2024,"revised":"2024-08-22","unit":"kg","boundary":"cradle-to-gate (원유 채굴~정제, 원유 52.8 MJ/kg 투입)","coverage_pct":100.0,"review":"Independent external review","sar_short":0.75908,"sar_longterm":0.1407,"ef_reported":0.9173,"co2":0.6736,"n2o":1.3738e-05,"sar_short_old":0.7586,"ar6_short":0.79229,"ar6_longterm":0.12488,"ch4_fossil":0.00381,"ch4_biogenic":2.3671e-05},"elec_market":{"name":"Electricity, market mix, including transmission and distribution losses; Consumption mix, to consumer","uuid":"01a4869d-1556-4f7d-ae9a-4eab3f2f27bf","version":"00.00.001","ref_year":2022,"data_year":2021,"valid_until":2025,"revised":"2024-07-05","unit":"kWh","boundary":"cradle-to-gate, 송배전 손실 포함, 소비자 공급 기준","coverage_pct":57.78,"review":"Independent external review","sar_short":0.52305,"sar_longterm":0.0018,"ef_reported":0.5304,"co2":0.5076,"sar_short_old":0.5202,"ar6_short":0.52876,"ar6_longterm":0.0016,"ch4_fossil":0.00056181,"ch4_biogenic":0.00013768,"n2o":2.1523e-06},"elec_prodmix":{"name":"Electricity production Mix; Production mix, at plant","uuid":"e475dd1c-85c1-4d21-a1a0-447636f6014c","version":"00.00.001","ref_year":2022,"data_year":2021,"unit":"kWh","sar_short":0.50457,"ef_reported":0.5117,"sar_short_old":0.5018,"ar6_short":0.51007,"ar6_longterm":0.00154},"elec_coal":{"name":"Electricity production, hard coal; Production mix, at plant","uuid":"3ed94f3f-8002-4512-9e96-8bf901428231","data_year":2021,"unit":"kWh","sar_short":1.36831,"sar_short_old":1.3681,"ar6_short":1.40925,"ar6_longterm":0.00525},"elec_ngcc":{"name":"Electricity production, natural gas, combined cycle power plant","uuid":"b09cd113-5813-45ee-8990-e107133bc25d","data_year":2021,"unit":"kWh","sar_short":0.46658,"sar_short_old":0.4661,"ar6_short":0.47952,"ar6_longterm":0.0002},"elec_oil":{"name":"Electricity production, heavy oil","uuid":"3b1b303a-9ef0-4bb2-b014-e9aea1b1dda2","data_year":2021,"unit":"kWh","sar_short":1.25285,"sar_short_old":1.2533,"ar6_short":1.26751,"ar6_longterm":0.00125},"elec_nuclear":{"name":"Electricity production, nuclear power","uuid":"108ed1a9-f9bf-44cb-bcf7-ec46990a6188","data_year":2021,"unit":"kWh","sar_short":0.01469,"sar_short_old":0.0146,"ar6_short":0.01498,"ar6_longterm":1e-05},"elec_pv":{"name":"Electricity production, photovoltaic, open ground, multi-Si","uuid":"20162042-0dfc-41f2-bdc5-018848726b92","data_year":2021,"unit":"kWh","sar_short":0.12364,"sar_short_old":0.123,"ar6_short":0.12713,"ar6_longterm":4e-05},"elec_wind":{"name":"Electricity production, wind, 1-3MW, onshore","uuid":"5b97eb28-2884-400a-bdee-0a588323ff9a","data_year":2021,"unit":"kWh","sar_short":0.01776,"sar_short_old":0.0177,"ar6_short":0.01827,"ar6_longterm":2e-05},"elec_hydro":{"name":"Electricity production, hydro, reservoir","uuid":"feefad35-c9ec-4676-8f9f-7b78e3cee05c","data_year":2021,"unit":"kWh","sar_short":0.03084,"sar_short_old":0.0308,"ar6_short":0.03165,"ar6_longterm":0},"elec_fuelcell":{"name":"Electricity production, fuel cell","uuid":"dbf531ed-c900-4244-a7ea-71a1561681e4","data_year":2021,"unit":"kWh","sar_short":0.56087,"sar_short_old":0.5603,"ar6_short":0.57936,"ar6_longterm":0},"car_carrier":{"name":"Marine transportation_Car Carrier","uuid":"92f83e29-2967-4788-911e-355889b30428","version":"00.00.001","data_year":2022,"unit":"tkm","sar_short":0.04293,"review":"Accredited third party review","sar_short_old":0.0429,"ar6_short":0.04368,"ar6_longterm":0},"al_recycled_ingot":{"name":"Aluminium Ingot_Raw material of Recycle","uuid":"2d684aac-eb3b-4778-8dcc-19bbd4a02341","version":"00.00.001","data_year":2021,"unit":"kg","sar_short":0.93115,"coverage_pct":11.0,"review":"Accredited third party review","sar_short_old":0.9297,"ar6_short":0.94821,"ar6_longterm":0.00098},"al_alloy":{"name":"Aluminium alloy (잉곳·스크랩·합금원소 혼합)","uuid":"55751a1d-b8d1-4212-8c4f-c8f709c55e4f","version":"00.00.001","data_year":2021,"unit":"kg","sar_short":13.3765,"coverage_pct":17.0,"review":"Accredited third party review","sar_short_old":13.3625,"ar6_short":13.82778,"ar6_longterm":0.00073}},"scope3":{"per_vehicle":{"520i":{"cat1":10.1,"cat4":1.0,"cat11_min":35.308712958677695,"cat11_optional":9.690819834710744,"cat12":0.6,"total":56.69953279338844},"530e":{"cat1":13.799999999999999,"cat4":0.4,"cat11_min":32.472571193008854,"cat11_optional":7.869551838495573,"cat12":0.6,"total":56.097623031504426},"i5_40":{"cat1":16.0,"cat4":1.0,"cat11_min":18.143478260869568,"cat11_optional":3.385217391304346,"cat12":0.6,"total":40.5895652173913},"M5":{"cat1":16.22536889897843,"cat4":0.4,"cat11_min":41.139358765555556,"cat11_optional":10.05511355641688,"cat12":0.6,"total":69.55228566539532},"i5_M60":{"cat1":16.81265607264472,"cat4":1.0,"cat11_min":21.400000000000002,"cat11_optional":3.9928205128205114,"cat12":0.6,"total":45.52855350854217}},"korea_h1_2025":[{"id":"520i","units":7116,"cat1":71871.59999999999,"cat4":7116.0,"cat11_min":251256.80141395048,"cat11_optional":68959.87394380166,"cat12":4269.599999999999,"total":403473.87535775214},{"id":"530e","units":1512,"cat1":20865.6,"cat4":604.8000000000001,"cat11_min":49098.52764382939,"cat11_optional":11898.762379805306,"cat12":907.1999999999999,"total":84819.6060236347},{"id":"i5_40","units":828,"cat1":13248.0,"cat4":828.0,"cat11_min":15022.800000000003,"cat11_optional":2802.9599999999987,"cat12":496.79999999999995,"total":33608.159999999996}],"korea_h1_2025_life_grid":[{"id":"520i","units":7116,"cat1":71871.59999999999,"cat4":7116.0,"cat11_min":251256.80141395048,"cat11_optional":68959.87394380166,"cat12":4269.599999999999,"total":403473.87535775214},{"id":"530e","units":1512,"cat1":20865.6,"cat4":604.8000000000001,"cat11_min":49098.52764382939,"cat11_optional":10373.659869974155,"cat12":907.1999999999999,"total":74462.38533138808},{"id":"i5_40","units":828,"cat1":13248.0,"cat4":828.0,"cat11_min":15022.800000000003,"cat11_optional":1526.0557531502636,"cat12":496.79999999999995,"total":24936.494323603052}],"sales":{"source":"BMW 코리아 보도자료 'BMW 5시리즈, 2025년 상반기 누적 판매 1만 대 돌파' (2025.7.7)","series_total":12786,"520i":7116,"530e":1512,"i5_all":828,"note":"530e는 xDrive 포함, i5는 트림 구분 없이 합계. 모델링한 3종 합계 9,456대(74%)만 산정, 나머지(523d·550e·M5 등) 제외. 교차 확인: KAIDA 2025년 연간 BMW 520 14,579대"},"bmw_group":{"source":"BMW Group ESG Overview FY2025 (p.127~128)","scope1":667275,"scope2_market":144145,"scope2_location":1241512,"scope3_total":127541482,"scope3":{"1":31709908,"4":2451399,"6":63456,"7":171959,"11":89538674,"12":1425073,"14":556061},"deliveries_2025":2463681,"deliveries_bev_2025":442059,"fleet_wtw_g_per_km":175.7,"targets":"Scope 3 2019년 148.9 Mt → 2030년 108.0 Mt 목표, 2025년 118.7 Mt(목표 대상 범위)"},"bmw_per_vehicle_use":36.34345274408497},"avoided":{"base":{"R1":{"label":"같은 차급 가솔린 (520i)","ref":56.69953279338844,"solution":"i5_40","solution_total":40.5895652173913,"per_unit":16.10996757599714,"fleet_h1_2025":13339.053152925631},"R2":{"label":"i5를 뺀 5시리즈 판매 평균 (520i·530e)","ref":56.59405208407358,"solution":"i5_40","solution_total":40.5895652173913,"per_unit":16.004486866682278,"fleet_h1_2025":13251.715125612925},"R3":{"label":"고성능 PHEV (M5)","ref":69.55228566539532,"solution":"i5_M60","solution_total":45.52855350854217,"per_unit":24.02373215685315,"fleet_h1_2025":null}},"life_grid":{"R1":{"label":"같은 차급 가솔린 (520i)","ref":56.69953279338844,"solution":"i5_40","solution_total":30.11653903816794,"per_unit":26.582993755220503,"fleet_h1_2025":22010.718829322577},"R2":{"label":"i5를 뺀 5시리즈 판매 평균 (520i·530e)","ref":55.39363243963146,"solution":"i5_40","solution_total":30.11653903816794,"per_unit":25.27709340146352,"fleet_h1_2025":20929.433336411796},"R3":{"label":"고성능 PHEV (M5)","ref":61.433750927204755,"solution":"i5_M60","solution_total":33.1757533997146,"per_unit":28.257997527490154,"fleet_h1_2025":null}}},"recycling":{"al_alloy":13.82778,"al_recycled":0.94821,"avoided_per_kg":12.879570000000001,"bmw_i5_secondary_al_claim_t":1.2},"grid_bottom_up":{"value":0.6116614837620887,"coverage":0.9742620749817691},"breakeven":[{"ev":"i5_40","ref":"520i","static_km":53612.07352648914,"dynamic_km":42930.71476264486},{"ev":"530e","ref":"520i","static_km":167481.12187490572,"dynamic_km":76312.53077678662},{"ev":"i5_40","ref":"530e","static_km":30587.62462331278,"dynamic_km":27997.459508157153},{"ev":"i5_M60","ref":"M5","static_km":9418.79547273211,"dynamic_km":8829.819581238142}]};
 </script>
 <script>
 (() => {
@@ -1090,6 +1062,8 @@ const gridOf = (set, key) => key === "life" ? FX.grid_life_avg[set] : FX.grid[se
 const gasWtt = (set) => set === "lcidb" ? FX.gas_wtt_lcidb : FX.gas_wtt_desnz;
 const B_RATIO = FX.b_phev / FX.b_bev;
 const GRID_LABEL = { base: "2021년 전력 고정", life: "전력계획 반영", "2030": "2030년 전력 고정", "2038": "2038년 전력 고정" };
+const OFFICIAL_2023 = FX.grid_direct_official;   // 공시용 Cat 11 전기 계수 (계산기 조건과 무관)
+const glabel = (k) => k === "base" && S.set !== "lcidb" ? "2023년 전력 고정 (재계산)" : GRID_LABEL[k];
 const RM = matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 const DEF = { km: D.meta.km, set: "lcidb", gridKey: "base", grid: gridOf("lcidb", "base"), uf: D.meta.uf, bBev: FX.b_bev, real: 1.0, i5: 4.6 };
@@ -1122,11 +1096,11 @@ function use(id, p) {
   const e = ec ? 1 / ec * p.elecMult : 0;
   let fs = 1, es = 0;
   if (v.powertrain === "BEV") { fs = 0; es = 1; } else if (v.powertrain === "PHEV") { fs = 1 - p.uf; es = p.uf; }
-  return { fuel: fs * l * p.gasWtt, elec: es * e * p.grid, tail: fs * l * p.gasComb };
+  return { fuel: fs * l * p.gasWtt, elec: es * e * p.grid, tail: fs * l * p.gasComb, kwh: es * e };
 }
 function life(id, p = P()) {
   const pr = prod(id, p), u = use(id, p), k = p.km / 1000;
-  const r = { body: pr.body + p.eol, battery: pr.batt, energy: (u.fuel + u.elec) * k, tailpipe: u.tail * k, eol: p.eol, bodyOnly: pr.body, fuel: u.fuel * k, elec: u.elec * k };
+  const r = { body: pr.body + p.eol, battery: pr.batt, energy: (u.fuel + u.elec) * k, tailpipe: u.tail * k, eol: p.eol, bodyOnly: pr.body, fuel: u.fuel * k, elec: u.elec * k, kwh: u.kwh * p.km };
   r.total = r.body + r.battery + r.energy + r.tailpipe;
   r.gkm = r.total * 1e6 / p.km;
   return r;
@@ -1157,9 +1131,9 @@ function gridTie(ev, ref) {
 /* ---------- Scope 3 · 회피배출 (계산기 조건을 따라감) ---------- */
 const SALES = S3.sales, UNITS = { "520i": SALES["520i"], "530e": SALES["530e"], "i5_40": SALES.i5_all };
 function scopeMap(id, p = P()) {
-  // BMW 코리아 기준. Cat 11 필수 = 배기 + 충전 전기의 발전소 직접배출, 선택 = 연료·전기 생산
+  // BMW 코리아 기준. Cat 11 필수 = 배기 + 충전 전기 × 2023년 국가 전력배출계수(고정), 선택 = 연료 생산 + 전기의 직접배출 외 몫
   const r = life(id, p), logi = FX.logistics[id], ds = FX.direct_share[S.set];
-  return { cat1: r.bodyOnly + r.battery - logi, cat4: logi, cat11_min: r.tailpipe + r.elec * ds,
+  return { cat1: r.bodyOnly + r.battery - logi, cat4: logi, cat11_min: r.tailpipe + r.kwh * OFFICIAL_2023 / 1000,
     cat11_optional: r.fuel + r.elec * (1 - ds), cat12: r.eol, total: r.total };
 }
 function inventory(p = P()) {
@@ -1177,7 +1151,29 @@ function avoided(p = P()) {
   return out;
 }
 const isDefault = () => ["km", "grid", "uf", "bBev", "real", "i5", "set"].every(k => S[k] === DEF[k]);
-const gridTxt = () => S.gridKey ? GRID_LABEL[S.gridKey] : `전력 ${fmt(S.grid, 3)} kg/kWh`;
+const gridTxt = () => S.gridKey ? glabel(S.gridKey) : `전력 ${fmt(S.grid, 3)} kg/kWh`;
+
+/* ---------- 부드러운 전환: 이전 값에서 새 값으로 이어서 그리기 ---------- */
+const TW = {};
+function lerpV(a, b, t) {
+  if (typeof b === "number" && typeof a === "number") return a + (b - a) * t;
+  if (Array.isArray(b) && Array.isArray(a) && a.length === b.length) return b.map((x, i) => lerpV(a[i], x, t));
+  if (b && typeof b === "object" && a && typeof a === "object") { const o = {}; for (const k in b) o[k] = lerpV(a[k], b[k], t); return o; }
+  return b;
+}
+function tween(key, target, render, dur = 600) {
+  const st = TW[key] || (TW[key] = {});
+  cancelAnimationFrame(st.raf);
+  const from = st.cur;
+  if (RM || !from || from.sig !== target.sig) { st.cur = target; render(target); return; }
+  const t0 = performance.now();
+  const step = (t) => {
+    const k = Math.min(1, (t - t0) / dur), e = 1 - Math.pow(1 - k, 3);
+    st.cur = k < 1 ? lerpV(from, target, e) : target; render(st.cur);
+    if (k < 1) st.raf = requestAnimationFrame(step);
+  };
+  st.raf = requestAnimationFrame(step);
+}
 function updateCond() {
   const h = `<span>${isDefault() ? "기본 조건" : "바꾼 조건"}</span><b>${fmtKm(S.km)} km</b><b>${gridTxt()}</b><b>PHEV 전기 주행 ${fmt(S.uf * 100, 1)}%</b><a href="#controls">조건 바꾸기 ↑</a>`;
   document.querySelectorAll("[data-cond]").forEach(el => { el.innerHTML = h; });
@@ -1242,12 +1238,12 @@ function buildDefs() {
     r("시스템 경계", "System boundary", "어느 공정부터 어느 공정까지 셀지", "요람에서 무덤까지: 원료 채굴 → 제조·물류 → 연료·전기 생산 → 주행 → 폐차 (아래 그림)") +
     r("컷오프 기준", "Cut-off criteria", "너무 작아서 빼는 기준", "제조 단계는 BMW LCA 보고서의 기준(공구·설비 제외)을 따름. 사용 단계의 엔진오일·타이어 등 소모품은 제외(크기는 정량 검토하지 않음)") +
     r("할당 방법", "Allocation", "여러 제품이 함께 나오는 공정의 배출을 나누는 법", "정유 공정의 제품별 배분은 국가 LCI DB 데이터셋 방식을 그대로 따름. 폐차 재활용은 컷오프 방식(재활용 크레딧 없음, BMW와 같음)") +
-    r("영향 범주·평가 방법", "Impact category, LCIA", "어떤 환경 영향을 어떤 계수로 잴지", "기후변화 1개. 100년 지구온난화지수, IPCC 2차 보고서 값(메탄 21, 아산화질소 310). 국내 배출권거래제 지침·국가 LCI DB와 같은 기준") +
+    r("영향 범주·평가 방법", "Impact category, LCIA", "어떤 환경 영향을 어떤 계수로 잴지", "기후변화 1개. ISO 14067에 따라 IPCC 6차 보고서(AR6)의 100년 지구온난화지수(메탄 화석 29.8·비화석 27.0, 아산화질소 273). 국내 배출권거래제 기준(2차 보고서)은 민감도로 비교. 생물기원 CO₂는 흡수와 상쇄되는 것으로 보고 0, 100년 이후 장기 배출 제외") +
     r("데이터 품질 요구사항", "Data quality requirements", "어떤 데이터를 써도 되는지 미리 정한 조건", "시간: 2020년 이후 / 지역: 사용은 한국, 제조는 독일 / 기술: 현행 모델. 공식 통계와 검토받은 데이터셋 우선") +
-    r("가정과 가치 선택", "Assumptions, value choices", "판단이 들어간 부분", "주행거리 20만 km, 충전 습관 45.5%, 휘발유 밀도 0.74 kg/L, M5·i5 M60 제조 배출 추정, 100년 이후 장기 배출 제외") +
+    r("가정과 가치 선택", "Assumptions, value choices", "판단이 들어간 부분", "주행거리 20만 km, 충전 습관 45.5%, 휘발유 밀도 0.74 kg/L, 공인 전비에 충전 손실 포함, M5·i5 M60 제조 배출 추정, 100년 이후 장기 배출 제외") +
     r("비판적 검토", "Critical review", "제3자가 방법을 점검했는가", "받지 않음 (개인 연구)") +
     g("탄소발자국 추가 항목 (ISO 14067)") +
-    r("시간 경계", "Time boundary", "언제 배출되는 것까지 셀지", "2026년에 사서 15년 사용. 배출 시점에 따른 가중은 하지 않음") +
+    r("시간 경계", "Time boundary", "언제 배출되는 것까지 셀지", "2025년에 판매되어 2025~2039년 15년 사용. 배출 시점에 따른 가중은 하지 않음") +
     r("전력 모델링", "Electricity", "어떤 전기를 썼다고 볼지", "한국 평균 소비 믹스(위치 기반). 국가 LCI DB 데이터셋(2021년 자료) 그대로. 재생에너지 구매 계약은 반영하지 않음") +
     r("생물기원 탄소", "Biogenic carbon", "식물에서 온 탄소를 어떻게 다룰지", "해당 흐름이 매우 작음. 생물기원 CO₂는 제외");
 }
@@ -1264,38 +1260,38 @@ function buildRF() {
 function buildData() {
   const gs = DS.gasoline, em = DS.elec_market;
   $("pk1").innerHTML = `${fmt(FX.gas_wtt_lcidb, 3)} <small>kgCO₂e/L</small>`;
-  $("pk2").innerHTML = `${fmt(em.sar_short, 3)} <small>kgCO₂e/kWh</small>`;
-  $("pk3").innerHTML = `${fmt(gs.sar_short, 3)} <small>kgCO₂e/kg</small>`;
+  $("pk2").innerHTML = `${fmt(FX.grid.lcidb.base, 3)} <small>kgCO₂e/kWh</small>`;
+  $("pk3").innerHTML = `${fmt(gs.ar6_short, 3)} <small>kgCO₂e/kg</small>`;
   $("pk3r").textContent = `${fmt(gs.ef_reported, 3)} kgCO₂e/kg`;
   const link = (d) => `<a href="${DSURL(d.uuid)}" target="_blank" rel="noopener">${d.name.split(";")[0]}</a><span class="src mono">${d.uuid}</span>`;
   const g = (t) => `<tr class="grp"><td colspan="7">${t}</td></tr>`;
-  const r = (k, v, src, how, t, a, b) => `<tr><td><b>${k}</b></td><td class="n">${v}</td><td>${src}</td><td><span class="src" style="margin:0">${how}</span></td><td data-l="시간">${q3(t)}</td><td data-l="지역">${q3(a)}</td><td data-l="기술">${q3(b)}</td></tr>`;
+  const r = (k, v, src, how, t, a, b) => `<tr><td><b>${k}</b></td><td class="n">${v}</td><td>${src}</td><td><span class="src" style="margin:0">${how}</span></td><td>${q3(t)}</td><td>${q3(a)}</td><td>${q3(b)}</td></tr>`;
   $("regBody").innerHTML =
     g("제조") +
-    r("제조 배출 (520i·530e·i5)", "11.1 · 14.2 · 17.0 t", "BMW Vehicle Footprint (2023 MY)<span class=\"src\">ISO 14040/44, TÜV Rheinland 검토</span>", "그대로 사용. 공장(0.7t)·물류(0.4~1.0t) 구분도 원문 값", 3, 3, 3) +
+    r("제조 배출 (520i·530e·i5)", "11.1 · 14.2 · 17.0 t", "BMW Vehicle Footprint (2023 MY)<span class=\"src\">ISO 14040/44, TÜV Rheinland 검토</span>", "그대로 사용(BMW의 온실가스 환산 기준 그대로). 공장(0.7t)·물류(0.4~1.0t) 구분도 원문 값", 3, 3, 3) +
     r("제조 배출 (M5·i5 M60)", `${fmt(FX.a_body * 1000, 2)} kg/kg · ${fmt(FX.b_bev, 1)} kg/kWh`, "위 세 차종으로 구한 계수", "무게·배터리 용량에 곱해 추정", 3, 3, 2) +
     r("차량 무게", "DIN 공차중량", "BMW 미디어 제원표", "BMW LCA와 같은 기준으로 통일", 3, 2, 3) +
     g("사용") +
-    r("국내 공인 연비·전비", "12.1 km/L 등", "한국에너지공단 표시연비 원자료 (2026.04)", "기준흐름 계산", 3, 3, 3) +
+    r("국내 공인 연비·전비", "12.1 km/L 등", "한국에너지공단 표시연비 원자료 (2026.04)", "기준흐름 계산. 전비는 외부 교류 전원에서 충전한 전력량 기준(MCT 시험, 미국 SAE J1634 기반)이라 충전 손실 포함", 3, 3, 3) +
     r("휘발유 순발열량", "30.1 MJ/L", "에너지법 시행규칙 열량 환산기준 (2022)", "연소 계수의 단위 환산", 3, 3, 3) +
-    r("휘발유 연소", `${fmt(FX.gas_comb, 3)} kg/L`, "2006 IPCC Vol.2 Ch.3 Table 3.2.1·3.2.2", "CO₂ 69,300 · CH₄ 3.8 · N₂O 5.7 kg/TJ × 30.1 MJ/L, SAR로 환산", 2, 2, 3) +
-    r("휘발유 생산", `${fmt(gs.sar_short, 4)} kg/kg`, link(gs) + `<span class="src">국가 LCI DB · ${gs.data_year}년 자료 · 외부 검토</span>`, `대기 배출 물질을 SAR로 다시 특성화. × 밀도 0.74 → ${fmt(FX.gas_wtt_lcidb, 3)} kg/L`, 2, 3, 3) +
+    r("휘발유 연소", `${fmt(FX.gas_comb, 3)} kg/L`, "2006 IPCC Vol.2 Ch.3 Table 3.2.1·3.2.2", "CO₂ 69,300 · CH₄ 3.8 · N₂O 5.7 kg/TJ × 30.1 MJ/L, AR6로 환산", 2, 2, 3) +
+    r("휘발유 생산", `${fmt(gs.ar6_short, 4)} kg/kg`, link(gs) + `<span class="src">국가 LCI DB · ${gs.data_year}년 자료 · 외부 검토</span>`, `대기 배출 물질을 AR6로 다시 특성화. × 밀도 0.74 → ${fmt(FX.gas_wtt_lcidb, 3)} kg/L`, 2, 3, 3) +
     r("휘발유 밀도", "0.74 kg/L", "가정", "국내 휘발유 일반 범위의 중간값. 0.72~0.76 민감도 확인", 2, 2, 2) +
-    r("충전 전력 (기준)", `${fmt(em.sar_short, 4)} kg/kWh`, link(em) + `<span class="src">국가 LCI DB · ${em.data_year}년 자료 · 송배전 손실 포함</span>`, "대기 배출 물질을 SAR로 다시 특성화. 보정 없이 그대로 사용", 2, 3, 3) +
+    r("충전 전력 (기준)", `${fmt(FX.grid.lcidb.base, 4)} kg/kWh`, link(em) + `<span class="src">국가 LCI DB · ${em.data_year}년 자료 · 송배전 손실 포함</span>`, "대기 배출 물질을 AR6로 다시 특성화. 보정 없이 그대로 사용", 2, 3, 3) +
     r("충전 전력 (2030·2038년)", `${fmt(FX.grid.lcidb["2030"], 3)} · ${fmt(FX.grid.lcidb["2038"], 3)}`, "기준 계수 × 발전소 직접배출 변화 비율<span class=\"src\">제11차 전력수급기본계획, EPSIS 2023 발전 실적, IPCC 2006 고정연소</span>", "비율 = 그해 직접배출 ÷ 2021년 국가 전력배출계수 0.4509 (부록 참조)", 1, 3, 2) +
     r("국가 전력배출계수", "0.4173 · 0.4509", "2023년 · 2021년 단년도 계수 (국가 온실가스 통계 관리위원회)", "미래 전력 비율 계산, Cat 11 필수 범위의 발전소 직접배출", 3, 3, 3) +
     r("PHEV 전기 주행 비율", "45.5%", "Energies 2026, 유럽 PHEV 457,303대 OBFCM 기록", "기준흐름의 휘발유·전기 배분", 3, 1, 2) +
     g("폐기 · 공시 · 비교") +
-    r("폐차 처리", "0.6 t", "BMW Vehicle Footprint", "재활용 크레딧 없이 그대로", 3, 2, 3) +
+    r("폐차 처리", "0.6 t", "BMW Vehicle Footprint", "재활용 크레딧 없이 그대로. BMW 자료상 세 차종 모두 0.6 t이라 배터리 처리량 차이는 반영되지 않음", 3, 2, 2) +
     r("판매 대수", "520i 7,116 · 530e 1,512 · i5 828", "BMW 코리아 발표 (2025년 1~6월, 2025.7.7)", "Scope 3 예시 산정의 활동자료. 530e는 xDrive 포함, i5는 트림 합계", 3, 3, 2) +
     r("BMW 그룹 Scope 3", fmtMan(S3.bmw_group.scope3_total), "BMW Group ESG Overview FY2025", "실제 보고 항목·비중 비교", 3, 1, 3) +
-    r("재생 알루미늄 · 알루미늄 합금", `${fmt(DS.al_recycled_ingot.sar_short, 2)} · ${fmt(DS.al_alloy.sar_short, 2)} kg/kg`, link(DS.al_recycled_ingot) + link(DS.al_alloy), "회피배출 예시 (순환경제)", 3, 3, 2) +
+    r("재생 알루미늄 · 알루미늄 합금", `${fmt(DS.al_recycled_ingot.ar6_short, 2)} · ${fmt(DS.al_alloy.ar6_short, 2)} kg/kg`, link(DS.al_recycled_ingot) + link(DS.al_alloy), "회피배출 예시 (순환경제)", 3, 3, 2) +
     r("배터리 제조 범위", "59~115 kg/kWh", "Nature Communications 2024 (NMC811 셀)", "민감도·무작위 계산의 범위", 3, 2, 2);
   const un = [
-    ["국가 LCI DB 평가계수 표의 휘발유 값 (0.083 kg/kg)", `실제 데이터셋 값(${fmt(gs.sar_short, 3)} kg/kg)의 약 9분의 1이고, 원유 채굴 포함 여부를 확인할 수 없어 쓰지 않았습니다.`],
+    ["국가 LCI DB 평가계수 표의 휘발유 값 (0.083 kg/kg)", `실제 데이터셋 값(${fmt(gs.ar6_short, 3)} kg/kg)의 약 9분의 1이고, 원유 채굴 포함 여부를 확인할 수 없어 쓰지 않았습니다.`],
     ["자동차운반선 해상운송 데이터셋 (0.043 kg/tkm)", "독일에서 한국까지 배로 옮기는 몫을 더하려 했으나, BMW 제조 값의 물류(대당 0.4~1.0 t)에 이미 '세계 시장으로의 출고 운송'이 들어 있어 더하면 이중 계산이 됩니다."],
-    ["발전원별 전력 데이터셋 (석탄 1.37, LNG 복합 0.47 kg/kWh 등)", `2023년 발전 비중으로 합치면 ${fmt(D.grid_bottom_up.value, 3)} kg/kWh로, 같은 DB의 생산 믹스 데이터셋(${fmt(DS.elec_prodmix.sar_short, 3)})보다 18% 높습니다. 원인을 확인하지 못해 전력 계수에 쓰지 않았습니다.`],
-    ["데이터셋 표시 기후변화 값", `휘발유 표시값 ${fmt(gs.ef_reported, 3)} kg/kg는 유럽 EF 방식이고 100년 이후 장기 배출(${fmt(gs.sar_longterm, 3)})까지 포함합니다. 국내 기준(SAR, 장기 배출 제외)으로 다시 계산했습니다.`],
+    ["발전원별 전력 데이터셋 (석탄 1.41, LNG 복합 0.48 kg/kWh 등)", `2023년 발전 비중으로 합치면 ${fmt(D.grid_bottom_up.value, 3)} kg/kWh로, 같은 DB의 생산 믹스 데이터셋(${fmt(DS.elec_prodmix.ar6_short, 3)})보다 18% 높습니다. 원인을 확인하지 못해 전력 계수에 쓰지 않았습니다.`],
+    ["데이터셋 표시 기후변화 값", `휘발유 표시값 ${fmt(gs.ef_reported, 3)} kg/kg는 유럽 EF 방식이고 100년 이후 장기 배출(${fmt(gs.ar6_longterm, 3)})까지 포함합니다. ISO 14067 기준(IPCC 6차 보고서 값, 장기 배출 제외)으로 다시 계산했습니다.`],
   ];
   $("unusedList").innerHTML = un.map(u => `<li><b>${u[0]}</b><span>${u[1]}</span></li>`).join("");
 }
@@ -1376,20 +1372,23 @@ function buildStack() {
 /* ---------- 03 누적 곡선 ---------- */
 let lineDrawn = false;
 function drawLines() {
-  const el = $("lineChart");
-  const w = W(el), narrow = w < 520, H = Math.round(Math.min(380, Math.max(260, w * 0.45)));
-  const m = { l: 40, r: narrow ? 80 : 96, t: 16, b: 34 };
-  const p = P(), ids = ORDER[S.grp];
+  const el = $("lineChart"), p = P(), ids = ORDER[S.grp];
   const se = ids.map(id => ({ id, ...cumul(id, p) }));
-  const xs = se[0].xs, xMax = 300000;
-  const yMax = nice(Math.max(...se.map(z => z.ys[z.ys.length - 1])), 20);
+  const target = { sig: ids.join() + "|" + W(el), se, yMax: nice(Math.max(...se.map(z => z.ys[z.ys.length - 1])), 20), km: S.km };
+  tween("line", target, renderLines);
+}
+function renderLines(T) {
+  const el = $("lineChart"), ids = ORDER[S.grp];
+  const w = W(el), H = Math.round(Math.min(380, Math.max(260, w * 0.45)));
+  const m = { l: 40, r: 96, t: 16, b: 34 };
+  const se = T.se, xs = se[0].xs, xMax = 300000, yMax = T.yMax;
   const sx = (k) => m.l + (w - m.l - m.r) * k / xMax, sy = (t) => H - m.b - (H - m.t - m.b) * t / yMax;
   const dc = lineDrawn ? "" : " draw", pc = lineDrawn ? "" : ' class="pop"';
   let s = `<svg viewBox="0 0 ${w} ${H}" width="${w}" height="${H}">`;
-  for (let t = 0; t <= yMax; t += 20) s += `<line class="grid" x1="${m.l}" x2="${w - m.r}" y1="${sy(t)}" y2="${sy(t)}"></line><text class="tick" x="${m.l - 8}" y="${sy(t) + 4}" text-anchor="end">${t}${t === yMax ? " t" : ""}</text>`;
-  for (let k = 0; k <= xMax; k += (narrow ? 100000 : 50000)) s += `<text class="tick" x="${sx(k)}" y="${H - 12}" text-anchor="middle">${k ? fmtKm(k) : 0}${k === xMax ? " km" : ""}</text>`;
+  for (let t = 0; t <= yMax + 0.01; t += 20) s += `<line class="grid" x1="${m.l}" x2="${w - m.r}" y1="${sy(t)}" y2="${sy(t)}"></line><text class="tick" x="${m.l - 8}" y="${sy(t) + 4}" text-anchor="end">${t}${t + 20 > yMax + 0.01 ? " t" : ""}</text>`;
+  for (let k = 0; k <= xMax; k += 50000) s += `<text class="tick" x="${sx(k)}" y="${H - 12}" text-anchor="middle">${k ? fmtKm(k) : 0}${k === xMax ? " km" : ""}</text>`;
   s += `<line class="axis" x1="${m.l}" x2="${w - m.r}" y1="${sy(0)}" y2="${sy(0)}"></line>`;
-  s += `<line x1="${sx(S.km)}" x2="${sx(S.km)}" y1="${m.t}" y2="${sy(0)}" stroke="var(--ink-3)" stroke-dasharray="3 3"></line><text class="tick" x="${sx(S.km) + 5}" y="${m.t + 9}">${fmtKm(S.km)} km</text>`;
+  s += `<line x1="${sx(T.km)}" x2="${sx(T.km)}" y1="${m.t}" y2="${sy(0)}" stroke="var(--ink-3)" stroke-dasharray="3 3"></line><text class="tick" x="${sx(T.km) + 5}" y="${m.t + 9}">${fmtKm(T.km)} km</text>`;
   const labs = [];
   se.forEach(z => {
     const v = V[z.id], sel = z.id === S.sel;
@@ -1459,19 +1458,23 @@ function buildScope3() {
 function updateScope() {
   const per = Object.fromEntries(ALL.map(id => [id, scopeMap(id)]));
   setBars($("scBars"), per, SC, 20, (id, v) => `필수 ${fmt(v.cat11_min, 1)} t`);
-  const dsv = S.grid * FX.direct_share[S.set];
-  $("gridOfficial").textContent = S.gridKey === "base" && S.set === "lcidb" ? "2021년 국가 전력배출계수 0.4509 kg/kWh" : `지금 조건 ${fmt(dsv, 3)} kg/kWh`;
-
   const inv = inventory(), sum = (k) => inv.reduce((a, r) => a + r[k], 0), units = sum("units");
   const base = sum("cat1") + sum("cat4") + sum("cat11_min") + sum("cat12");
-  const k = (v, l) => `<div><span class="v">${v}</span><span class="l">${l}</span></div>`;
-  $("invKpis").innerHTML = k(`${fmt0(units)}<small>대</small>`, `산정 대상 (5시리즈 ${fmt0(SALES.series_total)}대 중 ${fmt(units / SALES.series_total * 100, 0)}%)`) +
-    k(`${fmt(sum("cat11_min") / 1e4, 1)}<small>만 t</small>`, "Cat 11 필수 (배기 + 충전 전기)") +
-    k(`${fmt(sum("cat1") / 1e4, 1)}<small>만 t</small>`, "Cat 1 차량 구매 (제조 배출)") +
-    k(`${fmt(sum("cat11_min") / base * 100, 0)}<small>%</small>`, "산정 합계 중 Cat 11 필수 비중 (선택 범위 제외)");
-  const cols = [...SCK, "total"];
-  const row = (r) => `<tr><td><b>${V[r.id].name}</b>${r.id === "i5_40" ? '<span class="src">트림 구분 없는 합계</span>' : r.id === "530e" ? '<span class="src">xDrive 포함</span>' : ""}</td><td class="n">${fmt0(r.units)}</td>${cols.map(c => `<td class="n">${fmt0(r[c])}</td>`).join("")}</tr>`;
-  $("invBody").innerHTML = inv.map(row).join("") + `<tr><td><b>합계</b></td><td class="n"><b>${fmt0(units)}</b></td>${cols.map(c => `<td class="n"><b>${fmt0(sum(c))}</b></td>`).join("")}</tr>`;
+  const kp = $("invKpis");
+  if (!kp.children.length) {
+    const k = (i, u, l) => `<div style="--i:${i}"><span class="v"><span data-k="${i}"></span><small>${u}</small></span><span class="l">${l}</span></div>`;
+    kp.innerHTML = k(0, "대", `산정 대상 (5시리즈 ${fmt0(SALES.series_total)}대 중 ${fmt(units / SALES.series_total * 100, 0)}%)`) + k(1, "만 t", "Cat 11 필수 (배기 + 충전 전기)") +
+      k(2, "만 t", "Cat 1 차량 구매 (제조 배출)") + k(3, "%", "산정 합계 중 Cat 11 필수 비중 (선택 범위 제외)");
+  }
+  const kv = [[units, fmt0], [sum("cat11_min") / 1e4, x => fmt(x, 1)], [sum("cat1") / 1e4, x => fmt(x, 1)], [sum("cat11_min") / base * 100, x => fmt(x, 0)]];
+  kv.forEach(([v, f], i) => setNum(kp.querySelector(`[data-k="${i}"]`), v, f));
+  const cols = [...SCK, "total"], tb = $("invBody");
+  if (!tb.children.length) {
+    const row = (id, name, sub, b) => `<tr${b ? ' style="font-weight:700"' : ""}><td><b>${name}</b>${sub ? `<span class="src">${sub}</span>` : ""}</td><td class="n" data-r="${id}" data-c="units"></td>${cols.map(c => `<td class="n" data-r="${id}" data-c="${c}"></td>`).join("")}</tr>`;
+    tb.innerHTML = inv.map(r => row(r.id, V[r.id].name, r.id === "i5_40" ? "트림 구분 없는 합계" : r.id === "530e" ? "xDrive 포함" : "")).join("") + row("sum", "합계", "", true);
+  }
+  const totRow = Object.fromEntries(["units", ...cols].map(c => [c, sum(c)]));
+  [...inv.map(r => [r.id, r]), ["sum", totRow]].forEach(([id, r]) => ["units", ...cols].forEach(c => setNum(tb.querySelector(`[data-r="${id}"][data-c="${c}"]`), r[c], fmt0)));
   $("invNote").innerHTML = `단위 tCO₂e. 판매 대수는 BMW 코리아 발표(2025년 1~6월)입니다. i5는 트림 구분 없는 합계라 모두 eDrive40 값을 썼습니다. 523d·550e·M5 등 ${fmt0(SALES.series_total - units)}대(${fmt((1 - units / SALES.series_total) * 100, 0)}%)는 빠져 있어, 실제 공시라면 제외 비율과 이유를 밝혀야 합니다. Cat 4는 BMW 코리아가 운임을 낸다고 가정했습니다(운임 포함 가격으로 사 오면 Cat 1).`;
   const bg = S3.bmw_group;
   $("bmwPerCar").innerHTML = `BMW 그룹의 Cat 11을 2025년 인도 대수(${fmt0(bg.deliveries_2025)}대)로 나누면 대당 <strong>${fmt(S3.bmw_per_vehicle_use, 1)} t</strong>(전 차종·전 세계 평균)입니다. 이 분석에서 한국 520i의 Cat 11은 필수 범위 ${fmt(per["520i"].cat11_min, 1)} t, 선택 범위까지 ${fmt(per["520i"].cat11_min + per["520i"].cat11_optional, 1)} t이고, i5 eDrive40은 필수 범위 ${fmt(per.i5_40.cat11_min, 1)} t입니다.`;
@@ -1483,10 +1486,17 @@ function buildAvoided() {
   $("alText").innerHTML = `국가 LCI DB 기준 스크랩으로 만든 재생 알루미늄 잉곳은 1kg당 ${fmt(R.al_recycled, 2)} kg, 알루미늄 합금은 ${fmt(R.al_alloy, 2)} kg을 배출합니다. 재생 알루미늄 1kg이 합금 1kg을 대신하면 약 <b class="tnum">${fmt(R.avoided_per_kg, 1)} kg</b>이 회피됩니다. BMW가 i5에서 재생 알루미늄으로 줄였다고 밝힌 1.2 t은 이 기준으로 약 ${fmt0(al)} kg을 대체한 효과입니다. 재활용 업체가 "우리 원료를 쓰면 고객사 배출이 줄어든다"고 말할 때도 같은 규칙(비교 기준 공개, 별도 보고, Scope 3에서 빼지 않기)이 적용됩니다. 합금 데이터셋은 1차 잉곳과 스크랩을 섞은 값이라 순수 1차 알루미늄보다 낮을 수 있습니다.`;
 }
 function updateAvoided() {
-  const A = avoided(), max = Math.max(...Object.values(A).map(a => Math.max(a.ref, a.solution_total)));
-  $("refs").innerHTML = Object.entries(A).map(([k, a]) => `<div class="refrow"><div><b>${k} · ${a.label}</b><small>비교 제품: ${V[a.solution].name}</small></div>
-    <div class="bars"><div class="bl"><span>기준</span><span class="tr"><span class="fill" style="width:${a.ref / max * 100}%;background:var(--pt-ice)"></span></span></div><div class="bl"><span>전기차</span><span class="tr"><span class="fill" style="width:${a.solution_total / max * 100}%;background:var(--pt-bev)"></span></span></div><small>${fmt(a.ref)} t → ${fmt(a.solution_total)} t (1대 생애주기)</small></div>
-    <div class="av"><b>${fmt(a.per_unit)} t<span style="font-size:.6em;font-weight:500"> /대</span></b><small>${a.fleet != null ? `${fmt0(SALES.i5_all)}대 × ${fmt(a.per_unit)} t = ${fmt0(a.fleet)} t` : "판매 대수 미산정"}</small></div></div>`).join("");
+  const A = avoided(), max = Math.max(...Object.values(A).map(a => Math.max(a.ref, a.solution_total))), box = $("refs");
+  if (!box.children.length) box.innerHTML = Object.entries(A).map(([k, a]) => `<div class="refrow" data-ref="${k}"><div><b>${k} · ${a.label}</b><small>비교 제품: ${V[a.solution].name}</small></div>
+    <div class="bars"><div class="bl"><span>기준</span><span class="tr"><span class="fill" data-f="ref" style="background:var(--pt-ice)"></span></span></div><div class="bl"><span>전기차</span><span class="tr"><span class="fill" data-f="sol" style="background:var(--pt-bev)"></span></span></div><small data-f="txt"></small></div>
+    <div class="av"><b><span data-f="per"></span> t<span style="font-size:.6em;font-weight:500"> /대</span></b><small data-f="fleet"></small></div></div>`).join("");
+  Object.entries(A).forEach(([k, a]) => {
+    const row = box.querySelector(`[data-ref="${k}"]`), q = (f) => row.querySelector(`[data-f="${f}"]`);
+    q("ref").style.width = (a.ref / max * 100) + "%"; q("sol").style.width = (a.solution_total / max * 100) + "%";
+    q("txt").textContent = `${fmt(a.ref)} t → ${fmt(a.solution_total)} t (1대 생애주기)`;
+    setNum(q("per"), a.per_unit, x => fmt(x));
+    q("fleet").textContent = a.fleet != null ? `${fmt0(SALES.i5_all)}대 × ${fmt(a.per_unit)} t = ${fmt0(a.fleet)} t` : "판매 대수 미산정";
+  });
   const r1 = A.R1;
   $("badLine").textContent = `"i5를 ${fmt0(SALES.i5_all)}대 팔아 BMW 코리아의 Scope 3 배출을 ${fmt0(r1.fleet)} t 줄였다."`;
   $("goodLine").textContent = `"2025년 상반기에 판매한 i5 ${fmt0(SALES.i5_all)}대는 같은 수의 520i가 팔렸을 때보다 생애주기 동안 약 ${fmt0(r1.fleet)} t을 덜 배출할 것으로 추정된다(판매 연도 일괄 계상, ${fmtKm(S.km)} km, ${gridTxt()}). 이 값은 Scope 1~3 배출량과 별도로 보고한다."`;
@@ -1523,7 +1533,7 @@ function drawMC() {
   const el = $("mcChart"), mc = D.monte_carlo, ed = mc.hist_edges, ids = ORDER[S.mc];
   const w = W(el), H = 250, m = { l: 10, r: 10, t: 10, b: 30 }, n = mc.n;
   const yMax = Math.max(...ids.flatMap(id => mc.hist[id])) / n;
-  const x0 = 20, x1 = 90;
+  const x0 = 20, x1 = 100;
   const sx = (v) => m.l + (w - m.l - m.r) * (v - x0) / (x1 - x0), sy = (f) => H - m.b - (H - m.t - m.b) * f / (yMax * 1.08);
   let s = `<svg viewBox="0 0 ${w} ${H}" width="${w}" height="${H}">`;
   for (let t = x0; t <= x1; t += 10) s += `<line class="grid" x1="${sx(t)}" x2="${sx(t)}" y1="${m.t}" y2="${H - m.b}"></line><text class="tick" x="${sx(t)}" y="${H - 10}" text-anchor="middle">${t}${t === x1 ? " t" : ""}</text>`;
@@ -1543,10 +1553,14 @@ function drawMC() {
 }
 let ufDrawn = false;
 function drawUF() {
-  const el = $("ufChart"), w = W(el), H = 260, m = { l: 40, r: w < 520 ? 84 : 100, t: 12, b: 40 };
-  const st = Array.from({ length: 21 }, (_, i) => i / 20), ph = st.map(u => life("530e", P({ uf: u })).total);
+  const el = $("ufChart"), st = Array.from({ length: 21 }, (_, i) => i / 20), ph = st.map(u => life("530e", P({ uf: u })).total);
   const ice = life("520i").total, bev = life("i5_40").total, all = [...ph, ice, bev];
-  const y0 = Math.floor(Math.min(...all) / 10) * 10, y1 = nice(Math.max(...all), 10);
+  tween("uf", { sig: String(W(el)), ph, ice, bev, y0: Math.floor(Math.min(...all) / 10) * 10, y1: nice(Math.max(...all), 10), uf: S.uf, cur: life("530e").total }, renderUF);
+}
+function renderUF(T) {
+  const el = $("ufChart"), w = W(el), H = 260, m = { l: 40, r: 100, t: 12, b: 40 };
+  const st = Array.from({ length: 21 }, (_, i) => i / 20), ph = T.ph, ice = T.ice, bev = T.bev;
+  const y0 = Math.floor(T.y0 / 10) * 10, y1 = Math.ceil(T.y1 / 10) * 10;
   const sx = (u) => m.l + (w - m.l - m.r) * u, sy = (t) => H - m.b - (H - m.t - m.b) * (t - y0) / (y1 - y0);
   const dc = ufDrawn ? "" : " draw", pc = ufDrawn ? "" : ' class="pop"';
   let s = `<svg viewBox="0 0 ${w} ${H}" width="${w}" height="${H}">`;
@@ -1556,7 +1570,7 @@ function drawUF() {
   const ref = (t, pt, l) => { s += `<line x1="${m.l}" x2="${w - m.r}" y1="${sy(t)}" y2="${sy(t)}" stroke="var(${PTV[pt]})" stroke-width="2" stroke-dasharray="6 4"></line><text x="${w - m.r + 8}" y="${sy(t) + 4}" style="fill:var(--ink);font-size:12px;font-weight:500">${l}</text>`; };
   ref(ice, "ICE", "520i"); ref(bev, "BEV", "i5 eDrive40");
   s += `<path class="ln${dc}" pathLength="1" d="${st.map((u, i) => `${i ? "L" : "M"}${sx(u)},${sy(ph[i])}`).join("")}" fill="none" stroke="var(--pt-phev)" stroke-width="3"></path><text x="${w - m.r + 8}" y="${sy(ph[20]) + 4}" style="fill:var(--ink);font-size:12px;font-weight:700">530e</text>`;
-  s += `<circle${pc} cx="${sx(S.uf)}" cy="${sy(life("530e").total)}" r="5.5" fill="var(--bg)" stroke="var(--pt-phev)" stroke-width="2.5"></circle>`;
+  s += `<circle${pc} cx="${sx(T.uf)}" cy="${sy(T.cur)}" r="5.5" fill="var(--bg)" stroke="var(--pt-phev)" stroke-width="2.5"></circle>`;
   s += `<rect id="uhit" x="${m.l}" y="${m.t}" width="${w - m.l - m.r}" height="${H - m.t - m.b}" fill="transparent"></rect></svg>`;
   el.innerHTML = s;
   hover(el.querySelector("#uhit"), (e) => { const bx = el.querySelector("svg").getBoundingClientRect(), px = (e.clientX - bx.left) * (w / bx.width); const u = Math.round(Math.min(1, Math.max(0, (px - m.l) / (w - m.l - m.r))) * 20) / 20; showTip(`<b>전기 주행 ${Math.round(u * 100)}%</b><div class="r"><span>530e</span><span>${fmt(life("530e", P({ uf: u })).total)} t</span></div><div class="r"><span>520i</span><span>${fmt(ice)} t</span></div><div class="r"><span>i5 eDrive40</span><span>${fmt(bev)} t</span></div>`, e); });
@@ -1571,7 +1585,7 @@ function updateText(R) {
   const id = S.sel, r = R[id], ref = REF[id];
   $("sbThumb").src = IMG[id];
   $("sbName").textContent = V[id].name;
-  $("sbSub").textContent = `${PT[V[id].powertrain]} · ${fmtKm(S.km)} km · ${S.gridKey ? GRID_LABEL[S.gridKey] : "직접 정한 전력"}`;
+  $("sbSub").textContent = `${PT[V[id].powertrain]} · ${fmtKm(S.km)} km · ${S.gridKey ? glabel(S.gridKey) : "직접 정한 전력"}`;
   setNum($("sbTotal"), r.total, x => fmt(x) + " t");
   $("sbKm").textContent = fmt(r.gkm, 0) + " g";
   const cmp = ref ? [id, ref] : [id === "520i" ? "i5_40" : "i5_M60", id];
@@ -1611,16 +1625,16 @@ function fillStatic() {
 기준흐름 = 휘발유: 주행거리 × (1−UF) ÷ 연비,  전기: 주행거리 × UF ÷ 전비
 Cat 11 필수 = 휘발유(L) × 연소 계수 + 전기(kWh) × 전력 계수 × ${fmt(FX.direct_share.lcidb, 3)} (발전소 직접배출 몫)`;
   $("gasFormula").textContent =
-`휘발유 1L 연소 = 30.1 MJ × (69,300 + 21×3.8 + 310×5.7) kg/TJ ÷ 10⁶ = ${fmt(FX.gas_comb, 4)} kgCO₂e
-휘발유 1L 생산 = ${fmt(DS.gasoline.sar_short, 4)} kgCO₂e/kg (국가 LCI DB) × 0.74 kg/L = ${fmt(FX.gas_wtt_lcidb, 4)} kgCO₂e`;
+`휘발유 1L 연소 = 30.1 MJ × (69,300 + 29.8×3.8 + 273×5.7) kg/TJ ÷ 10⁶ = ${fmt(FX.gas_comb, 4)} kgCO₂e
+휘발유 1L 생산 = ${fmt(DS.gasoline.ar6_short, 4)} kgCO₂e/kg (국가 LCI DB) × 0.74 kg/L = ${fmt(FX.gas_wtt_lcidb, 4)} kgCO₂e`;
   $("dsFormula").textContent =
-`데이터셋 특성화 = Σ 대기 배출량(kg) × GWP(SAR)
-  CO₂(화석·토지이용) × 1 + CH₄ × 21 + N₂O × 310 + SF₆ × 23,900 + HFC·PFC × 해당 값
+`데이터셋 특성화 = Σ 대기 배출량(kg) × GWP100 (IPCC 6차 보고서, ISO 14067)
+  CO₂(화석·토지이용) × 1 + CH₄ 화석 × 29.8 · 비화석 × 27.0 + N₂O × 273 + SF₆ × 25,200 + HFC·PFC × 해당 값
   생물기원 CO₂와 100년 이후 장기 배출(long-term)은 제외
-휘발유 1kg: CO₂ ${fmt(DS.gasoline.co2, 4)} + CH₄ ${DS.gasoline.ch4} × 21 + N₂O ${DS.gasoline.n2o} × 310 + … = ${fmt(DS.gasoline.sar_short, 4)} kgCO₂e`;
+휘발유 1kg: CO₂ ${fmt(DS.gasoline.co2, 4)} + CH₄ ${DS.gasoline.ch4_fossil} × 29.8 + N₂O ${DS.gasoline.n2o} × 273 + … = ${fmt(DS.gasoline.ar6_short, 4)} kgCO₂e`;
   const sh = FX.share["2023"];
   $("gridFormula").textContent =
-`기준 계수    = 국가 LCI DB ${fmt(DS.elec_market.sar_short, 4)} kg/kWh (2021년 자료, 그대로)
+`기준 계수    = 국가 LCI DB ${fmt(FX.grid.lcidb.base, 4)} kg/kWh (2021년 자료, AR6로 특성화)
 그해 계수    = 기준 계수 × 변화 비율
 변화 비율    = 그해 직접배출 ÷ 2021년 국가 전력배출계수 0.4509
 직접배출     = k × Σ 발전 비중 × 연소 배출(연료 MJ × IPCC 2006 계수)
@@ -1628,7 +1642,7 @@ Cat 11 필수 = 휘발유(L) × 연소 계수 + 전기(kWh) × 전력 계수 × 
 보정계수 k   = 공식 0.4173 ÷ 2023년 직접 계산값 ${fmt(FX.raw_direct_2023, 4)} = ${fmt(FX.k_cal, 3)}
   (2023년: 석탄 ${fmt(sh.coal * 100, 1)}% × ${fmt(FX.direct.coal, 3)} + 가스 ${fmt(sh.gas * 100, 1)}% × ${fmt(FX.direct.gas, 3)} + 중유 ${fmt(sh.oil * 100, 2)}% × ${fmt(FX.direct.oil, 3)})`;
   $("gridBody").innerHTML = `<tr><td>2021년 (기준)<span class="src">국가 LCI DB</span></td><td class="n">–</td><td class="n">–</td><td class="n">1.000</td><td class="n">0.451</td><td class="n"><b>${fmt(FX.grid.lcidb.base, 3)}</b></td></tr>` + ["2023", "2030", "2038"].map(y => `<tr><td>${y}년${y === "2023" ? " (실적)" : " (계획)"}</td><td class="n">${fmt(FX.share[y].coal * 100, 1)}%</td><td class="n">${fmt(FX.share[y].gas * 100, 1)}%</td><td class="n">${fmt(FX.grid_ratio[y], 3)}</td><td class="n">${fmt(FX.grid_direct[y], 3)}</td><td class="n"><b>${fmt(FX.grid.lcidb[y], 3)}</b></td></tr>`).join("") +
-    `<tr><td>2026~2040년 평균<span class="src">전력계획 반영</span></td><td class="n">–</td><td class="n">–</td><td class="n">${fmt(FX.grid_life_avg.lcidb / FX.grid.lcidb.base, 3)}</td><td class="n">${fmt(FX.grid_life_avg.lcidb * FX.direct_share.lcidb, 3)}</td><td class="n"><b>${fmt(FX.grid_life_avg.lcidb, 3)}</b></td></tr>`;
+    `<tr><td>2025~2039년 평균<span class="src">전력계획 반영</span></td><td class="n">–</td><td class="n">–</td><td class="n">${fmt(FX.grid_life_avg.lcidb / FX.grid.lcidb.base, 3)}</td><td class="n">${fmt(FX.grid_life_avg.lcidb * FX.direct_share.lcidb, 3)}</td><td class="n"><b>${fmt(FX.grid_life_avg.lcidb, 3)}</b></td></tr>`;
   $("valBody").innerHTML = D.validation.map(v => `<tr><td>${v.case}<span class="src">${v.unit}</span></td><td class="n">${fmt(v.ref, v.ref < 10 ? 4 : 1)}</td><td class="n">${fmt(v.model, v.model < 10 ? 4 : 1)}</td><td class="n">${v.diff_pct >= 0 ? "+" : "−"}${fmt(Math.abs(v.diff_pct), 1)}%</td></tr>`).join("");
   $("bottomUp").textContent = `국가 LCI DB의 발전원별 데이터셋(석탄, LNG 복합, 원자력, 태양광 등)을 2023년 발전 비중으로 합치면 ${fmt(D.grid_bottom_up.value, 3)} kg/kWh인데, 같은 DB의 생산 믹스 데이터셋은 ${fmt(DS.elec_prodmix.sar_short, 3)} kg/kWh입니다. 연도 차이(2021 대 2023)만으로는 18% 차이를 설명하기 어렵습니다. 발전원별 데이터셋의 대표 범위가 다를 가능성이 있어, 실무라면 데이터 제공 기관에 문의할 부분입니다. 이 분석은 소비 믹스 데이터셋을 썼습니다.`;
   $("photoCredits").innerHTML = PHOTO.map(p => `<li>${p[0]} · <a href="${p[2]}" target="_blank" rel="noopener">${p[1]}</a></li>`).join("");
@@ -1697,17 +1711,23 @@ if ("IntersectionObserver" in window && !RM) {
   const io = new IntersectionObserver((es) => es.forEach(e => {
     if (!e.isIntersecting) return;
     io.unobserve(e.target);
-    if (e.target.classList.contains("rv")) e.target.classList.add("in");
+    if (e.target.classList.contains("rv") || e.target.classList.contains("stg")) e.target.classList.add("in");
     if (targets.includes(e.target)) play(e.target);
   }), { rootMargin: "0px 0px -10% 0px", threshold: 0.05 });
-  document.querySelectorAll(".rv").forEach(el => io.observe(el));
+  document.querySelectorAll(".rv, .stg").forEach(el => io.observe(el));
   targets.forEach(el => io.observe(el));
 } else {
   lineDrawn = ufDrawn = true;
-  document.querySelectorAll(".rv").forEach(el => el.classList.add("in"));
+  document.querySelectorAll(".rv, .stg").forEach(el => el.classList.add("in"));
   targets.forEach(el => el.classList.add("play"));
   renderAll();
 }
+/* 묶음 안 항목에 순서 번호를 붙여 차례로 떠오르게 함 */
+document.querySelectorAll(".stg").forEach(g => [...g.children].forEach((c, i) => { if (!c.style.getPropertyValue("--i")) c.style.setProperty("--i", i); }));
+/* 읽은 위치 표시 */
+const prog = $("progress");
+const onScroll = () => { const h = document.documentElement.scrollHeight - innerHeight; prog.style.transform = `scaleX(${h > 0 ? Math.min(1, scrollY / h) : 0})`; };
+addEventListener("scroll", onScroll, { passive: true }); onScroll();
 const sumbar = $("sumbar");
 if ("IntersectionObserver" in window) {
   const zone = $("result");
