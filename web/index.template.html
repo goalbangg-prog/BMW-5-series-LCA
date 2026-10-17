@@ -256,6 +256,7 @@ section.alt .formula { background: var(--bg); }
 /* 02 데이터 대장 */
 .reg td:nth-child(2) { white-space: nowrap; }
 .reg a { color: var(--accent); }
+.regcore td:first-child { width: 26%; } .regcore td:nth-child(2) { width: 24%; } .regcore td:last-child { width: 1%; white-space: nowrap; }
 .reg td:first-child { min-width: 120px; }
 .reg td:nth-child(5), .reg td:nth-child(6) { white-space: nowrap; }
 .unused li { display: grid; grid-template-columns: minmax(0, 220px) minmax(0, 1fr); gap: 4px 20px; padding: 12px 0; border-bottom: 1px solid var(--rule); }
@@ -628,19 +629,29 @@ footer .cols { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 
       </div>
 
       <div class="gap-l rv">
-        <h3 class="sub-h">데이터 출처<small>입력값마다 출처, 사용 방법, 자료 유형, 검증 상태, 데이터 품질(시간·지역·기술 대표성, 3칸 만점)을 적었습니다.</small></h3>
+        <h3 class="sub-h">데이터 출처<small>결과에 가장 큰 영향을 주는 입력값 6개입니다. 모든 입력값과 품질 평가는 아래에서 펼쳐 볼 수 있습니다.</small></h3>
+        <div class="tablewrap">
+          <table class="regcore">
+            <thead><tr><th>입력값</th><th class="n">값</th><th>출처</th><th>검증</th></tr></thead>
+            <tbody class="stg" id="regCore"></tbody>
+          </table>
+        </div>
+        <p class="note"><b>검증 상태</b> 확인: 원자료에서 값과 단위까지 대조함 · 부분 확인: 출처는 확인했으나 쪽수·표 위치를 기록하지 못했거나 언론 보도 등 2차 경로로 확인함 · 추정·가정: 이 분석에서 정한 값. 모든 입력은 공개된 2차 자료이며, 직접 측정한 1차 자료는 없습니다.</p>
+        <details class="more"><summary>전체 입력값 <span id="regN"></span>개와 품질 평가 보기</summary>
         <div class="tablewrap">
           <table class="reg">
             <thead><tr><th>입력값</th><th class="n">값</th><th>출처</th><th>어떻게 썼나</th><th>유형</th><th>검증</th><th>시간</th><th>지역</th><th>기술</th></tr></thead>
-            <tbody class="stg" id="regBody"></tbody>
+            <tbody id="regBody"></tbody>
           </table>
         </div>
-        <p class="note"><b>검증 상태</b> 확인: 원자료에서 값과 단위까지 대조함 · 부분 확인: 출처는 확인했으나 쪽수·표 위치를 기록하지 못했거나 언론 보도 등 2차 경로로 확인함 · 추정·가정: 이 분석에서 정한 값. 모든 입력은 공개된 2차 자료이며, 직접 측정한 1차 자료는 없습니다.<br>국가 LCI DB 데이터셋은 KEITI soda4LCA 노드(133.186.241.65)에서 ILCD 형식으로 내려받았습니다(무료, 등록 후 사용). 데이터셋 이름을 누르면 원본 페이지가 열립니다.</p>
+        <p class="note">유형은 자료를 어떻게 얻었는지, 시간·지역·기술은 데이터 품질(대표성, 3칸 만점)입니다.<br>국가 LCI DB 데이터셋은 KEITI soda4LCA 노드(133.186.241.65)에서 ILCD 형식으로 내려받았습니다(무료, 등록 후 사용). 데이터셋 이름을 누르면 원본 페이지가 열립니다.</p>
+        </details>
       </div>
 
       <div class="gap-l rv">
         <h3 class="sub-h">찾았지만 쓰지 않은 데이터<small>뺀 데이터와 이유도 기록해야 다른 사람이 같은 계산을 재현할 수 있습니다.</small></h3>
         <ul class="unused stg" id="unusedList"></ul>
+        <details class="more"><summary>나머지 2개 보기</summary><ul class="unused" id="unusedMore"></ul></details>
       </div>
     </div>
   </section>
@@ -1286,7 +1297,19 @@ function buildData() {
     ["발전원별 전력 데이터셋 (석탄 1.41, LNG 복합 0.48 kg/kWh 등)", `2023년 발전 비중으로 합치면 ${fmt(D.grid_bottom_up.value, 3)} kg/kWh로, 같은 DB의 생산 믹스 데이터셋(${fmt(DS.elec_prodmix.ar6_short, 3)})보다 18% 높습니다. 원인을 확인하지 못해 전력 계수에 쓰지 않았습니다.`],
     ["데이터셋 표시 기후변화 값", `휘발유 표시값 ${fmt(gs.ef_reported, 3)} kg/kg는 유럽 EF 방식이고 100년 이후 장기 배출(${fmt(gs.ar6_longterm, 3)})까지 포함합니다. ISO 14067 기준(IPCC 6차 보고서 값, 장기 배출 제외)으로 다시 계산했습니다.`],
   ];
-  $("unusedList").innerHTML = un.map(u => `<li><b>${u[0]}</b><span>${u[1]}</span></li>`).join("");
+  const li = (u) => `<li><b>${u[0]}</b><span>${u[1]}</span></li>`;
+  $("unusedList").innerHTML = [un[1], un[2]].map(li).join("");
+  $("unusedMore").innerHTML = [un[0], un[3]].map(li).join("");
+  $("regN").textContent = $("regBody").querySelectorAll("tr:not(.grp)").length;
+  const VB2 = { "확인": "b", "부분 확인": "", "추정": "w", "가정": "w" };
+  $("regCore").innerHTML = [
+    ["제조 배출 (520i·530e·i5)", "11.1 · 14.2 · 17.0 t", "BMW Vehicle Footprint (2023 MY)", "부분 확인"],
+    ["국내 공인 연비·전비", "12.1 km/L 등", "한국에너지공단 표시연비 (2026.04)", "부분 확인"],
+    ["휘발유 연소", `${fmt(FX.gas_comb, 3)} kg/L`, "2006 IPCC + 국내 순발열량", "확인"],
+    ["휘발유 생산", `${fmt(FX.gas_wtt_lcidb, 3)} kg/L`, "국가 LCI DB (2020년 자료)", "확인"],
+    ["충전 전력", `${fmt(FX.grid.lcidb.base, 3)} kg/kWh`, "국가 LCI DB (2021년 자료)", "확인"],
+    ["판매 대수", "520i 7,116 · 530e 1,512 · i5 828", "BMW 코리아 발표 (2025년 상반기)", "확인"],
+  ].map(x => `<tr><td><b>${x[0]}</b></td><td class="n">${x[1]}</td><td>${x[2]}</td><td><span class="badge ${VB2[x[3]]}">${x[3]}</span></td></tr>`).join("");
 }
 
 /* ---------- 03 카드 ---------- */
