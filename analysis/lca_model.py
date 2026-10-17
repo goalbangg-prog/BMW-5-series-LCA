@@ -12,8 +12,8 @@ BMW 5시리즈 전과정평가(LCA) 모델 — 한국 주행 조건 + Scope 3 + 
  1. 배경 데이터: 한국환경산업기술원 국가 LCI DB 데이터셋(soda4LCA)의 대기 배출 원소 흐름을
     IPCC 2차 보고서 GWP로 특성화 (휘발유 생산, 전력 소비 믹스). 영국 DESNZ 2026 + IPCC 2006은 비교용
  2. 휘발유 연소: 2006 IPCC 기본값 + 국내 순발열량
- 3. 전력: 국가 LCI DB 데이터셋(2021년 자료)을 2023년 국가 전력배출계수 비율로 보정한 값이 출발점.
-    미래 연도는 같은 값에 제11차 전력수급기본계획에 따른 직접배출 감소 비율만 곱한다
+ 3. 전력: 국가 LCI DB 소비 믹스 데이터셋(2021년 자료)을 그대로 기준값으로 쓴다.
+    다른 연도는 같은 값에 발전소 직접배출의 변화 비율(2021년 국가 전력배출계수 대비)만 곱한다
  4. Scope 3(BMW 코리아 기준, 판매 대수 × 1대 값)와 WBCSD 회피배출
 
 실행: python3 analysis/lca_model.py  → outputs/
@@ -116,24 +116,25 @@ def grid_ipcc(year=2023, gwp=GWP_SAR, override=None, upstream=True) -> float:
 
 
 # 전력 계수는 한 가지 방법으로 통일:
-#   그해 계수 = 2023년 기준 계수 × (그해 직접배출 ÷ 2023년 직접배출)
-#   2023년 기준 계수(국가 LCI DB) = 2021년 데이터셋 값 × (2023 국가 전력배출계수 ÷ 2021 국가 전력배출계수)
+#   기준 계수 = 국가 LCI DB 소비 믹스 데이터셋 (2021년 자료, 그대로 사용)
+#   그해 계수 = 기준 계수 × (그해 발전소 직접배출 ÷ 기준 연도 국가 전력배출계수)
+#   그해 직접배출은 2023년 공식값에 보정한 IPCC 2006 발전 모델 + 제11차 전력수급기본계획 비중
 OFF = G["official_by_year_t_per_MWh"]
-LCIDB_TO_2023 = OFF["2023"] / OFF[str(DS["elec_market"]["data_year"])]
+BASE_YEAR = {"lcidb": DS["elec_market"]["data_year"], "desnz": 2023}
 
 
 def grid_now(src="lcidb") -> float:
-    """2023년 전과정 전력 계수 kgCO2e/kWh"""
-    return DS["elec_market"]["sar_short"] * LCIDB_TO_2023 if src == "lcidb" else grid_ipcc(2023)
+    """기준 전과정 전력 계수 kgCO2e/kWh (국가 LCI DB: 2021년 자료 그대로, 비교용 DESNZ: 2023년 재계산)"""
+    return DS["elec_market"]["sar_short"] if src == "lcidb" else grid_ipcc(2023)
 
 
-def grid_ratio(year) -> float:
-    """2023년 대비 직접배출 감소 비율 (제11차 전력수급기본계획 발전 비중)"""
-    return grid_ipcc(year, upstream=False) / grid_ipcc(2023, upstream=False)
+def grid_ratio(year, src="lcidb") -> float:
+    """기준 연도 대비 발전소 직접배출 비율"""
+    return grid_ipcc(year, upstream=False) / OFF[str(BASE_YEAR[src])]
 
 
 def grid_year(year, src="lcidb") -> float:
-    return grid_now(src) * grid_ratio(year)
+    return grid_now(src) * grid_ratio(year, src)
 
 
 LIFE = F["lifetime"]
@@ -266,7 +267,7 @@ def params_for_set(src):
 SPLIT = F["bmw_footprint_split"]
 SALES = F["korea_sales_2025h1"]
 GRID_DIRECT_2023 = G["official_2023_t_per_MWh"]
-DIRECT_SHARE = {src: GRID_DIRECT_2023 / grid_now(src) for src in ("lcidb", "desnz")}   # 전과정 계수 중 발전소 직접배출 몫
+DIRECT_SHARE = {src: OFF[str(BASE_YEAR[src])] / grid_now(src) for src in ("lcidb", "desnz")}   # 전과정 계수 중 발전소 직접배출 몫
 
 
 def logistics_t(vid):
@@ -338,9 +339,9 @@ def main():
         "upstream": {f: upstream_kg_per_kWh(f) for f in FUEL},
         "fuel_MJ_per_kWh": {f: fuel_MJ_per_kWh(f) for f in FUEL},
         "share": {str(y): s for y, s in SHARE.items()},
-        "grid": {src: {str(y): grid_year(y, src) for y in (2023, 2030, 2038)} for src in ("lcidb", "desnz")},
+        "grid": {src: {"base": grid_now(src), **{str(y): grid_year(y, src) for y in (2023, 2030, 2038)}} for src in ("lcidb", "desnz")},
         "grid_ratio": {str(y): grid_ratio(y) for y in (2023, 2030, 2038)},
-        "lcidb_to_2023": LCIDB_TO_2023, "official_by_year": {k: v for k, v in OFF.items() if k.isdigit()},
+        "official_by_year": {k: v for k, v in OFF.items() if k.isdigit()},
         "direct_share": DIRECT_SHARE, "logistics": {v: logistics_t(v) for v in V},
         "grid_direct": {str(y): grid_ipcc(y, upstream=False) for y in (2023, 2030, 2038)},
         "grid_life_avg": {src: grid_lifetime_avg(src) for src in ("lcidb", "desnz")},
@@ -369,7 +370,7 @@ def main():
                            for s in ("lcidb", "desnz") for v in ids])
 
     scen = []
-    for label, g in [("2023", grid_now()), ("life", grid_lifetime_avg()), ("2030", grid_year(2030)), ("2038", grid_year(2038))]:
+    for label, g in [("base", grid_now()), ("life", grid_lifetime_avg()), ("2030", grid_year(2030)), ("2038", grid_year(2038))]:
         for v in ids:
             scen.append({"scenario": label, "grid": g, "id": v, "total": lifecycle(v, Params(grid=g))["total"]})
     scen_df = pd.DataFrame(scen)
@@ -404,7 +405,7 @@ def main():
 
     add("생애주기 주행거리", P(lifetime_km=120_000), P(lifetime_km=300_000), "12만 km", "30만 km")
     add("실제 연비", P(fuel_mult=0.95), P(fuel_mult=1.2), "공인 0.95배", "공인 1.2배")
-    add("충전 전력", P(grid=grid_now()), P(grid=grid_lifetime_avg()), "2023년 고정", "전력계획 반영")
+    add("충전 전력", P(grid=grid_now()), P(grid=grid_lifetime_avg()), "2021년 고정", "전력계획 반영")
     add("실제 전비", P(elec_mult=1.25), P(elec_mult=0.95), "공인 1.25배", "공인 0.95배")
     add("배터리 제조 배출", P(b_bev=115.0, b_phev=115.0 * B_PHEV / B_BEV), P(b_bev=59.0, b_phev=59.0 * B_PHEV / B_BEV), "115 kg/kWh", "59 kg/kWh")
     add("i5 공인 전비", P(i5_elec=4.1), P(i5_elec=4.8), "4.1 km/kWh", "4.8 km/kWh")
@@ -422,7 +423,7 @@ def main():
     rng = np.random.default_rng(20261017)
     N = 20_000
     d = {
-        "grid": rng.uniform(min(grid_ipcc(2023), grid_now()), DS["elec_market"]["sar_short"], N),
+        "grid": rng.uniform(grid_year(2023), DS["elec_market"]["ef_reported"], N),
         "wtt": rng.triangular(gasoline_upstream("desnz"), gasoline_upstream(), (DS["gasoline"]["sar_short"] + DS["gasoline"]["sar_longterm"]) * 0.74, N),
         "b_bev": rng.triangular(50, B_BEV, 115, N),
         "body_mult": rng.normal(1, 0.08, N), "m_mult": rng.normal(1, 0.10, N),
@@ -465,7 +466,7 @@ def main():
          "model": factors["gas_comb_co2_only"], "unit": "kgCO₂/L"},
         {"case": "휘발유 생산: 국가 LCI DB 데이터셋 vs 영국 DESNZ 2026", "ref": gasoline_upstream("desnz"),
          "model": gasoline_upstream("lcidb"), "unit": "kgCO₂e/L"},
-        {"case": "2023년 전력: 국가 LCI DB 보정값 vs IPCC 2006 + DESNZ 재계산", "ref": grid_ipcc(2023),
+        {"case": "전력: 국가 LCI DB 소비 믹스(2021년 자료) vs IPCC 2006 + DESNZ 재계산(2023년)", "ref": grid_ipcc(2023),
          "model": grid_now("lcidb"), "unit": "kgCO₂e/kWh"},
         {"case": "2023 전력 직접배출 재현 vs 공식 0.4173 (보정 전)", "ref": G["official_2023_t_per_MWh"],
          "model": RAW_DIRECT_2023, "unit": "kgCO₂e/kWh"},
