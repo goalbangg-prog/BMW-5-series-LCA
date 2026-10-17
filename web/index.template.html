@@ -124,9 +124,9 @@ body { min-width: 1000px; }
 /* 프로젝트 정보 */
 .meta { border-top: 1px solid var(--rule); }
 .meta dl { margin: 0; display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); }
-.meta dl > div:nth-child(1) { grid-column: span 2; } .meta dl > div:nth-child(4) { grid-column: span 3; }
+.meta dl > div:nth-child(1), .meta dl > div:nth-child(3), .meta dl > div:nth-child(4) { grid-column: span 2; }
 @media (max-width: 900px) { .meta dl { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-.meta dl > div { padding: 14px; display: grid; gap: 2px; border-right: 1px solid var(--rule); }
+.meta dl > div { padding: 14px; display: grid; gap: 2px; align-content: start; border-right: 1px solid var(--rule); }
 .meta dl > div:last-child { border-right: 0; }
 @media (max-width: 900px) { .meta dl > div:nth-child(3) { border-left: 0; padding-left: 0; } }
 .meta dt { font-size: 0.72rem; font-weight: 700; color: var(--ink-3); letter-spacing: 0.04em; }
@@ -507,10 +507,10 @@ footer .cols { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 
   <div class="meta gut">
     <div class="wrap">
       <dl>
-        <div><dt>수행</dt><dd>김수현 (기획·데이터 수집·모델링·웹 구현)</dd></div>
+        <div><dt>수행</dt><dd>김수현<br>기획·데이터 수집·모델링·웹 구현</dd></div>
         <div><dt>기간</dt><dd>2026년 10월</dd></div>
-        <div><dt>도구</dt><dd>Python · JavaScript</dd></div>
-        <div><dt>기준</dt><dd>ISO 14040·14044·14067 · GHG Protocol · WBCSD</dd></div>
+        <div><dt>도구</dt><dd>Python (Pandas, NumPy)<br>JavaScript · HTML/CSS · GitHub Pages</dd></div>
+        <div><dt>기준</dt><dd>ISO 14040·14044·14067<br>GHG Protocol · WBCSD</dd></div>
       </dl>
     </div>
   </div>

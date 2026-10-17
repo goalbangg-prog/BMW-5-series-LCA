@@ -51,7 +51,7 @@ index.html                 # 웹페이지
 img/                       # 차량 사진 (위키미디어 공용, CC BY-SA 4.0)
 data/vehicles.csv          # 차종별 입력값과 출처
 data/factors.json          # 배출계수, 국가 LCI DB 데이터셋 값, Scope 3 입력값과 출처
-analysis/lca_model.py      # 계산 모델 (Python: Pandas, NumPy)
+analysis/lca_model.py      # 계산 모델 (Python: Pandas, NumPy). 몬테카를로는 NumPy 난수로 계산
 outputs/                   # 결과 CSV(기준흐름, 민감도 등)와 results.json
 web/index.template.html    # 웹페이지 원본
 web/build.py               # results.json을 템플릿에 넣어 index.html 생성
