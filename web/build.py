@@ -18,7 +18,6 @@ data = {
     "datasets": r["datasets"],
     "scope3": r["scope3"],
     "avoided": r["avoided"],
-    "recycling": r["recycling_example"],
     "grid_bottom_up": r["grid_bottom_up"],
     "breakeven": r["breakeven"],
 }

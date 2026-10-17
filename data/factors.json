@@ -150,7 +150,7 @@
  },
  "eol_t": 0.6,
  "keiti_lcidb": {
-  "source": "한국환경산업기술원(KEITI) 국가 LCI DB, soda4LCA 노드 http://133.186.241.65 (ILCD 1.1, LCI result). 원소 흐름(대기 배출)을 내려받아 IPCC 2차 보고서 GWP로 직접 특성화. 100년 이후 장기 배출(long-term)은 제외",
+  "source": "한국환경산업기술원(KEITI) 국가 LCI DB, soda4LCA 노드 http://133.186.241.65 (ILCD 1.1, LCI result). 원소 흐름(대기 배출)을 내려받아 IPCC 6차 보고서(AR6) GWP100으로 직접 특성화(ISO 14067), 비교용으로 2차 보고서 값도 계산. 100년 이후 장기 배출(long-term)은 제외",
   "gwp_method_note": "기본: IPCC AR6 GWP100 (ISO 14067). CO₂ 1, CH₄ 화석 29.8 · 비화석 27.0, N₂O 273, SF₆ 25,200, HFC·PFC·NF₃는 AR6 표 값. 대기 배출(단기)만 합산, 100년 이후 장기 배출 제외. 생물기원 CO₂는 흡수와 상쇄되는 것으로 보고 0 처리, 생물기원 CH₄는 포함. 비교: SAR(CH₄ 21, N₂O 310)",
   "datasets": {
    "gasoline": {

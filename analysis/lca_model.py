@@ -323,7 +323,6 @@ def avoided(p: Params = None):
     refs = {
         "R1": {"label": "같은 차급 가솔린 (520i)", "ref": L["520i"], "solution": "i5_40"},
         "R2": {"label": "i5를 뺀 5시리즈 판매 평균 (520i·530e)", "ref": mkt, "solution": "i5_40"},
-        "R3": {"label": "고성능 PHEV (M5)", "ref": L["M5"], "solution": "i5_M60"},
     }
     out = {}
     for k, r in refs.items():
