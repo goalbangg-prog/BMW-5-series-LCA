@@ -1,0 +1,339 @@
+{
+ "_note": "모든 입력 계수와 출처. 값을 바꾸면 analysis/lca_model.py 결과가 바뀝니다.",
+ "gwp": {
+  "basis": "IPCC 2차 평가보고서(SAR) GWP100 — 국내 배출권거래제 배출량 보고·인증 지침, 환경성적표지 국가 LCI DB와 같은 기준",
+  "CH4": 21,
+  "N2O": 310,
+  "alt_AR5": {
+   "CH4": 28,
+   "N2O": 265
+  }
+ },
+ "ncv": {
+  "source": "에너지법 시행규칙 [별표] 에너지열량 환산기준 (2022.11.21 개정)",
+  "gasoline_MJ_per_L": 30.1,
+  "gasoline_GCV_MJ_per_L": 32.4,
+  "lng_MJ_per_kg": 49.4,
+  "lng_GCV_MJ_per_kg": 54.7,
+  "coal_MJ_per_kg": 23.3,
+  "coal_GCV_MJ_per_kg": 24.6,
+  "bc_oil_MJ_per_L": 39.3,
+  "bc_oil_GCV_MJ_per_L": 41.8
+ },
+ "ipcc2006": {
+  "source": "2006 IPCC Guidelines Vol.2 Ch.3 Table 3.2.1·3.2.2 (도로 이동연소), Ch.2 Table 2.2 (에너지산업 고정연소)",
+  "gasoline_road_kg_per_TJ": {
+   "CO2": 69300,
+   "CH4": 3.8,
+   "N2O": 5.7,
+   "row": "Motor gasoline — Low mileage light duty vehicle, vintage 1995 or later"
+  },
+  "gasoline_road_uncontrolled_kg_per_TJ": {
+   "CO2": 69300,
+   "CH4": 33,
+   "N2O": 3.2
+  },
+  "coal_energy_kg_per_TJ": {
+   "CO2": 94600,
+   "CH4": 1,
+   "N2O": 1.5,
+   "row": "Other bituminous coal"
+  },
+  "gas_energy_kg_per_TJ": {
+   "CO2": 56100,
+   "CH4": 1,
+   "N2O": 0.1,
+   "row": "Natural gas"
+  },
+  "oil_energy_kg_per_TJ": {
+   "CO2": 77400,
+   "CH4": 3,
+   "N2O": 0.6,
+   "row": "Residual fuel oil"
+  }
+ },
+ "upstream_desnz2026_g_per_MJ_ncv": {
+  "source": "UK DESNZ, 2026 GHG Conversion Factors Methodology Report, Table 5 (WTT: 채굴·수송·정제·배송)",
+  "petrol": 18.3,
+  "lng": 20.0,
+  "coal": 16.5,
+  "oil": 18.3
+ },
+ "upstream_kr_lcidb": {
+  "source": "한국환경산업기술원, 환경성적표지 평가계수(국가 LCI DB, 2021) — 원료 및 에너지 생산",
+  "gasoline_kg_per_kg": 0.083169967,
+  "natural_gas_kg_per_kg": 0.272338714,
+  "coal_kg_per_kg": 0.479503678,
+  "heavy_oil_kg_per_kg": 0.324615431,
+  "electricity_kg_per_kWh": 0.495106716,
+  "gasoline_road_combustion_kg_per_L": 2.085,
+  "gasoline_density_kg_per_L": 0.74
+ },
+ "grid": {
+  "official_2023_t_per_MWh": 0.4173,
+  "official_source": "국가 온실가스 통계 관리위원회, 2023년 국가 전력배출계수 (2025.12 공표)",
+  "gen_2023_GWh": {
+   "source": "전력통계정보시스템(EPSIS) 에너지원별 발전량 2023 (한국전력통계, 사업자용)",
+   "nuclear": 180494,
+   "coal": 184927,
+   "igcc": 997,
+   "lng": 157571,
+   "fuel_cell": 6164,
+   "oil": 1487,
+   "hydro": 3716,
+   "solar": 29288,
+   "wind": 3382,
+   "ocean": 438,
+   "bio": 12577,
+   "pumped": 3784,
+   "other": 2091,
+   "total": 586916
+  },
+  "efficiency_2023_hhv_sendout": {
+   "source": "EPSIS 화력발전소 열효율 2023 (총발열량 기준, 송전단)",
+   "coal": 0.3664,
+   "lng_cc": 0.4538,
+   "oil": 0.3406
+  },
+  "plan11_TWh": {
+   "source": "제11차 전력수급기본계획 (2025.2 확정) 발전원별 발전량",
+   "2030": {
+    "nuclear": 204.2,
+    "coal": 110.5,
+    "lng": 161.0,
+    "renew": 139.6,
+    "h2nh3": 15.5,
+    "other": 11.8
+   },
+   "2038": {
+    "nuclear": 248.3,
+    "coal": 70.9,
+    "lng": 74.3,
+    "renew": 232.1,
+    "h2nh3": 43.9,
+    "other": 34.9
+   }
+  },
+  "official_2023_note": "국가 전력배출계수 = 전력 사용자의 Scope 2(위치 기반) 산정에 쓰는 직접배출 계수",
+  "official_by_year_t_per_MWh": {
+   "2021": 0.4509,
+   "2022": 0.4312,
+   "2023": 0.4173,
+   "source": "국가 온실가스 통계 관리위원회 단년도 국가 전력배출계수(소비단). 2023년 계수 공표 보도(2025.12.18, 데일리한국·국민일보)"
+  }
+ },
+ "phev_uf": {
+  "base": 0.455,
+  "source": "Energies 2026, 19(5), 1165 — 유럽 PHEV 457,303대 OBFCM 실주행 자료(2021~2023) 전기 주행 비율 45.5%; EU 집행위 COM(2024)122 (실주행 CO2가 WLTP의 약 3.5배)",
+  "range": [
+   0.15,
+   0.75
+  ]
+ },
+ "battery_literature": {
+  "source": "Peiseler et al., Nature Communications 15, 10301 (2024) — NMC811 셀 5/50/95 백분위",
+  "nmc811_cell_p5": 59,
+  "nmc811_cell_p50": 74,
+  "nmc811_cell_p95": 115
+ },
+ "lifetime": {
+  "km": 200000,
+  "years": 15,
+  "start_year": 2026,
+  "source": "BMW Vehicle Footprint와 같은 20만 km"
+ },
+ "eol_t": 0.6,
+ "keiti_lcidb": {
+  "source": "한국환경산업기술원(KEITI) 국가 LCI DB, soda4LCA 노드 http://133.186.241.65 (ILCD 1.1, LCI result). 원소 흐름(대기 배출)을 내려받아 IPCC 2차 보고서 GWP로 직접 특성화. 100년 이후 장기 배출(long-term)은 제외",
+  "gwp_method_note": "CO2(화석·토지이용변화) 1, CH4 21, N2O 310, SF6 23,900, HFC·PFC는 SAR 값. 생물기원 CO2 제외",
+  "datasets": {
+   "gasoline": {
+    "name": "Gasoline; Production mix, at plant",
+    "uuid": "c6a62851-83b8-41c5-8e5d-aba03b2b3332",
+    "version": "00.00.001",
+    "ref_year": 2021,
+    "data_year": 2020,
+    "valid_until": 2024,
+    "revised": "2024-08-22",
+    "unit": "kg",
+    "boundary": "cradle-to-gate (원유 채굴~정제, 원유 52.8 MJ/kg 투입)",
+    "coverage_pct": 100.0,
+    "review": "Independent external review",
+    "sar_short": 0.7586,
+    "sar_longterm": 0.1407,
+    "ef_reported": 0.9173,
+    "co2": 0.6736,
+    "ch4": 0.00381,
+    "n2o": 1.374e-05
+   },
+   "elec_market": {
+    "name": "Electricity, market mix, including transmission and distribution losses; Consumption mix, to consumer",
+    "uuid": "01a4869d-1556-4f7d-ae9a-4eab3f2f27bf",
+    "version": "00.00.001",
+    "ref_year": 2022,
+    "data_year": 2021,
+    "valid_until": 2025,
+    "revised": "2024-07-05",
+    "unit": "kWh",
+    "boundary": "cradle-to-gate, 송배전 손실 포함, 소비자 공급 기준",
+    "coverage_pct": 57.78,
+    "review": "Independent external review",
+    "sar_short": 0.5202,
+    "sar_longterm": 0.0018,
+    "ef_reported": 0.5304,
+    "co2": 0.5076
+   },
+   "elec_prodmix": {
+    "name": "Electricity production Mix; Production mix, at plant",
+    "uuid": "e475dd1c-85c1-4d21-a1a0-447636f6014c",
+    "version": "00.00.001",
+    "ref_year": 2022,
+    "data_year": 2021,
+    "unit": "kWh",
+    "sar_short": 0.5018,
+    "ef_reported": 0.5117
+   },
+   "elec_coal": {
+    "name": "Electricity production, hard coal; Production mix, at plant",
+    "uuid": "3ed94f3f-8002-4512-9e96-8bf901428231",
+    "data_year": 2021,
+    "unit": "kWh",
+    "sar_short": 1.3681
+   },
+   "elec_ngcc": {
+    "name": "Electricity production, natural gas, combined cycle power plant",
+    "uuid": "b09cd113-5813-45ee-8990-e107133bc25d",
+    "data_year": 2021,
+    "unit": "kWh",
+    "sar_short": 0.4661
+   },
+   "elec_oil": {
+    "name": "Electricity production, heavy oil",
+    "uuid": "3b1b303a-9ef0-4bb2-b014-e9aea1b1dda2",
+    "data_year": 2021,
+    "unit": "kWh",
+    "sar_short": 1.2533
+   },
+   "elec_nuclear": {
+    "name": "Electricity production, nuclear power",
+    "uuid": "108ed1a9-f9bf-44cb-bcf7-ec46990a6188",
+    "data_year": 2021,
+    "unit": "kWh",
+    "sar_short": 0.0146
+   },
+   "elec_pv": {
+    "name": "Electricity production, photovoltaic, open ground, multi-Si",
+    "uuid": "20162042-0dfc-41f2-bdc5-018848726b92",
+    "data_year": 2021,
+    "unit": "kWh",
+    "sar_short": 0.123
+   },
+   "elec_wind": {
+    "name": "Electricity production, wind, 1-3MW, onshore",
+    "uuid": "5b97eb28-2884-400a-bdee-0a588323ff9a",
+    "data_year": 2021,
+    "unit": "kWh",
+    "sar_short": 0.0177
+   },
+   "elec_hydro": {
+    "name": "Electricity production, hydro, reservoir",
+    "uuid": "feefad35-c9ec-4676-8f9f-7b78e3cee05c",
+    "data_year": 2021,
+    "unit": "kWh",
+    "sar_short": 0.0308
+   },
+   "elec_fuelcell": {
+    "name": "Electricity production, fuel cell",
+    "uuid": "dbf531ed-c900-4244-a7ea-71a1561681e4",
+    "data_year": 2021,
+    "unit": "kWh",
+    "sar_short": 0.5603
+   },
+   "car_carrier": {
+    "name": "Marine transportation_Car Carrier",
+    "uuid": "92f83e29-2967-4788-911e-355889b30428",
+    "version": "00.00.001",
+    "data_year": 2022,
+    "unit": "tkm",
+    "sar_short": 0.0429,
+    "review": "Accredited third party review"
+   },
+   "al_recycled_ingot": {
+    "name": "Aluminium Ingot_Raw material of Recycle",
+    "uuid": "2d684aac-eb3b-4778-8dcc-19bbd4a02341",
+    "version": "00.00.001",
+    "data_year": 2021,
+    "unit": "kg",
+    "sar_short": 0.9297,
+    "coverage_pct": 11.0,
+    "review": "Accredited third party review"
+   },
+   "al_alloy": {
+    "name": "Aluminium alloy (잉곳·스크랩·합금원소 혼합)",
+    "uuid": "55751a1d-b8d1-4212-8c4f-c8f709c55e4f",
+    "version": "00.00.001",
+    "data_year": 2021,
+    "unit": "kg",
+    "sar_short": 13.3625,
+    "coverage_pct": 17.0,
+    "review": "Accredited third party review"
+   }
+  },
+  "gasoline_density_kg_per_L": 0.74,
+  "gasoline_density_note": "가정: 국내 휘발유 일반 밀도 범위의 중간값. 민감도에서 0.72~0.76 확인"
+ },
+ "bmw_footprint_split": {
+  "source": "BMW Vehicle Footprint 520i·530e·i5 eDrive40 (2023 MY)",
+  "520i": {
+   "supply_chain_logistics": 10.4,
+   "bmw_production": 0.7,
+   "logistics": 1.0,
+   "eol": 0.6,
+   "eu_use": 34.0
+  },
+  "530e": {
+   "supply_chain_logistics": 13.5,
+   "bmw_production": 0.7,
+   "logistics": 0.4,
+   "eol": 0.6,
+   "eu_use": 17.5,
+   "wltp_uf": 0.9
+  },
+  "i5_40": {
+   "supply_chain_logistics": 16.3,
+   "bmw_production": 0.7,
+   "logistics": 1.0,
+   "eol": 0.6,
+   "eu_use": 11.5
+  },
+  "estimated_note": "M5·i5 M60은 공개 자료 없음: BMW 자체 생산 0.7 t, 물류는 같은 동력의 530e(0.4 t)·i5(1.0 t) 값을 가정"
+ },
+ "bmw_group_2025": {
+  "source": "BMW Group ESG Overview FY2025 (p.127~128)",
+  "scope1": 667275,
+  "scope2_market": 144145,
+  "scope2_location": 1241512,
+  "scope3_total": 127541482,
+  "scope3": {
+   "1": 31709908,
+   "4": 2451399,
+   "6": 63456,
+   "7": 171959,
+   "11": 89538674,
+   "12": 1425073,
+   "14": 556061
+  },
+  "deliveries_2025": 2463681,
+  "deliveries_bev_2025": 442059,
+  "fleet_wtw_g_per_km": 175.7,
+  "targets": "Scope 3 2019년 148.9 Mt → 2030년 108.0 Mt 목표, 2025년 118.7 Mt(목표 대상 범위)"
+ },
+ "korea_sales_2025h1": {
+  "source": "BMW 코리아 보도자료 'BMW 5시리즈, 2025년 상반기 누적 판매 1만 대 돌파' (2025.7.7)",
+  "series_total": 12786,
+  "520i": 7116,
+  "530e": 1512,
+  "i5_all": 828,
+  "note": "530e는 xDrive 포함, i5는 트림 구분 없이 합계. 모델링한 3종 합계 9,456대(74%)만 산정, 나머지(523d·550e·M5 등) 제외. 교차 확인: KAIDA 2025년 연간 BMW 520 14,579대"
+ }
+}

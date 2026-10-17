@@ -1,0 +1,1232 @@
+{
+ "factors": {
+  "gas_comb": 2.14151868,
+  "gas_comb_co2_only": 2.08593,
+  "gas_wtt_lcidb": 0.5613640000000001,
+  "gas_wtt_desnz": 0.55083,
+  "k_cal": 1.053970059815558,
+  "raw_direct_2023": 0.3959315505347718,
+  "direct": {
+   "coal": 0.8848800990520821,
+   "gas": 0.4022933570104331,
+   "oil": 0.7716315789473682
+  },
+  "upstream": {
+   "coal": 0.15355069762488016,
+   "gas": 0.14328727632512933,
+   "oil": 0.18185498711814502
+  },
+  "fuel_MJ_per_kWh": {
+   "coal": 9.306102886356374,
+   "gas": 7.164363816256468,
+   "oil": 9.937430990062568
+  },
+  "share": {
+   "2023": {
+    "coal": 0.3167812770481636,
+    "gas": 0.2825378759481766,
+    "oil": 0.002533582318423761
+   },
+   "2030": {
+    "coal": 0.17195767195767195,
+    "gas": 0.2689075630252101,
+    "oil": 0.0
+   },
+   "2038": {
+    "coal": 0.10065303804656446,
+    "gas": 0.15502555366269163,
+    "oil": 0.0
+   }
+  },
+  "grid": {
+   "lcidb": {
+    "2023": 0.48143592814371255,
+    "2030": 0.31656437279100885,
+    "2038": 0.1841344109981342
+   },
+   "desnz": {
+    "2023": 0.5117218190446065,
+    "2030": 0.33647861993584693,
+    "2038": 0.1957178312553053
+   }
+  },
+  "grid_ratio": {
+   "2023": 1.0,
+   "2030": 0.6575420617476472,
+   "2038": 0.3824691931657593
+  },
+  "lcidb_to_2023": 0.925482368596141,
+  "official_by_year": {
+   "2021": 0.4509,
+   "2022": 0.4312,
+   "2023": 0.4173
+  },
+  "direct_share": {
+   "lcidb": 0.8667820069204153,
+   "desnz": 0.8154821320285041
+  },
+  "logistics": {
+   "520i": 1.0,
+   "530e": 0.4,
+   "i5_40": 1.0,
+   "M5": 0.4,
+   "i5_M60": 1.0
+  },
+  "grid_direct": {
+   "2023": 0.4173,
+   "2030": 0.2743923023672932,
+   "2038": 0.15960439430807136
+  },
+  "grid_life_avg": {
+   "lcidb": 0.26732536626692105,
+   "desnz": 0.28414211467416634
+  },
+  "grid_direct_official": 0.4173,
+  "a_body": 0.006299659477866061,
+  "b_bev": 63.744336468878835,
+  "b_phev": 85.05683073019651,
+  "gasoline_density": 0.74
+ },
+ "meta": {
+  "km": 200000,
+  "years": 15,
+  "start_year": 2026,
+  "source": "BMW Vehicle Footprint와 같은 20만 km",
+  "uf": 0.455,
+  "eol": 0.6
+ },
+ "vehicles": [
+  {
+   "id": "520i",
+   "name": "520i",
+   "group": "daily",
+   "powertrain": "ICE",
+   "drive": "RWD",
+   "mass_din_kg": 1762,
+   "mass_source": "BMW Vehicle Footprint 520i (2023 MY)",
+   "battery_gross_kwh": 0.0,
+   "battery_net_kwh": 0.0,
+   "cell_mass_kg": 0.0,
+   "kr_fuel_km_l": 12.1,
+   "kr_elec_km_kwh": NaN,
+   "kr_elec_low": NaN,
+   "kr_elec_high": NaN,
+   "kr_ev_range_km": NaN,
+   "kr_cert": "에너지공단 표시연비: BMW 520i 복합 12.1 km/L (3등급)",
+   "bmw_production_t": 11.1,
+   "production_source": "BMW Vehicle Footprint 520i (TÜV Rheinland 2023-08-02)"
+  },
+  {
+   "id": "530e",
+   "name": "530e",
+   "group": "daily",
+   "powertrain": "PHEV",
+   "drive": "RWD",
+   "mass_din_kg": 2050,
+   "mass_source": "BMW Vehicle Footprint 530e (2023 MY)",
+   "battery_gross_kwh": 22.1,
+   "battery_net_kwh": 19.4,
+   "cell_mass_kg": 94.3,
+   "kr_fuel_km_l": 11.3,
+   "kr_elec_km_kwh": 3.2,
+   "kr_elec_low": 3.2,
+   "kr_elec_high": 3.2,
+   "kr_ev_range_km": 73.0,
+   "kr_cert": "에너지공단 표시연비: BMW 530e 복합 3.2 km/kWh / 11.3 km/L (전기 주행 70~73 km 3건)",
+   "bmw_production_t": 14.2,
+   "production_source": "BMW Vehicle Footprint 530e (TÜV Rheinland 2023-12-01)"
+  },
+  {
+   "id": "i5_40",
+   "name": "i5 eDrive40",
+   "group": "daily",
+   "powertrain": "BEV",
+   "drive": "RWD",
+   "mass_din_kg": 2176,
+   "mass_source": "BMW Vehicle Footprint i5 eDrive40 (2023 MY)",
+   "battery_gross_kwh": 83.9,
+   "battery_net_kwh": 81.2,
+   "cell_mass_kg": 326.4,
+   "kr_fuel_km_l": NaN,
+   "kr_elec_km_kwh": 4.6,
+   "kr_elec_low": 4.1,
+   "kr_elec_high": 4.8,
+   "kr_ev_range_km": 441.0,
+   "kr_cert": "에너지공단 표시연비: BMW i5 eDrive40 4.6 km/kWh(19·20인치 공통 인증; 다른 인증 4.1·4.8)",
+   "bmw_production_t": 17.0,
+   "production_source": "BMW Vehicle Footprint i5 eDrive40 (TÜV Rheinland 2023-08-02)"
+  },
+  {
+   "id": "M5",
+   "name": "M5",
+   "group": "performance",
+   "powertrain": "PHEV",
+   "drive": "AWD",
+   "mass_din_kg": 2435,
+   "mass_source": "BMW Media Information M5 Technical specifications (06/2024)",
+   "battery_gross_kwh": 22.1,
+   "battery_net_kwh": 18.6,
+   "cell_mass_kg": 94.3,
+   "kr_fuel_km_l": 8.6,
+   "kr_elec_km_kwh": 2.7,
+   "kr_elec_low": 2.4,
+   "kr_elec_high": 2.7,
+   "kr_ev_range_km": 59.0,
+   "kr_cert": "에너지공단 표시연비: BMW M5 복합 2.7 km/kWh / 8.6 km/L (다른 인증 2.4 km/kWh)",
+   "bmw_production_t": NaN,
+   "production_source": "추정: BMW 3개 차종으로 보정한 질량·배터리 계수"
+  },
+  {
+   "id": "i5_M60",
+   "name": "i5 M60",
+   "group": "performance",
+   "powertrain": "BEV",
+   "drive": "AWD",
+   "mass_din_kg": 2305,
+   "mass_source": "BMW Media Information 5 Series Sedan Technical specifications (05/2023)",
+   "battery_gross_kwh": 83.9,
+   "battery_net_kwh": 81.2,
+   "cell_mass_kg": 326.4,
+   "kr_fuel_km_l": NaN,
+   "kr_elec_km_kwh": 3.9,
+   "kr_elec_low": 3.8,
+   "kr_elec_high": 3.9,
+   "kr_ev_range_km": 371.0,
+   "kr_cert": "에너지공단 표시연비: BMW i5 M60 xDrive 3.9 km/kWh (다른 인증 3.8)",
+   "bmw_production_t": NaN,
+   "production_source": "추정: BMW 3개 차종으로 보정한 질량·배터리 계수"
+  }
+ ],
+ "base": [
+  {
+   "id": "520i",
+   "name": "520i",
+   "group": "daily",
+   "body": 11.1,
+   "battery": 0.0,
+   "fuel_supply": 9.2787,
+   "elec_supply": 0.0,
+   "tailpipe": 35.397,
+   "eol": 0.6,
+   "total": 56.3757,
+   "per_km_g": 281.8787
+  },
+  {
+   "id": "530e",
+   "name": "530e",
+   "group": "daily",
+   "body": 12.3202,
+   "battery": 1.8798,
+   "fuel_supply": 5.4149,
+   "elec_supply": 13.6908,
+   "tailpipe": 20.6571,
+   "eol": 0.6,
+   "total": 54.5629,
+   "per_km_g": 272.8144
+  },
+  {
+   "id": "i5_40",
+   "name": "i5 eDrive40",
+   "group": "daily",
+   "body": 11.6519,
+   "battery": 5.3481,
+   "fuel_supply": 0.0,
+   "elec_supply": 20.932,
+   "tailpipe": 0.0,
+   "eol": 0.6,
+   "total": 38.532,
+   "per_km_g": 192.66
+  },
+  {
+   "id": "M5",
+   "name": "M5",
+   "group": "performance",
+   "body": 14.7456,
+   "battery": 1.8798,
+   "fuel_supply": 7.115,
+   "elec_supply": 16.2262,
+   "tailpipe": 27.1425,
+   "eol": 0.6,
+   "total": 67.709,
+   "per_km_g": 338.545
+  },
+  {
+   "id": "i5_M60",
+   "name": "i5 M60",
+   "group": "performance",
+   "body": 12.4645,
+   "battery": 5.3481,
+   "fuel_supply": 0.0,
+   "elec_supply": 24.689,
+   "tailpipe": 0.0,
+   "eol": 0.6,
+   "total": 43.1017,
+   "per_km_g": 215.5084
+  }
+ ],
+ "reference_flows": {
+  "520i": {
+   "vehicle": 1,
+   "mass_kg": 1762,
+   "battery_kwh": 0.0,
+   "gasoline_L": 16528.92561983471,
+   "gasoline_kg": 12231.404958677685,
+   "electricity_kWh": 0.0
+  },
+  "530e": {
+   "vehicle": 1,
+   "mass_kg": 2050,
+   "battery_kwh": 22.1,
+   "gasoline_L": 9646.017699115044,
+   "gasoline_kg": 7138.053097345132,
+   "electricity_kWh": 28437.5
+  },
+  "i5_40": {
+   "vehicle": 1,
+   "mass_kg": 2176,
+   "battery_kwh": 83.9,
+   "gasoline_L": 0.0,
+   "gasoline_kg": 0.0,
+   "electricity_kWh": 43478.26086956522
+  },
+  "M5": {
+   "vehicle": 1,
+   "mass_kg": 2435,
+   "battery_kwh": 22.1,
+   "gasoline_L": 12674.41860465116,
+   "gasoline_kg": 9379.069767441859,
+   "electricity_kWh": 33703.7037037037
+  },
+  "i5_M60": {
+   "vehicle": 1,
+   "mass_kg": 2305,
+   "battery_kwh": 83.9,
+   "gasoline_L": 0.0,
+   "gasoline_kg": 0.0,
+   "electricity_kWh": 51282.05128205129
+  }
+ },
+ "breakeven": [
+  {
+   "ev": "i5_40",
+   "ref": "520i",
+   "static_km": 49697.28896731773,
+   "dynamic_km": 41526.64546237369
+  },
+  {
+   "ev": "530e",
+   "ref": "520i",
+   "static_km": 126199.44428978856,
+   "dynamic_km": 71403.22374580224
+  },
+  {
+   "ev": "i5_40",
+   "ref": "530e",
+   "static_km": 29738.368997539892,
+   "dynamic_km": 27635.511429559898
+  },
+  {
+   "ev": "i5_M60",
+   "ref": "M5",
+   "static_km": 9205.69673279264,
+   "dynamic_km": 8736.245027151199
+  }
+ ],
+ "sets": [
+  {
+   "set": "lcidb",
+   "id": "520i",
+   "total": 56.376
+  },
+  {
+   "set": "lcidb",
+   "id": "530e",
+   "total": 54.563
+  },
+  {
+   "set": "lcidb",
+   "id": "i5_40",
+   "total": 38.532
+  },
+  {
+   "set": "lcidb",
+   "id": "M5",
+   "total": 67.709
+  },
+  {
+   "set": "lcidb",
+   "id": "i5_M60",
+   "total": 43.102
+  },
+  {
+   "set": "desnz",
+   "id": "520i",
+   "total": 56.202
+  },
+  {
+   "set": "desnz",
+   "id": "530e",
+   "total": 55.323
+  },
+  {
+   "set": "desnz",
+   "id": "i5_40",
+   "total": 39.849
+  },
+  {
+   "set": "desnz",
+   "id": "M5",
+   "total": 68.596
+  },
+  {
+   "set": "desnz",
+   "id": "i5_M60",
+   "total": 44.655
+  }
+ ],
+ "grid_scenarios": [
+  {
+   "scenario": "2023",
+   "grid": 0.4814,
+   "id": "520i",
+   "total": 56.3757
+  },
+  {
+   "scenario": "2023",
+   "grid": 0.4814,
+   "id": "530e",
+   "total": 54.5629
+  },
+  {
+   "scenario": "2023",
+   "grid": 0.4814,
+   "id": "i5_40",
+   "total": 38.532
+  },
+  {
+   "scenario": "2023",
+   "grid": 0.4814,
+   "id": "M5",
+   "total": 67.709
+  },
+  {
+   "scenario": "2023",
+   "grid": 0.4814,
+   "id": "i5_M60",
+   "total": 43.1017
+  },
+  {
+   "scenario": "life",
+   "grid": 0.2673,
+   "id": "520i",
+   "total": 56.3757
+  },
+  {
+   "scenario": "life",
+   "grid": 0.2673,
+   "id": "530e",
+   "total": 48.4741
+  },
+  {
+   "scenario": "life",
+   "grid": 0.2673,
+   "id": "i5_40",
+   "total": 29.2228
+  },
+  {
+   "scenario": "life",
+   "grid": 0.2673,
+   "id": "M5",
+   "total": 60.4927
+  },
+  {
+   "scenario": "life",
+   "grid": 0.2673,
+   "id": "i5_M60",
+   "total": 32.1216
+  },
+  {
+   "scenario": "2030",
+   "grid": 0.3166,
+   "id": "520i",
+   "total": 56.3757
+  },
+  {
+   "scenario": "2030",
+   "grid": 0.3166,
+   "id": "530e",
+   "total": 49.8744
+  },
+  {
+   "scenario": "2030",
+   "grid": 0.3166,
+   "id": "i5_40",
+   "total": 31.3637
+  },
+  {
+   "scenario": "2030",
+   "grid": 0.3166,
+   "id": "M5",
+   "total": 62.1522
+  },
+  {
+   "scenario": "2030",
+   "grid": 0.3166,
+   "id": "i5_M60",
+   "total": 34.6467
+  },
+  {
+   "scenario": "2038",
+   "grid": 0.1841,
+   "id": "520i",
+   "total": 56.3757
+  },
+  {
+   "scenario": "2038",
+   "grid": 0.1841,
+   "id": "530e",
+   "total": 46.1084
+  },
+  {
+   "scenario": "2038",
+   "grid": 0.1841,
+   "id": "i5_40",
+   "total": 25.6058
+  },
+  {
+   "scenario": "2038",
+   "grid": 0.1841,
+   "id": "M5",
+   "total": 57.6888
+  },
+  {
+   "scenario": "2038",
+   "grid": 0.1841,
+   "id": "i5_M60",
+   "total": 27.8554
+  }
+ ],
+ "grid_tie": {
+  "i5_40_vs_520i": 0.8918421758677686,
+  "i5_M60_vs_M5": 1.8813019371997064
+ },
+ "sensitivity": {
+  "base_saving": 17.843749901045918,
+  "rows": [
+   {
+    "label": "생애주기 주행거리",
+    "lo_txt": "12만 km",
+    "hi_txt": "30만 km",
+    "saving_lo": 8.346,
+    "saving_hi": 29.716,
+    "swing": 21.369
+   },
+   {
+    "label": "실제 연비",
+    "lo_txt": "공인 0.95배",
+    "hi_txt": "공인 1.2배",
+    "saving_lo": 15.61,
+    "saving_hi": 26.779,
+    "swing": 11.169
+   },
+   {
+    "label": "충전 전력",
+    "lo_txt": "2023년 고정",
+    "hi_txt": "전력계획 반영",
+    "saving_lo": 17.844,
+    "saving_hi": 27.153,
+    "swing": 9.309
+   },
+   {
+    "label": "실제 전비",
+    "lo_txt": "공인 1.25배",
+    "hi_txt": "공인 0.95배",
+    "saving_lo": 12.611,
+    "saving_hi": 18.89,
+    "swing": 6.28
+   },
+   {
+    "label": "배터리 제조 배출",
+    "lo_txt": "115 kg/kWh",
+    "hi_txt": "59 kg/kWh",
+    "saving_lo": 13.543,
+    "saving_hi": 18.242,
+    "swing": 4.698
+   },
+   {
+    "label": "i5 공인 전비",
+    "lo_txt": "4.1 km/kWh",
+    "hi_txt": "4.8 km/kWh",
+    "saving_lo": 15.291,
+    "saving_hi": 18.716,
+    "swing": 3.425
+   },
+   {
+    "label": "휘발유 장기 배출 포함",
+    "lo_txt": "제외(기본)",
+    "hi_txt": "포함",
+    "saving_lo": 17.844,
+    "saving_hi": 19.565,
+    "swing": 1.721
+   },
+   {
+    "label": "배경 데이터 출처",
+    "lo_txt": "영국 DESNZ+IPCC",
+    "hi_txt": "국가 LCI DB",
+    "saving_lo": 16.353,
+    "saving_hi": 17.844,
+    "swing": 1.491
+   },
+   {
+    "label": "휘발유 밀도",
+    "lo_txt": "0.72 kg/L",
+    "hi_txt": "0.76 kg/L",
+    "saving_lo": 17.593,
+    "saving_hi": 18.095,
+    "swing": 0.502
+   },
+   {
+    "label": "차체 제조 배출",
+    "lo_txt": "+15%",
+    "hi_txt": "−15%",
+    "saving_lo": 17.761,
+    "saving_hi": 17.927,
+    "swing": 0.166
+   },
+   {
+    "label": "온실가스 환산 기준",
+    "lo_txt": "5차 보고서",
+    "hi_txt": "2차 보고서",
+    "saving_lo": 17.729,
+    "saving_hi": 17.844,
+    "swing": 0.114
+   }
+  ]
+ },
+ "monte_carlo": {
+  "n": 20000,
+  "prob": {
+   "i5_40_lt_520i": 1.0,
+   "530e_lt_520i": 0.6287,
+   "i5_40_lt_530e": 1.0,
+   "i5_M60_lt_M5": 1.0
+  },
+  "hist_edges": [
+   10.0,
+   12.5,
+   15.0,
+   17.5,
+   20.0,
+   22.5,
+   25.0,
+   27.5,
+   30.0,
+   32.5,
+   35.0,
+   37.5,
+   40.0,
+   42.5,
+   45.0,
+   47.5,
+   50.0,
+   52.5,
+   55.0,
+   57.5,
+   60.0,
+   62.5,
+   65.0,
+   67.5,
+   70.0,
+   72.5,
+   75.0,
+   77.5,
+   80.0,
+   82.5,
+   85.0,
+   87.5,
+   90.0
+  ],
+  "hist": {
+   "520i": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    1,
+    30,
+    184,
+    447,
+    790,
+    1106,
+    1358,
+    1689,
+    1931,
+    2177,
+    2096,
+    1852,
+    1573,
+    1388,
+    1117,
+    867,
+    640,
+    388,
+    204,
+    105,
+    38,
+    16
+   ],
+   "530e": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    1,
+    23,
+    165,
+    471,
+    880,
+    1196,
+    1591,
+    1995,
+    2194,
+    2234,
+    2133,
+    1892,
+    1516,
+    1199,
+    1041,
+    674,
+    410,
+    228,
+    107,
+    33,
+    13,
+    3
+   ],
+   "i5_40": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    8,
+    118,
+    778,
+    1811,
+    2932,
+    3605,
+    3538,
+    2928,
+    2085,
+    1244,
+    610,
+    249,
+    71,
+    20,
+    3,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "M5": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    5,
+    12,
+    61,
+    216,
+    378,
+    584,
+    872,
+    1093,
+    1273,
+    1560,
+    1616,
+    1803,
+    1652,
+    1619,
+    1520,
+    1216,
+    1118,
+    916,
+    825
+   ],
+   "i5_M60": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    1,
+    14,
+    140,
+    489,
+    1220,
+    2044,
+    2795,
+    3250,
+    3118,
+    2599,
+    1910,
+    1281,
+    679,
+    321,
+    103,
+    28,
+    7,
+    1,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ]
+  },
+  "pct": {
+   "520i": {
+    "5": 46.22097384071934,
+    "50": 60.364653087213426,
+    "95": 76.42611586872171
+   },
+   "530e": {
+    "5": 46.14763276247889,
+    "50": 59.156096148809596,
+    "95": 74.05542183695613
+   },
+   "i5_40": {
+    "5": 35.172346207330264,
+    "50": 43.01091087745239,
+    "95": 52.359800249869124
+   },
+   "M5": {
+    "5": 56.55183954018478,
+    "50": 73.29651166542067,
+    "95": 92.97684762181584
+   },
+   "i5_M60": {
+    "5": 38.51792666887678,
+    "50": 47.53416432778475,
+    "95": 57.88129446397984
+   }
+  },
+  "avoided_pct": {
+   "5": 8.72243449922664,
+   "50": 17.078572897915397,
+   "95": 27.38655712690369
+  }
+ },
+ "validation": [
+  {
+   "case": "휘발유 연소 CO₂ vs 국가 LCI DB 평가계수(휘발유 육상수송)",
+   "ref": 2.085,
+   "model": 2.08593,
+   "unit": "kgCO₂/L",
+   "diff_pct": 0.04460431654675661
+  },
+  {
+   "case": "휘발유 생산: 국가 LCI DB 데이터셋 vs 영국 DESNZ 2026",
+   "ref": 0.55083,
+   "model": 0.5613640000000001,
+   "unit": "kgCO₂e/L",
+   "diff_pct": 1.912386761795843
+  },
+  {
+   "case": "2023년 전력: 국가 LCI DB 보정값 vs IPCC 2006 + DESNZ 재계산",
+   "ref": 0.5117218190446065,
+   "model": 0.48143592814371255,
+   "unit": "kgCO₂e/kWh",
+   "diff_pct": -5.91842868014465
+  },
+  {
+   "case": "2023 전력 직접배출 재현 vs 공식 0.4173 (보정 전)",
+   "ref": 0.4173,
+   "model": 0.3959315505347718,
+   "unit": "kgCO₂e/kWh",
+   "diff_pct": -5.120644492026887
+  },
+  {
+   "case": "BMW 520i 유럽 사용단계 재현 (WLTP 6.2 L/100km, 20만 km)",
+   "ref": 34.0,
+   "model": 33.515745232,
+   "unit": "tCO₂e",
+   "diff_pct": -1.4242787294117634
+  },
+  {
+   "case": "발전원별 데이터셋 합산(2023 비중) vs 생산 믹스 데이터셋",
+   "ref": 0.5018,
+   "model": 0.5939950536017209,
+   "unit": "kgCO₂e/kWh",
+   "diff_pct": 18.372868394125323
+  }
+ ],
+ "datasets": {
+  "gasoline": {
+   "name": "Gasoline; Production mix, at plant",
+   "uuid": "c6a62851-83b8-41c5-8e5d-aba03b2b3332",
+   "version": "00.00.001",
+   "ref_year": 2021,
+   "data_year": 2020,
+   "valid_until": 2024,
+   "revised": "2024-08-22",
+   "unit": "kg",
+   "boundary": "cradle-to-gate (원유 채굴~정제, 원유 52.8 MJ/kg 투입)",
+   "coverage_pct": 100.0,
+   "review": "Independent external review",
+   "sar_short": 0.7586,
+   "sar_longterm": 0.1407,
+   "ef_reported": 0.9173,
+   "co2": 0.6736,
+   "ch4": 0.00381,
+   "n2o": 1.374e-05
+  },
+  "elec_market": {
+   "name": "Electricity, market mix, including transmission and distribution losses; Consumption mix, to consumer",
+   "uuid": "01a4869d-1556-4f7d-ae9a-4eab3f2f27bf",
+   "version": "00.00.001",
+   "ref_year": 2022,
+   "data_year": 2021,
+   "valid_until": 2025,
+   "revised": "2024-07-05",
+   "unit": "kWh",
+   "boundary": "cradle-to-gate, 송배전 손실 포함, 소비자 공급 기준",
+   "coverage_pct": 57.78,
+   "review": "Independent external review",
+   "sar_short": 0.5202,
+   "sar_longterm": 0.0018,
+   "ef_reported": 0.5304,
+   "co2": 0.5076
+  },
+  "elec_prodmix": {
+   "name": "Electricity production Mix; Production mix, at plant",
+   "uuid": "e475dd1c-85c1-4d21-a1a0-447636f6014c",
+   "version": "00.00.001",
+   "ref_year": 2022,
+   "data_year": 2021,
+   "unit": "kWh",
+   "sar_short": 0.5018,
+   "ef_reported": 0.5117
+  },
+  "elec_coal": {
+   "name": "Electricity production, hard coal; Production mix, at plant",
+   "uuid": "3ed94f3f-8002-4512-9e96-8bf901428231",
+   "data_year": 2021,
+   "unit": "kWh",
+   "sar_short": 1.3681
+  },
+  "elec_ngcc": {
+   "name": "Electricity production, natural gas, combined cycle power plant",
+   "uuid": "b09cd113-5813-45ee-8990-e107133bc25d",
+   "data_year": 2021,
+   "unit": "kWh",
+   "sar_short": 0.4661
+  },
+  "elec_oil": {
+   "name": "Electricity production, heavy oil",
+   "uuid": "3b1b303a-9ef0-4bb2-b014-e9aea1b1dda2",
+   "data_year": 2021,
+   "unit": "kWh",
+   "sar_short": 1.2533
+  },
+  "elec_nuclear": {
+   "name": "Electricity production, nuclear power",
+   "uuid": "108ed1a9-f9bf-44cb-bcf7-ec46990a6188",
+   "data_year": 2021,
+   "unit": "kWh",
+   "sar_short": 0.0146
+  },
+  "elec_pv": {
+   "name": "Electricity production, photovoltaic, open ground, multi-Si",
+   "uuid": "20162042-0dfc-41f2-bdc5-018848726b92",
+   "data_year": 2021,
+   "unit": "kWh",
+   "sar_short": 0.123
+  },
+  "elec_wind": {
+   "name": "Electricity production, wind, 1-3MW, onshore",
+   "uuid": "5b97eb28-2884-400a-bdee-0a588323ff9a",
+   "data_year": 2021,
+   "unit": "kWh",
+   "sar_short": 0.0177
+  },
+  "elec_hydro": {
+   "name": "Electricity production, hydro, reservoir",
+   "uuid": "feefad35-c9ec-4676-8f9f-7b78e3cee05c",
+   "data_year": 2021,
+   "unit": "kWh",
+   "sar_short": 0.0308
+  },
+  "elec_fuelcell": {
+   "name": "Electricity production, fuel cell",
+   "uuid": "dbf531ed-c900-4244-a7ea-71a1561681e4",
+   "data_year": 2021,
+   "unit": "kWh",
+   "sar_short": 0.5603
+  },
+  "car_carrier": {
+   "name": "Marine transportation_Car Carrier",
+   "uuid": "92f83e29-2967-4788-911e-355889b30428",
+   "version": "00.00.001",
+   "data_year": 2022,
+   "unit": "tkm",
+   "sar_short": 0.0429,
+   "review": "Accredited third party review"
+  },
+  "al_recycled_ingot": {
+   "name": "Aluminium Ingot_Raw material of Recycle",
+   "uuid": "2d684aac-eb3b-4778-8dcc-19bbd4a02341",
+   "version": "00.00.001",
+   "data_year": 2021,
+   "unit": "kg",
+   "sar_short": 0.9297,
+   "coverage_pct": 11.0,
+   "review": "Accredited third party review"
+  },
+  "al_alloy": {
+   "name": "Aluminium alloy (잉곳·스크랩·합금원소 혼합)",
+   "uuid": "55751a1d-b8d1-4212-8c4f-c8f709c55e4f",
+   "version": "00.00.001",
+   "data_year": 2021,
+   "unit": "kg",
+   "sar_short": 13.3625,
+   "coverage_pct": 17.0,
+   "review": "Accredited third party review"
+  }
+ },
+ "scope3": {
+  "per_vehicle": {
+   "520i": {
+    "cat1": 10.1,
+    "cat4": 1.0,
+    "cat11_min": 35.39700297520661,
+    "cat11_optional": 9.278743801652894,
+    "cat12": 0.6,
+    "total": 56.37574677685951
+   },
+   "530e": {
+    "cat1": 13.799999999999999,
+    "cat4": 0.4,
+    "cat11_min": 32.52409584026548,
+    "cat11_optional": 7.238792536232843,
+    "cat12": 0.6,
+    "total": 54.56288837649832
+   },
+   "i5_40": {
+    "cat1": 16.0,
+    "cat4": 1.0,
+    "cat11_min": 18.143478260869568,
+    "cat11_optional": 2.7885186149440244,
+    "cat12": 0.6,
+    "total": 38.53199687581359
+   },
+   "M5": {
+    "cat1": 16.22536889897843,
+    "cat4": 0.4,
+    "cat11_min": 41.20705975555555,
+    "cat11_optional": 9.27658064449912,
+    "cat12": 0.6,
+    "total": 67.7090092990331
+   },
+   "i5_M60": {
+    "cat1": 16.81265607264472,
+    "cat4": 1.0,
+    "cat11_min": 21.400000000000002,
+    "cat11_optional": 3.289021956087822,
+    "cat12": 0.6,
+    "total": 43.10167802873255
+   }
+  },
+  "korea_h1_2025": [
+   {
+    "id": "520i",
+    "units": 7116,
+    "cat1": 71871.59999999999,
+    "cat4": 7116.0,
+    "cat11_min": 251885.07317157026,
+    "cat11_optional": 66027.540892562,
+    "cat12": 4269.599999999999,
+    "total": 401169.8140641323
+   },
+   {
+    "id": "530e",
+    "units": 1512,
+    "cat1": 20865.6,
+    "cat4": 604.8000000000001,
+    "cat11_min": 49176.43291048141,
+    "cat11_optional": 10945.054314784058,
+    "cat12": 907.1999999999999,
+    "total": 82499.08722526547
+   },
+   {
+    "id": "i5_40",
+    "units": 828,
+    "cat1": 13248.0,
+    "cat4": 828.0,
+    "cat11_min": 15022.800000000003,
+    "cat11_optional": 2308.8934131736523,
+    "cat12": 496.79999999999995,
+    "total": 31904.49341317365
+   }
+  ],
+  "korea_h1_2025_life_grid": [
+   {
+    "id": "520i",
+    "units": 7116,
+    "cat1": 71871.59999999999,
+    "cat4": 7116.0,
+    "cat11_min": 251885.07317157026,
+    "cat11_optional": 66027.540892562,
+    "cat12": 4269.599999999999,
+    "total": 401169.8140641323
+   },
+   {
+    "id": "530e",
+    "units": 1512,
+    "cat1": 20865.6,
+    "cat4": 604.8000000000001,
+    "cat11_min": 41196.64802980154,
+    "cat11_optional": 9718.620311166589,
+    "cat12": 907.1999999999999,
+    "total": 73292.86834096813
+   },
+   {
+    "id": "i5_40",
+    "units": 828,
+    "cat1": 13248.0,
+    "cat4": 828.0,
+    "cat11_min": 8341.66142904877,
+    "cat11_optional": 1282.0517565603893,
+    "cat12": 496.79999999999995,
+    "total": 24196.51318560916
+   }
+  ],
+  "sales": {
+   "source": "BMW 코리아 보도자료 'BMW 5시리즈, 2025년 상반기 누적 판매 1만 대 돌파' (2025.7.7)",
+   "series_total": 12786,
+   "520i": 7116,
+   "530e": 1512,
+   "i5_all": 828,
+   "note": "530e는 xDrive 포함, i5는 트림 구분 없이 합계. 모델링한 3종 합계 9,456대(74%)만 산정, 나머지(523d·550e·M5 등) 제외. 교차 확인: KAIDA 2025년 연간 BMW 520 14,579대"
+  },
+  "bmw_group": {
+   "source": "BMW Group ESG Overview FY2025 (p.127~128)",
+   "scope1": 667275,
+   "scope2_market": 144145,
+   "scope2_location": 1241512,
+   "scope3_total": 127541482,
+   "scope3": {
+    "1": 31709908,
+    "4": 2451399,
+    "6": 63456,
+    "7": 171959,
+    "11": 89538674,
+    "12": 1425073,
+    "14": 556061
+   },
+   "deliveries_2025": 2463681,
+   "deliveries_bev_2025": 442059,
+   "fleet_wtw_g_per_km": 175.7,
+   "targets": "Scope 3 2019년 148.9 Mt → 2030년 108.0 Mt 목표, 2025년 118.7 Mt(목표 대상 범위)"
+  },
+  "bmw_per_vehicle_use": 36.34345274408497
+ },
+ "avoided": {
+  "base": {
+   "R1": {
+    "label": "같은 차급 가솔린 (520i)",
+    "ref": 56.37574677685951,
+    "solution": "i5_40",
+    "solution_total": 38.53199687581359,
+    "per_unit": 17.843749901045918,
+    "fleet_h1_2025": 14774.62491806602
+   },
+   "R2": {
+    "label": "i5를 뺀 5시리즈 판매 평균 (520i·530e)",
+    "ref": 56.05805531865991,
+    "solution": "i5_40",
+    "solution_total": 38.53199687581359,
+    "per_unit": 17.52605844284632,
+    "fleet_h1_2025": 14511.576390676753
+   },
+   "R3": {
+    "label": "고성능 PHEV (M5)",
+    "ref": 67.7090092990331,
+    "solution": "i5_M60",
+    "solution_total": 43.10167802873255,
+    "per_unit": 24.60733127030055,
+    "fleet_h1_2025": null
+   }
+  },
+  "life_grid": {
+   "R1": {
+    "label": "같은 차급 가솔린 (520i)",
+    "ref": 56.37574677685951,
+    "solution": "i5_40",
+    "solution_total": 29.222842011605266,
+    "per_unit": 27.15290476525424,
+    "fleet_h1_2025": 22482.60514563051
+   },
+   "R2": {
+    "label": "i5를 뺀 5시리즈 판매 평균 (520i·530e)",
+    "ref": 54.99103875812476,
+    "solution": "i5_40",
+    "solution_total": 29.222842011605266,
+    "per_unit": 25.768196746519493,
+    "fleet_h1_2025": 21336.06690611814
+   },
+   "R3": {
+    "label": "고성능 PHEV (M5)",
+    "ref": 60.4926903617042,
+    "solution": "i5_M60",
+    "solution_total": 32.12164921453811,
+    "per_unit": 28.37104114716609,
+    "fleet_h1_2025": null
+   }
+  }
+ },
+ "recycling_example": {
+  "al_alloy": 13.3625,
+  "al_recycled": 0.9297,
+  "avoided_per_kg": 12.4328,
+  "bmw_i5_secondary_al_claim_t": 1.2
+ },
+ "grid_bottom_up": {
+  "value": 0.5939950536017209,
+  "coverage": 0.9742620749817691
+ }
+}

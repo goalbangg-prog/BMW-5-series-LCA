@@ -1,0 +1,6 @@
+id,name,group,powertrain,drive,mass_din_kg,mass_source,battery_gross_kwh,battery_net_kwh,cell_mass_kg,kr_fuel_km_l,kr_elec_km_kwh,kr_elec_low,kr_elec_high,kr_ev_range_km,kr_cert,bmw_production_t,production_source
+520i,520i,daily,ICE,RWD,1762,BMW Vehicle Footprint 520i (2023 MY),0,0,0,12.1,,,,,에너지공단 표시연비: BMW 520i 복합 12.1 km/L (3등급),11.1,BMW Vehicle Footprint 520i (TÜV Rheinland 2023-08-02)
+530e,530e,daily,PHEV,RWD,2050,BMW Vehicle Footprint 530e (2023 MY),22.1,19.4,94.3,11.3,3.2,3.2,3.2,73,에너지공단 표시연비: BMW 530e 복합 3.2 km/kWh / 11.3 km/L (전기 주행 70~73 km 3건),14.2,BMW Vehicle Footprint 530e (TÜV Rheinland 2023-12-01)
+i5_40,i5 eDrive40,daily,BEV,RWD,2176,BMW Vehicle Footprint i5 eDrive40 (2023 MY),83.9,81.2,326.4,,4.6,4.1,4.8,441,에너지공단 표시연비: BMW i5 eDrive40 4.6 km/kWh(19·20인치 공통 인증; 다른 인증 4.1·4.8),17.0,BMW Vehicle Footprint i5 eDrive40 (TÜV Rheinland 2023-08-02)
+M5,M5,performance,PHEV,AWD,2435,BMW Media Information M5 Technical specifications (06/2024),22.1,18.6,94.3,8.6,2.7,2.4,2.7,59,에너지공단 표시연비: BMW M5 복합 2.7 km/kWh / 8.6 km/L (다른 인증 2.4 km/kWh),,추정: BMW 3개 차종으로 보정한 질량·배터리 계수
+i5_M60,i5 M60,performance,BEV,AWD,2305,BMW Media Information 5 Series Sedan Technical specifications (05/2023),83.9,81.2,326.4,,3.9,3.8,3.9,371,에너지공단 표시연비: BMW i5 M60 xDrive 3.9 km/kWh (다른 인증 3.8),,추정: BMW 3개 차종으로 보정한 질량·배터리 계수
