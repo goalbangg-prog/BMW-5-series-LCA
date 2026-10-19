@@ -497,11 +497,11 @@ section.alt .hb .tr { background: var(--card); }
 .mark.ok { background: var(--accent); color: #fff; }
 .mark.part { background: var(--warn); color: #fff; }
 .refs { display: grid; gap: 10px; }
-.refrow { display: grid; grid-template-columns: minmax(0, 220px) minmax(0, 1fr) minmax(0, 150px); gap: 12px; align-items: center; padding: 12px 0; border-bottom: 1px solid var(--rule); }
+.refrow { display: grid; grid-template-columns: minmax(0, 260px) minmax(0, 1fr) minmax(0, 170px); gap: 12px; align-items: center; padding: 12px 0; border-bottom: 1px solid var(--rule); }
 .refrow b { font-size: 0.92rem; }
 .refrow small { display: block; font-size: 0.76rem; color: var(--ink-3); }
 .refrow .bars { display: grid; gap: 4px; }
-.refrow .bl { display: grid; grid-template-columns: 70px minmax(0, 1fr); gap: 8px; align-items: center; font-size: 0.74rem; color: var(--ink-3); }
+.refrow .bl { display: grid; grid-template-columns: 84px minmax(0, 1fr); gap: 8px; align-items: center; font-size: 0.74rem; color: var(--ink-3); }
 .refrow .bl .tr { height: 12px; position: relative; }
 .refrow .bl .fill { position: absolute; inset: 0 auto 0 0; transition: width .7s var(--ease); }
 .js .refs:not(.play) .fill { width: 0 !important; }
@@ -862,15 +862,16 @@ footer .cols { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 
         <div class="gates stg">
           <div class="gate"><span class="gn">조건 1 · 회사</span><h4>기후 목표를 공개하고 지키는가</h4><p>Scope 1~3 전체에 과학기반 감축 목표가 있고 실적을 공개해야 합니다. BMW는 2030년 목표가 SBTi 검증을 받았고(2021년), Scope 3 실적(목표 대상 범위 기준 2019년 1억 4,890만 tCO₂eq → 2025년 1억 1,870만 tCO₂eq)을 매년 공개합니다.</p><div class="res"><span class="mark ok">✓</span>SBTi 검증 목표 보유, 실적 매년 공개</div></div>
           <div class="gate"><span class="gn">조건 2 · 제품</span><h4>최신 기후과학에 맞는 제품인가</h4><p>IPCC 6차 보고서나 EU 택소노미가 감축 수단으로 인정해야 합니다. 배기가스가 없는 전기 승용차는 EU 택소노미의 저탄소 운송 활동에 해당합니다.</p><div class="res"><span class="mark ok">✓</span>i5 해당. 530e는 2026년부터 기준 밖</div></div>
-          <div class="gate"><span class="gn">조건 3 · 기여</span><h4>직접적이고 의미 있게 줄이는가</h4><p>완성차는 연료 사용을 대체하는 최종 제품이라 직접 기여에 해당합니다. 부품 납품사는 충족하지 못할 수 있습니다.</p><div class="res"><span class="mark ok">✓</span>완성차는 직접 기여</div></div>
+          <div class="gate"><span class="gn">조건 3 · 기여</span><h4>직접적이고 의미 있게 줄이는가</h4><p>WBCSD 지침은 회사가 감축에 얼마나 직접 기여하는지를 따집니다. 고객이 직접 쓰는 최종 제품(완성차)은 사용 단계의 배출을 직접 줄이는 쪽이고, 부품은 이를 가능하게 하는 간접 기여로 봐 주장 범위가 좁아집니다.</p><div class="res"><span class="mark ok">✓</span>완성차(최종 제품)로 직접 기여</div></div>
         </div>
         <details class="more"><summary>EU 택소노미 기준 보기</summary><p class="note">EU 택소노미(위임규정 2021/2139, 활동 6.5)의 승용차 기준은 2025년 말까지 WLTP 50 g/km 미만, 2026년부터 0 g/km입니다. 주행 중 배기가스가 나오는 플러그인 하이브리드 530e는 2026년부터 기준을 넘습니다.</p></details>
       </div>
 
       <div class="gap-l rv">
-        <h3 class="sub-h">비교 대상을 바꿔도 결과는 비슷합니다<small>"i5를 사지 않았다면 무엇을 샀을까". 1대의 생애주기 기준이며, 2025년 상반기 i5 판매 대수를 곱했습니다.</small></h3>
+        <h3 class="sub-h">어떤 차를 대신 샀다고 보느냐에 따라 달라집니다<small>i5가 없었다면 고객이 대신 샀을 차 4가지와 비교했습니다. 1대의 생애주기 기준이며, 2025년 상반기 i5 판매 대수(828대)를 곱했습니다.</small></h3>
         <div class="refs" id="refs"></div>
-        <p class="note">기본 조건에서는 520i가 R2 판매의 82%이고 530e 배출도 520i와 비슷해, 두 기준의 차이가 1% 안팎입니다. WBCSD는 같은 차급 신차의 시장 평균을 기준으로 권합니다. 국내 준대형 세단 전체(E클래스, G80 등)의 자료가 없어 R2는 i5를 뺀 5시리즈 판매 평균으로 대신했습니다. i5 판매 대수는 트림 구분이 없어 모두 eDrive40 값을 썼습니다.</p>
+        <p class="note" id="refRange"></p>
+        <p class="note">520i는 i5보다 약 2,500만 원 저렴해 실제 대안이라기보다 같은 차체에서 가장 효율 좋은 가솔린차입니다. 가격대가 비슷한 530i xDrive·E 300·G80은 520i보다 배출이 많아, <b>520i 기준이 회피배출을 가장 작게 잡은 보수적인 값</b>입니다. 다른 차의 제조 배출은 차량 무게 × BMW 차체 계수(1 kg당 6.30 kgCO₂eq)로 추정했고, 연비는 국내 공인 복합연비입니다. i5 구매자 중 원래 다른 전기차를 사려던 사람이 있다면, 그만큼 회피배출은 줄어듭니다.</p>
       </div>
 
       <div class="gap-l">
@@ -1114,14 +1115,15 @@ function scopeMap(id, p = P()) {
 function inventory(p = P()) {
   return Object.entries(UNITS).map(([id, n]) => { const m = scopeMap(id, p), o = { id, units: n }; for (const k in m) o[k] = m[k] * n; return o; });
 }
+function refTotal(r, p) {
+  if (r.model) return life(r.id, p).total;
+  return FX.a_body * r.mass_kg + p.eol + (p.km / 1000) * (p.fuelMult / r.fuel_km_l) * (p.gasComb + p.gasWtt);
+}
 function avoided(p = P()) {
-  const L = Object.fromEntries(ALL.map(id => [id, life(id, p).total]));
-  const mkt = (L["520i"] * SALES["520i"] + L["530e"] * SALES["530e"]) / (SALES["520i"] + SALES["530e"]);   // i5 자신은 제외
-  const refs = { R1: ["같은 차급 가솔린 (520i)", L["520i"], "i5_40"], R2: ["i5를 뺀 5시리즈 판매 평균 (520i·530e)", mkt, "i5_40"] };
-  const out = {};
-  for (const [k, [label, ref, sol]] of Object.entries(refs)) {
-    const per = ref - L[sol];
-    out[k] = { label, ref, solution: sol, solution_total: L[sol], per_unit: per, fleet: sol === "i5_40" ? per * SALES.i5_all : null };
+  const sol = life("i5_40", p).total, out = {};
+  for (const r of D.avoided_refs) {
+    const ref = refTotal(r, p), per = ref - sol;
+    out[r.id] = { label: r.name, why: r.why, price: r.price, estimated: !r.model, ref, solution: "i5_40", solution_total: sol, per_unit: per, fleet: per * SALES.i5_all };
   }
   return out;
 }
@@ -1480,22 +1482,25 @@ function updateScope() {
 function buildAvoided() {}
 function updateAvoided() {
   const A = avoided(), max = Math.max(...Object.values(A).map(a => Math.max(a.ref, a.solution_total))), box = $("refs");
-  if (!box.children.length) box.innerHTML = Object.entries(A).map(([k, a]) => `<div class="refrow" data-ref="${k}"><div><b>${k} · ${a.label}</b><small>비교 제품: ${V[a.solution].name}</small></div>
-    <div class="bars"><div class="bl"><span>기준</span><span class="tr"><span class="fill" data-f="ref" style="background:var(--pt-ice)"></span></span></div><div class="bl"><span>전기차</span><span class="tr"><span class="fill" data-f="sol" style="background:var(--pt-bev)"></span></span></div><small data-f="txt"></small></div>
+  if (!box.children.length) box.innerHTML = Object.entries(A).map(([k, a]) => `<div class="refrow" data-ref="${k}"><div><b>${a.label}</b>${a.estimated ? ' <span class="badge w">추정</span>' : ""}<small>${a.why} · ${a.price}</small></div>
+    <div class="bars"><div class="bl"><span>대신 샀을 차</span><span class="tr"><span class="fill" data-f="ref" style="background:var(--pt-ice)"></span></span></div><div class="bl"><span>i5 eDrive40</span><span class="tr"><span class="fill" data-f="sol" style="background:var(--pt-bev)"></span></span></div><small data-f="txt"></small></div>
     <div class="av"><b><span data-f="per"></span> tCO₂eq<span style="font-size:.6em;font-weight:500"> /대</span></b><small data-f="fleet"></small></div></div>`).join("");
   Object.entries(A).forEach(([k, a]) => {
     const row = box.querySelector(`[data-ref="${k}"]`), q = (f) => row.querySelector(`[data-f="${f}"]`);
     q("ref").style.width = (a.ref / max * 100) + "%"; q("sol").style.width = (a.solution_total / max * 100) + "%";
     q("txt").textContent = `${fmt(a.ref)} tCO₂eq → ${fmt(a.solution_total)} tCO₂eq (1대 생애주기)`;
     setNum(q("per"), a.per_unit, x => fmt(x));
-    q("fleet").textContent = a.fleet != null ? `${fmt0(SALES.i5_all)}대 × ${fmt(a.per_unit)} tCO₂eq = ${fmt0(a.fleet)} tCO₂eq` : "판매 대수 미산정";
+    q("fleet").textContent = a.fleet != null ? `${fmt0(SALES.i5_all)}대 × ${fmt(a.per_unit)} = ${fmt0(a.fleet)} tCO₂eq` : "판매 대수 미산정";
   });
-  const r1 = A.R1;
+  const r1 = A["520i"], vals = Object.values(A).map(a => a.fleet), lo = Math.min(...vals), hi = Math.max(...vals);
   const sr = D.sensitivity.rows, sLo = Math.min(...sr.map(x => x.saving_lo)), sHi = Math.max(...sr.map(x => x.saving_hi));
+  const A21 = avoided(P({ grid: FX.grid.lcidb.base })), APL = avoided(P({ grid: FX.grid_life_avg.lcidb }));
+  $("refRange").innerHTML = `지금 조건에서 회피배출은 비교 차량에 따라 <b>약 ${fmt(lo / 1e4, 1)}만~${fmt(hi / 1e4, 1)}만 tCO₂eq</b>입니다. 전력 조건도 결과를 바꿉니다. 520i 기준으로 2021년 전력 고정이면 약 ${fmt(A21["520i"].fleet / 1e4, 1)}만, 전력계획 반영이면 약 ${fmt(APL["520i"].fleet / 1e4, 1)}만 tCO₂eq입니다.`;
   const ck = [
-    ["비교 기준과 근거", "R1(같은 차급 가솔린)과 R2(i5를 뺀 판매 평균)를 함께 제시"],
+    ["비교 기준과 근거", "대신 샀을 차 4가지와 고른 이유를 함께 제시하고, 가장 보수적인 값(520i 기준)을 밝힘"],
     ["제품 자체의 배출", `i5 eDrive40 생애주기 ${fmt(r1.solution_total)} tCO₂eq/대. 회피배출과 함께 공개`],
-    ["불확실성", `민감도 분석(가정을 하나씩 바꿈) 1대당 ${fmt(sLo)}~${fmt(sHi)} tCO₂eq`],
+    ["불확실성", `민감도 분석(가정을 하나씩 바꿈) 1대당 ${fmt(sLo)}~${fmt(sHi)} tCO₂eq, 전력 조건에 따른 범위 제시`],
+    ["기여 주체", "BMW AG(제조)·BMW 코리아(판매)·전력회사가 함께 만든 감축이라, 각자 역할을 밝히고 주장"],
     ["별도 보고", "Scope 1~3 배출량에서 빼지 않고 따로 보고"],
   ];
   $("checks").innerHTML = ck.map(c => `<li><span class="mark ok" style="width:18px;height:18px">✓</span><b>${c[0]}</b><span>${c[1]}</span></li>`).join("");
@@ -1532,6 +1537,7 @@ function updateText(R) {
   const pc = (a, b) => { const x = (a / b - 1) * 100; return (x > 0 ? "+" : x < 0 ? "−" : "") + fmt0(Math.abs(x)) + "%"; };
   const km = (x) => isFinite(x) ? `약 ${fmtKm(x)} km` : "생애주기 안에 만회하지 못함";
   const dP = R.M5.total - R.i5_M60.total, dD = R["520i"].total - R.i5_40.total;
+  const avs = Object.values(A).map(a => a.fleet), avLo = Math.min(...avs), avHi = Math.max(...avs);
   const C = [
     { v: pc(R.i5_40.total, R["520i"].total), b: "같은 차급이면 전기차의 생애주기 배출이 적습니다",
       s: `i5 eDrive40 ${fmt(R.i5_40.total)}, 520i ${fmt(R["520i"].total)} tCO₂eq. 배터리 제조로 ${fmt(extra)} tCO₂eq를 더 배출하지만 ${km(be1)}면 만회합니다.`,
@@ -1548,9 +1554,9 @@ function updateText(R) {
     { v: fmt0(c11 / all * 100) + "%", b: "공시에서는 판매한 차의 사용(Cat 11)이 가장 큽니다",
       s: `2025년 상반기 판매분의 Cat 11 필수 범위는 ${fmt(c11 / 1e4, 1)}만 tCO₂eq로, 산정 합계의 ${fmt0(c11 / all * 100)}%입니다.`,
       imp: "필수 범위와 선택 범위(연료·전기 생산)를 나눠 보고해야 다른 회사와 비교할 수 있습니다." },
-    { v: fmt(A.R1.fleet / 1e4, 1) + "만 tCO₂eq", b: "i5 판매로 피한 배출(회피배출)을 따로 산정했습니다",
-      s: `2025년 상반기 i5 828대를 같은 수의 520i와 비교한 값입니다(판매 평균과 비교하면 ${fmt0(A.R2.fleet)} tCO₂eq).`,
-      imp: "회피배출은 Scope 3에서 빼지 않고, 비교 기준과 함께 따로 보고해야 합니다." },
+    { v: `${fmt(avLo / 1e4, 1)}~${fmt(avHi / 1e4, 1)}만 tCO₂eq`, b: "i5 판매로 피한 배출(회피배출)은 비교 기준에 따라 달라집니다",
+      s: `2025년 상반기 i5 828대를 520i·530i xDrive·E 300·G80과 비교한 범위입니다. 같은 차체의 520i 기준(${fmt0(A["520i"].fleet)} tCO₂eq)이 가장 보수적인 값입니다.`,
+      imp: "회피배출은 비교 기준을 함께 밝히고, Scope 3에서 빼지 않고 따로 보고해야 합니다." },
   ];
   $("concl").innerHTML = C.map(c => `<div class="ins"><span class="v${c.warn ? " warn" : ""}">${c.v}</span><b>${c.b}</b><p>${c.s}</p><p class="imp"><b>시사점</b>${c.imp}</p></div>`).join("");
 }

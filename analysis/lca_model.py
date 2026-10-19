@@ -315,20 +315,28 @@ def korea_inventory(p: Params = None):
 # ---------------------------------------------------------------------------
 # 5. 회피배출 (WBCSD Guidance on Avoided Emissions, 2023)
 # ---------------------------------------------------------------------------
+REFS = F["avoided_refs"]["refs"]
+
+
+def ref_total(r, p: Params):
+    """비교 차량 1대의 생애주기 배출(tCO2eq). 520i는 모델 결과, 나머지는 무게·공인 연비로 추정"""
+    if r.get("model"):
+        return lifecycle(r["id"], p)["total"]
+    body = A_BODY * p.body_mult * r["mass_kg"]
+    use = (1 / r["fuel_km_l"]) * p.fuel_mult * (p.gas_comb + p.gas_wtt) * p.lifetime_km / 1000
+    return body + use + p.eol
+
+
 def avoided(p: Params = None):
+    """WBCSD 회피배출: i5가 없었다면 대신 샀을 차(비교 기준) − i5 eDrive40"""
     p = p or Params()
-    L = {v: lifecycle(v, p)["total"] for v in V}
-    w = {"520i": SALES["520i"], "530e": SALES["530e"]}          # i5 자신은 기준에서 제외
-    mkt = sum(L[k] * n for k, n in w.items()) / sum(w.values())
-    refs = {
-        "R1": {"label": "같은 차급 가솔린 (520i)", "ref": L["520i"], "solution": "i5_40"},
-        "R2": {"label": "i5를 뺀 5시리즈 판매 평균 (520i·530e)", "ref": mkt, "solution": "i5_40"},
-    }
+    sol = lifecycle("i5_40", p)["total"]
     out = {}
-    for k, r in refs.items():
-        per = r["ref"] - L[r["solution"]]
-        out[k] = {**r, "solution_total": L[r["solution"]], "per_unit": per,
-                  "fleet_h1_2025": per * SALES["i5_all"] if r["solution"] == "i5_40" else None}
+    for r in REFS:
+        ref = ref_total(r, p)
+        per = ref - sol
+        out[r["id"]] = {"label": r["name"], "why": r["why"], "estimated": not r.get("model"), "ref": ref,
+                        "solution": "i5_40", "solution_total": sol, "per_unit": per, "fleet_h1_2025": per * SALES["i5_all"]}
     return out
 
 
@@ -479,6 +487,7 @@ def main():
         "scope3": {"per_vehicle": smap, "korea_h1_2025": inv, "korea_h1_2025_life_grid": inv_life,
                    "sales": SALES, "bmw_group": bg, "bmw_per_vehicle_use": bmw_per_vehicle_use},
         "avoided": {"base": av, "life_grid": av_life},
+        "avoided_refs": REFS,
         "recycling_example": {"al_alloy": ds("al_alloy"), "al_recycled": ds("al_recycled_ingot"),
                               "avoided_per_kg": ds("al_alloy") - ds("al_recycled_ingot"),
                               "bmw_i5_secondary_al_claim_t": 1.2},

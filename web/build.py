@@ -15,6 +15,7 @@ data = {
     "datasets": r["datasets"],
     "scope3": r["scope3"],
     "avoided": r["avoided"],
+    "avoided_refs": r["avoided_refs"],
     "grid_bottom_up": r["grid_bottom_up"],
     "breakeven": r["breakeven"],
 }
