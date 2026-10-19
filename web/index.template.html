@@ -1214,11 +1214,15 @@ const q3 = (n) => `<span class="q" aria-label="3점 중 ${n}점">${[0, 1, 2].map
 function buildFinds() {
   const B = Object.fromEntries(VEH.map(v => [v.id, life(v.id)]));
   const inv = inventory(), units = inv.reduce((a, r) => a + r.units, 0);
-  const c11 = inv.reduce((a, r) => a + r.cat11_min, 0), av = avoided().R1.fleet;
+  const c11 = inv.reduce((a, r) => a + r.cat11_min, 0), c1 = inv.reduce((a, r) => a + r.cat1, 0), A = avoided().R1;
+  const be = breakeven("i5_40", "520i"), yrs = be / (D.meta.km / D.meta.years);
   const rows = [
-    { v: (B.i5_40.total / B["520i"].total - 1) * 100, f: pctTxt, b: "차 한 대의 생애주기", s: `전기 i5 eDrive40, 가솔린 520i 대비 (${fmt(B["520i"].total)} → ${fmt(B.i5_40.total)} t)` },
-    { v: c11 / 10000, f: (x) => fmt(x, 1) + "만 t", b: "공시 예시 · BMW 코리아 Scope 3 Cat 11", s: `2025년 상반기 5시리즈 판매량 총 ${fmt0(units)}대의 사용단계 배출` },
-    { v: av / 10000, f: (x) => fmt(x, 2) + "만 t", b: "회피배출 예시 · 520i 대비", s: `i5 ${fmt0(SALES.i5_all)}대가 같은 수의 520i 대신 팔렸을 때 생애주기 배출 차이`, n: true },
+    { v: (B.i5_40.total / B["520i"].total - 1) * 100, f: pctTxt, b: "전기차가 가솔린차보다 덜 배출합니다",
+      s: `i5 eDrive40 ${fmt(B.i5_40.total)} t, 520i ${fmt(B["520i"].total)} t. 배터리를 만들며 더 낸 몫은 약 ${fmt0(yrs)}년(${fmtKm(be)} km)만 타면 만회합니다.` },
+    { v: c11 / 10000, f: (x) => fmt(x, 1) + "만 t", b: "공시에서 가장 큰 배출은 차가 팔린 뒤에 나옵니다",
+      s: `2025년 상반기 5시리즈 ${fmt0(units)}대가 도로에서 낼 배출(Scope 3 Cat 11 예시)로, 차를 만들 때의 약 ${fmt0(c11 / c1)}배입니다.` },
+    { v: A.fleet / 10000, f: (x) => fmt(x, 1) + "만 t", b: `i5 ${fmt0(SALES.i5_all)}대가 줄인 배출 (회피배출 예시)`,
+      s: `같은 수의 520i를 팔았을 때보다 1대당 ${fmt(A.per_unit)} t 적습니다. 이 값은 Scope 3에서 빼지 않고 따로 보고합니다.`, n: true },
   ];
   $("finds").innerHTML = rows.map((r, i) => `<div class="find"><span class="v${r.n ? " neutral" : ""}" data-f="${i}">${r.f(r.v)}</span><div><b>${r.b}</b><span>${r.s}</span></div></div>`).join("");
   rows.forEach((r, i) => { const el = document.querySelector(`[data-f="${i}"]`); el._target = r.v; el._fmt = r.f; });
