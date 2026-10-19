@@ -174,6 +174,16 @@ body { min-width: 1000px; }
 .find b { display: block; font-size: 0.96rem; }
 .find span { display: block; font-size: 0.84rem; color: var(--ink-2); line-height: 1.55; }
 .finds-cap { font-size: 0.78rem; color: var(--ink-3); margin-top: 10px; }
+/* PART 구분 띠 */
+.part { background: var(--ink); color: #fff; }
+.part .wrap { display: grid; grid-template-columns: auto auto minmax(0, 1fr); align-items: baseline; gap: 6px 18px; padding-block: 22px; }
+.part .pn { font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em; color: #7fb4ff; }
+.part b { font-size: 1.25rem; }
+.part p { font-size: 0.84rem; color: rgba(255,255,255,0.72); line-height: 1.6; }
+.top nav .nsep { width: 1px; align-self: center; height: 14px; background: rgba(255,255,255,0.25); margin: 0 6px; }
+.ins-grid.three { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 28px 24px; }
+.impl { margin-top: 28px; padding: 14px 18px; border-left: 3px solid var(--accent); background: var(--bg); font-size: 0.92rem; color: var(--ink-2); }
+.impl b { color: var(--accent); margin-right: 8px; }
 /* 01 결과 앞머리: 분석 기준 요약 */
 .basis { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 20px; padding: 14px 18px; margin-bottom: 20px; border: 1px solid var(--rule); border-left: 3px solid var(--accent); background: var(--bg-2, var(--bg)); }
 .basis .bl { font-size: 0.78rem; font-weight: 700; color: var(--accent); white-space: nowrap; }
@@ -554,10 +564,12 @@ footer .cols { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 
     <a class="wordmark" href="#top" aria-label="맨 위로"><i aria-hidden="true"></i>5 SERIES <span>CARBON LCA</span></a>
     <nav aria-label="목차" id="nav"><span class="ind" id="navInd" aria-hidden="true"></span>
       <a href="#result">결과</a>
+      <a href="#method">분석 방법</a>
+      <a href="#trust">민감도</a>
+      <i class="nsep" aria-hidden="true"></i>
       <a href="#scope3">Scope 3</a>
       <a href="#avoided">회피배출</a>
-      <a href="#trust">민감도</a>
-      <a href="#method">분석 방법</a>
+      <i class="nsep" aria-hidden="true"></i>
       <a href="#verdict">결론</a>
       <a href="#appendix">부록</a>
     </nav>
@@ -592,6 +604,9 @@ footer .cols { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 
     </div>
   </section>
 
+  <div class="part gut" role="presentation">
+    <div class="wrap"><span class="pn">PART 1</span><b>제품 LCA</b><p>차 한 대의 생애주기 탄소발자국 · ISO 14044·14067</p></div>
+  </div>
   <!-- 01 결과 -->
   <section class="block gut" id="result">
     <div class="wrap">
@@ -688,122 +703,11 @@ footer .cols { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 
     </div>
   </section>
 
-  <!-- 02 Scope 3 -->
-  <section class="block alt gut" id="scope3">
+  <!-- 02 분석 방법 -->
+  <section class="block alt gut" id="method">
     <div class="wrap">
       <div class="head rv">
-        <div><span class="idx">02 Scope 3 공시</span><h2>BMW 코리아의 Scope 3로 옮기면</h2></div>
-        <p>BMW 코리아는 독일에서 만든 차를 들여와 파는 회사입니다.<br>차량 LCA 결과를 이 회사의 Scope 3 항목으로 나누고, 2025년 상반기 판매분으로 산정했습니다.</p>
-      </div>
-      <div class="cond rv" data-cond></div>
-
-      <div class="rv">
-        <h3 class="sub-h">이 분석에서 산정한 Scope 3 항목 4개<small>15개 항목 중 수입·판매사인 BMW 코리아 기준으로 산정한 항목입니다.</small></h3>
-        <div class="s3key"><span><span class="badge b">산정</span> 이 분석에서 계산한 항목</span><span><span class="badge">BMW 그룹 보고</span> BMW 그룹 2025년 보고값 (전 세계) · Scope 3 합계 대비 비중</span></div>
-        <div class="s3grid s3four stg" id="s3On"></div>
-      </div>
-
-      <div class="gap-l two">
-        <div class="rv">
-          <h3 class="sub-h">차 한 대를 Scope 3 항목으로 나누면<small>BMW 코리아 기준, 단위 t/대</small></h3>
-          <div class="legend" id="scLegend" style="margin-bottom:12px"></div>
-          <div class="sbars" id="scBars"></div>
-          <p class="note">전기를 쓰는 차의 합계가 01 결과와 다른 이유: Cat 11 필수 범위의 충전 전기에 공시용 국가 전력배출계수(0.4173)를 적용했기 때문입니다.</p>
-        </div>
-        <div class="prose rv d1">
-          <h3>Cat 11(판매한 제품의 사용)은 필수 범위와 선택 범위로 나뉩니다</h3>
-          <p><strong>필수 범위</strong>는 차 사용자의 Scope 1·2(배기가스, 충전 전기의 발전 배출)입니다. 전기에는 <strong>2023년 국가 전력배출계수 0.4173 kg/kWh</strong>를 곱합니다. 2025년 판매분 보고 시점의 최신값이며, 계산기 조건과 관계없이 고정입니다.</p>
-          <p>원유 채굴·정제, 발전 연료 채굴·송배전은 <strong>선택 범위</strong>(연한 파랑)입니다. 두 범위를 섞으면 다른 회사와 비교할 수 없습니다.</p>
-          <p>보고 주체에 따라 항목도 달라집니다. BMW 그룹에게 공장 배출(0.7 t)은 Scope 1·2지만, 수입사 BMW 코리아에게는 차량 전체가 Cat 1입니다.</p>
-        </div>
-      </div>
-
-      <div class="gap-l rv">
-        <h3 class="sub-h">예시 산정 (비공식): 5시리즈 2025년 상반기 판매분<small>판매 대수 × 차 한 대 값. GHG Protocol에 따라 판매한 해에 생애주기 전체 배출을 보고합니다.</small></h3>
-        <div class="kpis3 stg" id="invKpis"></div>
-        <details class="more"><summary>차종별 산정표 보기</summary>
-        <div class="tablewrap">
-          <table>
-            <thead><tr><th>모델</th><th class="n">판매 대수</th><th class="n">Cat 1 차량 구매</th><th class="n">Cat 4 운송</th><th class="n">Cat 11 필수</th><th class="n">Cat 11 선택</th><th class="n">Cat 12 폐기</th><th class="n">합계</th></tr></thead>
-            <tbody id="invBody"></tbody>
-          </table>
-        </div>
-        <p class="note" id="invNote"></p>
-        </details>
-      </div>
-
-      <div class="gap-l rv">
-        <details class="more" id="bmwMore"><summary>참고: BMW 그룹이 실제 보고한 Scope 3 보기 (2025년, 전 세계·제조사 기준)</summary>
-          <div style="max-width:760px"><div class="hbar" id="bmwBars"></div><p class="note" id="bmwNote"></p>
-          <p class="note" id="bmwPerCar"></p>
-          <p class="note">BMW 보고서의 차량 평균 배출에는 well-to-wheel(연료 생산 포함) 표시가 있어, Cat 11에 선택 범위까지 넣었을 수 있습니다. 실무라면 회사에 확인할 부분입니다.</p></div>
-        </details>
-      </div>
-    </div>
-  </section>
-
-  <!-- 03 회피배출 -->
-  <section class="block gut" id="avoided">
-    <div class="wrap">
-      <div class="head rv">
-        <div><span class="idx">03 회피배출 검증</span><h2>"전기차로 탄소를 줄였다"<br>이 말이 성립하려면</h2></div>
-        <p>다른 선택보다 줄어든 배출을 회피배출이라고 합니다. WBCSD 가이드(2023)로 검증했습니다.</p>
-      </div>
-
-      <div class="rv">
-        <h3 class="sub-h">회피배출을 주장하기 위한 3가지 조건</h3>
-        <div class="gates stg">
-          <div class="gate"><span class="gn">조건 1 · 회사</span><h4>기후 목표를 공개하고 지키는가</h4><p>Scope 1~3 전체에 과학기반 감축 목표가 있고 실적을 공개해야 합니다. BMW는 2030년 목표가 SBTi 검증을 받았고(2021년), Scope 3 실적(목표 대상 범위 기준 2019년 1억 4,890만 t → 2025년 1억 1,870만 t)을 매년 공개합니다.</p><div class="res"><span class="mark ok">✓</span>SBTi 검증 목표 보유, 실적 매년 공개</div></div>
-          <div class="gate"><span class="gn">조건 2 · 제품</span><h4>최신 기후과학에 맞는 제품인가</h4><p>IPCC 6차 보고서나 EU 택소노미가 감축 수단으로 인정해야 합니다. 배기가스가 없는 전기 승용차는 EU 택소노미의 저탄소 운송 활동에 해당합니다.</p><div class="res"><span class="mark ok">✓</span>i5 해당. 530e는 2026년부터 기준 밖</div></div>
-          <div class="gate"><span class="gn">조건 3 · 기여</span><h4>직접적이고 의미 있게 줄이는가</h4><p>완성차는 연료 사용을 대체하는 최종 제품이라 직접 기여에 해당합니다. 부품 납품사는 충족하지 못할 수 있습니다.</p><div class="res"><span class="mark ok">✓</span>완성차는 직접 기여</div></div>
-        </div>
-        <details class="more"><summary>EU 택소노미 기준 보기</summary><p class="note">EU 택소노미(위임규정 2021/2139, 활동 6.5)의 승용차 기준은 2025년 말까지 WLTP 50 g/km 미만, 2026년부터 0 g/km입니다. 주행 중 배기가스가 나오는 플러그인 하이브리드 530e는 2026년부터 기준을 넘습니다.</p></details>
-      </div>
-
-      <div class="gap-l rv">
-        <h3 class="sub-h">비교 대상을 바꿔도 결과는 비슷합니다<small>"i5를 사지 않았다면 무엇을 샀을까". 1대의 생애주기 기준이며, 2025년 상반기 i5 판매 대수를 곱했습니다.</small></h3>
-        <div class="refs" id="refs"></div>
-        <p class="note">기본 조건에서는 520i가 R2 판매의 82%이고 530e 배출도 520i와 비슷해, 두 기준의 차이가 1% 안팎입니다. WBCSD는 같은 차급 신차의 시장 평균을 기준으로 권합니다. 국내 준대형 세단 전체(E클래스, G80 등)의 자료가 없어 R2는 i5를 뺀 5시리즈 판매 평균으로 대신했습니다. i5 판매 대수는 트림 구분이 없어 모두 eDrive40 값을 썼습니다.</p>
-      </div>
-
-      <div class="gap-l">
-        <div class="rv">
-          <h3 class="sub-h">회피배출을 공개할 때 함께 밝혀야 할 것</h3>
-          <ul class="checks stg" id="checks"></ul>
-        </div>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- 04 민감도 분석 -->
-  <section class="block alt gut" id="trust">
-    <div class="wrap">
-      <div class="head rv">
-        <div><span class="idx">04 민감도 분석</span><h2>가정을 바꿔도<br>결론은 같을까</h2></div>
-        <p>가정을 하나씩 가장 불리한 값과 가장 유리한 값까지 바꿔 보고(민감도 분석), 결론이 유지되는지 확인했습니다. 기본 조건 기준입니다.</p>
-      </div>
-      <div class="pair">
-        <div class="rv">
-          <div class="ch-head"><h3>어떤 가정이 결과를 가장 많이 바꾸나</h3></div>
-          <p class="sub">520i와 i5 eDrive40의 생애주기 배출량 차이(기본 <b class="tnum" data-fill="baseSaving"></b> t)가 가정마다 어떻게 달라지는지</p>
-          <div class="torn" id="tornado"></div>
-        </div>
-        <div class="prose rv d1">
-          <h3>모든 막대가 0보다 오른쪽에 있습니다</h3>
-          <p>가정을 가장 불리하게 바꿔도 전기차 쪽이 적게 배출한다는 뜻입니다.</p>
-          <p>가장 큰 변수는 <strong>주행거리</strong>입니다. 12만 km만 타면 차이가 <b class="tnum" data-fill="sav120"></b> t으로 줄어듭니다. 다음은 <strong>실제 연비</strong>와 <strong>충전 전력</strong>입니다.</p>
-          <p id="tornRest"></p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 05 분석 방법 -->
-  <section class="block gut" id="method">
-    <div class="wrap">
-      <div class="head rv">
-        <div><span class="idx">05 분석 방법</span><h2>분석 전에 정한 것</h2></div>
+        <div><span class="idx">02 분석 방법</span><h2>분석 전에 정한 것</h2></div>
         <p>계산에 앞서 ISO 14044에 따라 정한 범위와 데이터입니다.<br>KEITI의 국가 LCI DB를 내려받은 후, ISO 14067 기준(IPCC 6차 보고서 값)으로 계산하였습니다.</p>
       </div>
       <div class="rv">
@@ -866,17 +770,133 @@ footer .cols { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 
     </div>
   </section>
 
+  <!-- 03 민감도 분석 -->
+  <section class="block gut" id="trust">
+    <div class="wrap">
+      <div class="head rv">
+        <div><span class="idx">03 민감도 분석</span><h2>가정을 바꿔도<br>결론은 같을까</h2></div>
+        <p>가정을 하나씩 가장 불리한 값과 가장 유리한 값까지 바꿔 보고(민감도 분석), 결론이 유지되는지 확인했습니다. 기본 조건 기준입니다.</p>
+      </div>
+      <div class="pair">
+        <div class="rv">
+          <div class="ch-head"><h3>어떤 가정이 결과를 가장 많이 바꾸나</h3></div>
+          <p class="sub">520i와 i5 eDrive40의 생애주기 배출량 차이(기본 <b class="tnum" data-fill="baseSaving"></b> t)가 가정마다 어떻게 달라지는지</p>
+          <div class="torn" id="tornado"></div>
+        </div>
+        <div class="prose rv d1">
+          <h3>모든 막대가 0보다 오른쪽에 있습니다</h3>
+          <p>가정을 가장 불리하게 바꿔도 전기차 쪽이 적게 배출한다는 뜻입니다.</p>
+          <p>가장 큰 변수는 <strong>주행거리</strong>입니다. 12만 km만 타면 차이가 <b class="tnum" data-fill="sav120"></b> t으로 줄어듭니다. 다음은 <strong>실제 연비</strong>와 <strong>충전 전력</strong>입니다.</p>
+          <p id="tornRest"></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="part gut" role="presentation">
+    <div class="wrap"><span class="pn">PART 2</span><b>실무 확장</b><p>회사 단위 보고 · GHG Protocol Scope 3, WBCSD 회피배출<br>PART 1은 차 한 대의 탄소발자국, PART 2는 회사가 판매한 차 전체를 보고하는 기준입니다. 공시용 전력 계수(2023년 0.4173) 등 기준이 달라 숫자가 조금 다릅니다.</p></div>
+  </div>
+  <!-- 04 Scope 3 -->
+  <section class="block alt gut" id="scope3">
+    <div class="wrap">
+      <div class="head rv">
+        <div><span class="idx">04 Scope 3 공시</span><h2>BMW 코리아의 Scope 3로 옮기면</h2></div>
+        <p>BMW 코리아는 독일에서 만든 차를 들여와 파는 회사입니다.<br>차량 LCA 결과를 이 회사의 Scope 3 항목으로 나누고, 2025년 상반기 판매분으로 산정했습니다.</p>
+      </div>
+      <div class="cond rv" data-cond></div>
+
+      <div class="rv">
+        <h3 class="sub-h">이 분석에서 산정한 Scope 3 항목 4개<small>15개 항목 중 수입·판매사인 BMW 코리아 기준으로 산정한 항목입니다.</small></h3>
+        <div class="s3key"><span><span class="badge b">산정</span> 이 분석에서 계산한 항목</span><span><span class="badge">BMW 그룹 보고</span> BMW 그룹 2025년 보고값 (전 세계) · Scope 3 합계 대비 비중</span></div>
+        <div class="s3grid s3four stg" id="s3On"></div>
+      </div>
+
+      <div class="gap-l two">
+        <div class="rv">
+          <h3 class="sub-h">차 한 대를 Scope 3 항목으로 나누면<small>BMW 코리아 기준, 단위 t/대</small></h3>
+          <div class="legend" id="scLegend" style="margin-bottom:12px"></div>
+          <div class="sbars" id="scBars"></div>
+          <p class="note">전기를 쓰는 차의 합계가 01 결과와 다른 이유: Cat 11 필수 범위의 충전 전기에 공시용 국가 전력배출계수(0.4173)를 적용했기 때문입니다.</p>
+        </div>
+        <div class="prose rv d1">
+          <h3>Cat 11(판매한 제품의 사용)은 필수 범위와 선택 범위로 나뉩니다</h3>
+          <p><strong>필수 범위</strong>는 차 사용자의 Scope 1·2(배기가스, 충전 전기의 발전 배출)입니다. 전기에는 <strong>2023년 국가 전력배출계수 0.4173 kg/kWh</strong>를 곱합니다. 2025년 판매분 보고 시점의 최신값이며, 계산기 조건과 관계없이 고정입니다.</p>
+          <p>원유 채굴·정제, 발전 연료 채굴·송배전은 <strong>선택 범위</strong>(연한 파랑)입니다. 두 범위를 섞으면 다른 회사와 비교할 수 없습니다.</p>
+          <p>보고 주체에 따라 항목도 달라집니다. BMW 그룹에게 공장 배출(0.7 t)은 Scope 1·2지만, 수입사 BMW 코리아에게는 차량 전체가 Cat 1입니다.</p>
+        </div>
+      </div>
+
+      <div class="gap-l rv">
+        <h3 class="sub-h">예시 산정 (비공식): 5시리즈 2025년 상반기 판매분<small>판매 대수 × 차 한 대 값. GHG Protocol에 따라 판매한 해에 생애주기 전체 배출을 보고합니다.</small></h3>
+        <div class="kpis3 stg" id="invKpis"></div>
+        <details class="more"><summary>차종별 산정표 보기</summary>
+        <div class="tablewrap">
+          <table>
+            <thead><tr><th>모델</th><th class="n">판매 대수</th><th class="n">Cat 1 차량 구매</th><th class="n">Cat 4 운송</th><th class="n">Cat 11 필수</th><th class="n">Cat 11 선택</th><th class="n">Cat 12 폐기</th><th class="n">합계</th></tr></thead>
+            <tbody id="invBody"></tbody>
+          </table>
+        </div>
+        <p class="note" id="invNote"></p>
+        </details>
+      </div>
+
+      <div class="gap-l rv">
+        <details class="more" id="bmwMore"><summary>참고: BMW 그룹이 실제 보고한 Scope 3 보기 (2025년, 전 세계·제조사 기준)</summary>
+          <div style="max-width:760px"><div class="hbar" id="bmwBars"></div><p class="note" id="bmwNote"></p>
+          <p class="note" id="bmwPerCar"></p>
+          <p class="note">BMW 보고서의 차량 평균 배출에는 well-to-wheel(연료 생산 포함) 표시가 있어, Cat 11에 선택 범위까지 넣었을 수 있습니다. 실무라면 회사에 확인할 부분입니다.</p></div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- 05 회피배출 -->
+  <section class="block gut" id="avoided">
+    <div class="wrap">
+      <div class="head rv">
+        <div><span class="idx">05 회피배출 검증</span><h2>"전기차로 탄소를 줄였다"<br>이 말이 성립하려면</h2></div>
+        <p>다른 선택보다 줄어든 배출을 회피배출이라고 합니다. WBCSD 가이드(2023)로 검증했습니다.</p>
+      </div>
+
+      <div class="rv">
+        <h3 class="sub-h">회피배출을 주장하기 위한 3가지 조건</h3>
+        <div class="gates stg">
+          <div class="gate"><span class="gn">조건 1 · 회사</span><h4>기후 목표를 공개하고 지키는가</h4><p>Scope 1~3 전체에 과학기반 감축 목표가 있고 실적을 공개해야 합니다. BMW는 2030년 목표가 SBTi 검증을 받았고(2021년), Scope 3 실적(목표 대상 범위 기준 2019년 1억 4,890만 t → 2025년 1억 1,870만 t)을 매년 공개합니다.</p><div class="res"><span class="mark ok">✓</span>SBTi 검증 목표 보유, 실적 매년 공개</div></div>
+          <div class="gate"><span class="gn">조건 2 · 제품</span><h4>최신 기후과학에 맞는 제품인가</h4><p>IPCC 6차 보고서나 EU 택소노미가 감축 수단으로 인정해야 합니다. 배기가스가 없는 전기 승용차는 EU 택소노미의 저탄소 운송 활동에 해당합니다.</p><div class="res"><span class="mark ok">✓</span>i5 해당. 530e는 2026년부터 기준 밖</div></div>
+          <div class="gate"><span class="gn">조건 3 · 기여</span><h4>직접적이고 의미 있게 줄이는가</h4><p>완성차는 연료 사용을 대체하는 최종 제품이라 직접 기여에 해당합니다. 부품 납품사는 충족하지 못할 수 있습니다.</p><div class="res"><span class="mark ok">✓</span>완성차는 직접 기여</div></div>
+        </div>
+        <details class="more"><summary>EU 택소노미 기준 보기</summary><p class="note">EU 택소노미(위임규정 2021/2139, 활동 6.5)의 승용차 기준은 2025년 말까지 WLTP 50 g/km 미만, 2026년부터 0 g/km입니다. 주행 중 배기가스가 나오는 플러그인 하이브리드 530e는 2026년부터 기준을 넘습니다.</p></details>
+      </div>
+
+      <div class="gap-l rv">
+        <h3 class="sub-h">비교 대상을 바꿔도 결과는 비슷합니다<small>"i5를 사지 않았다면 무엇을 샀을까". 1대의 생애주기 기준이며, 2025년 상반기 i5 판매 대수를 곱했습니다.</small></h3>
+        <div class="refs" id="refs"></div>
+        <p class="note">기본 조건에서는 520i가 R2 판매의 82%이고 530e 배출도 520i와 비슷해, 두 기준의 차이가 1% 안팎입니다. WBCSD는 같은 차급 신차의 시장 평균을 기준으로 권합니다. 국내 준대형 세단 전체(E클래스, G80 등)의 자료가 없어 R2는 i5를 뺀 5시리즈 판매 평균으로 대신했습니다. i5 판매 대수는 트림 구분이 없어 모두 eDrive40 값을 썼습니다.</p>
+      </div>
+
+      <div class="gap-l">
+        <div class="rv">
+          <h3 class="sub-h">회피배출을 공개할 때 함께 밝혀야 할 것</h3>
+          <ul class="checks stg" id="checks"></ul>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="part gut" role="presentation">
+    <div class="wrap"><span class="pn">PART 3</span><b>결론</b><p>핵심 결론, 한계, 실무 시사점</p></div>
+  </div>
   <!-- 06 결론 -->
   <section class="block alt gut" id="verdict">
     <div class="wrap">
       <div class="head rv">
-        <div><span class="idx">06 결론</span><h2>결과와 한계</h2></div>
-        <p>문장 속 숫자는 계산기 조건에 따라 바뀝니다.</p>
+        <div><span class="idx">06 결론</span><h2>숫자로 보는 결론 6가지</h2></div>
+        <p>숫자는 계산기 조건에 따라 바뀝니다.</p>
       </div>
-      <div class="verdict rv stg">
-        <div><h3>제품<small>차 한 대의 생애주기</small></h3><p id="vDaily"></p></div>
-        <div><h3>공시<small>Scope 3</small></h3><p id="vScope"></p></div>
-        <div><h3>회피배출<small>WBCSD 기준</small></h3><p id="vAvoid"></p></div>
+      <div class="ins-grid three stg" id="concl"></div>
+      <p class="impl rv"><b>실무 시사점</b> 제품 LCA를 공시에 옮길 때는 범위 구분(필수·선택)과 계수 선택(LCA용·공시용 전력)을 함께 밝혀야 다른 회사와 비교할 수 있습니다.</p>
+      <div class="verdict rv gap-l">
         <div><h3>이 분석의 한계</h3>
           <ul>
             <li>BMW와 관계없는 개인 분석입니다. 인증 EPD, 제3자 검증 PCF, 공식 Scope 3 인벤토리가 아니며, ISO 14044의 외부 전문가 검토도 받지 않았습니다. Scope 3와 회피배출은 방법을 보여주는 예시입니다. BMW, 5시리즈, M5, i5는 BMW AG의 상표입니다.</li>
@@ -1511,12 +1531,28 @@ const brk = (h) => h.replace(/(니다\.|요\.) (?=\S)/g, "$1<br>");
 function updateText(R) {
   const be1 = breakeven("i5_40", "520i");
   const tie = gridTie("i5_40", "520i");
-  const extra = R.i5_40.bodyOnly + R.i5_40.battery - R["520i"].bodyOnly, diff = R["520i"].total - R.i5_40.total;
-  $("vDaily").innerHTML = brk(`i5 eDrive40은 <b class="tnum">${fmt(R.i5_40.total)} t</b>으로 520i(<b class="tnum">${fmt(R["520i"].total)} t</b>)보다 <b class="tnum">${fmt(Math.abs(diff))} t</b> ${diff >= 0 ? "적습니다" : "많습니다"}. 배터리 제조로 ${fmt(extra)} t을 더 배출하지만 ${isFinite(be1) ? `약 ${fmtKm(be1)} km면 만회합니다` : "생애주기 안에 만회하지 못합니다"}. 전력 배출계수가 ${fmt(tie, 2)} kg/kWh를 넘어야 순위가 뒤집히며, 이 분석의 값은 ${fmt(FX.grid[S.set].base, 2)} kg/kWh입니다.`);
+  const extra = R.i5_40.bodyOnly + R.i5_40.battery - R["520i"].bodyOnly;
+  const T = (id, o) => life(id, P(o || {})).total;
   const inv = inventory(), c11 = inv.reduce((a, r) => a + r.cat11_min, 0), all = inv.reduce((a, r) => a + r.cat11_min + r.cat1 + r.cat4 + r.cat12, 0);
-  $("vScope").innerHTML = brk(`판매한 차의 사용(Cat 11)이 가장 큰 항목입니다. 2025년 상반기 판매분의 Cat 11 필수 범위는 <b class="tnum">${fmt(c11 / 1e4, 1)}만 t</b>으로 산정 합계의 ${fmt(c11 / all * 100, 0)}%입니다. 공시할 때는 필수 범위와 선택 범위를 나눠야 합니다.`);
-  const A = avoided();
-  $("vAvoid").innerHTML = brk(`i5 상반기 판매분의 회피배출은 R1(520i) 대비 약 <b class="tnum">${fmt0(A.R1.fleet)} t</b>, R2(판매 평균) 대비 약 <b class="tnum">${fmt0(A.R2.fleet)} t</b>입니다. Scope 3에서 빼지 않고 비교 기준과 함께 따로 보고합니다.`);
+  const A = avoided(), sr = D.sensitivity.rows, sLo = Math.min(...sr.map(x => x.saving_lo)), sHi = Math.max(...sr.map(x => x.saving_hi));
+  const be2 = breakeven("i5_M60", "M5"), base = FX.grid[S.set].base, noCh = T("530e", { uf: 0 });
+  const pc = (a, b) => { const x = (a / b - 1) * 100; return (x > 0 ? "+" : x < 0 ? "−" : "") + fmt0(Math.abs(x)) + "%"; };
+  const km = (x) => isFinite(x) ? `약 ${fmtKm(x)} km` : "생애주기 안에 만회하지 못함";
+  const C = [
+    { v: pc(R.i5_40.total, R["520i"].total), b: "같은 차급이면 전기차의 생애주기 배출이 적습니다",
+      s: `i5 eDrive40 ${fmt(R.i5_40.total)} t, 520i ${fmt(R["520i"].total)} t. 배터리 제조로 ${fmt(extra)} t을 더 배출하지만 ${km(be1)}면 만회합니다.` },
+    { v: pc(R.i5_M60.total, R.M5.total), b: "고성능일수록 차이가 더 커집니다",
+      s: `M5 ${fmt(R.M5.total)} t, i5 M60 ${fmt(R.i5_M60.total)} t. 연비가 낮은 고성능 내연기관은 주행 배출이 커서 ${km(be2)}면 앞섭니다.` },
+    { v: pc(R["530e"].total, R["520i"].total), warn: true, b: "하이브리드는 충전 습관이 결과를 정합니다",
+      s: `지금 조건(전기 주행 ${fmt(S.uf * 100, 1)}%)에서 530e는 ${fmt(R["530e"].total)} t으로 520i와 비슷하고, 충전하지 않으면 ${fmt(noCh)} t으로 더 많습니다.` },
+    { v: fmt(tie / base, 1) + "배", b: "전력 배출계수가 크게 높아져야 순위가 뒤집힙니다",
+      s: `전력 배출계수가 ${fmt(tie, 2)} kg/kWh(지금 ${fmt(base, 2)})를 넘어야 520i가 앞섭니다. 가정을 하나씩 가장 불리하게 바꿔도 i5 eDrive40이 1대당 ${fmt(sLo)}~${fmt(sHi)} t 적습니다.` },
+    { v: fmt0(c11 / all * 100) + "%", b: "공시에서는 판매한 차의 사용(Cat 11)이 가장 큽니다",
+      s: `2025년 상반기 판매분의 Cat 11 필수 범위는 ${fmt(c11 / 1e4, 1)}만 t입니다. 필수 범위와 선택 범위(연료·전기 생산)를 나눠 보고해야 비교할 수 있습니다.` },
+    { v: fmt(A.R1.fleet / 1e4, 1) + "만 t", b: "회피배출은 Scope 3에서 빼지 않고 따로 보고합니다",
+      s: `i5 상반기 판매분은 520i 대비 약 ${fmt0(A.R1.fleet)} t, 판매 평균 대비 약 ${fmt0(A.R2.fleet)} t입니다. 비교 기준을 함께 밝혀야 합니다.` },
+  ];
+  $("concl").innerHTML = C.map(c => `<div class="ins"><span class="v${c.warn ? " warn" : ""}">${c.v}</span><b>${c.b}</b><p>${c.s}</p></div>`).join("");
 }
 
 /* ---------- 부록 ---------- */
