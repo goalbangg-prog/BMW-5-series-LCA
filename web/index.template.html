@@ -135,13 +135,13 @@ body { min-width: 1000px; }
 
 /* 요약 */
 .hero { padding-block: 64px 48px; }
-.hero .wrap { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); gap: 40px 64px; align-items: center; }
+.hero .wrap { display: grid; grid-template-columns: minmax(0, 1fr); gap: 40px 64px; align-items: center; }
 @media (max-width: 900px) { .hero { padding-block: 40px 40px; } .hero .wrap { grid-template-columns: minmax(0, 1fr); } }
 .kicker { display: inline-flex; align-items: center; gap: 8px; font-size: 0.82rem; font-weight: 500; color: var(--ink-2); }
 .kicker::before { content: ""; width: 18px; height: 2px; background: var(--accent); }
 .hero h1 { font-size: clamp(2.3rem, 5.6vw, 4rem); line-height: 1.15; letter-spacing: -0.025em; font-weight: 700; margin-top: 16px; }
 .hero h1 em { font-style: normal; color: var(--accent); }
-.hero .lede { color: var(--ink-2); font-size: 1.06rem; line-height: 1.75; max-width: 42ch; margin-top: 20px; }
+.hero .lede { color: var(--ink-2); font-size: 1.06rem; line-height: 1.75; max-width: 56ch; margin-top: 20px; }
 .cta { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 28px; }
 .btn { display: inline-flex; align-items: center; gap: 10px; font: inherit; font-size: 0.92rem; font-weight: 500; padding: 12px 22px; border: 1px solid var(--accent); background: var(--accent); color: var(--accent-ink); text-decoration: none; cursor: pointer; border-radius: 0; transition: background .2s, border-color .2s; }
 .btn:hover { background: var(--accent-hover); border-color: var(--accent-hover); }
@@ -157,6 +157,22 @@ body { min-width: 1000px; }
 .find b { display: block; font-size: 0.96rem; }
 .find span { display: block; font-size: 0.84rem; color: var(--ink-2); line-height: 1.55; }
 .finds-cap { font-size: 0.78rem; color: var(--ink-3); margin-top: 10px; }
+/* 숫자로 보는 반전 5가지 */
+.insights { padding-block: 8px 64px; }
+.ins-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px 24px; flex-wrap: wrap; margin-bottom: 18px; }
+.ins-head h2 { font-size: 1.3rem; font-weight: 700; }
+.ins-head span { font-size: 0.78rem; color: var(--ink-3); }
+.ins-grid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 20px; }
+.ins { border-top: 2px solid var(--ink); padding-top: 16px; display: flex; flex-direction: column; gap: 10px; }
+.ins .v { font-size: 2.2rem; font-weight: 700; letter-spacing: -0.02em; line-height: 1.05; color: var(--accent); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.ins .v.warn { color: var(--warn); }
+.ins b { font-size: 0.98rem; line-height: 1.45; }
+.ins p { font-size: 0.84rem; color: var(--ink-2); line-height: 1.6; }
+.ins .acts { margin-top: auto; padding-top: 6px; display: flex; flex-direction: column; align-items: flex-start; gap: 4px; font-size: 0.82rem; }
+.ins .acts a { color: var(--accent); text-decoration: none; }
+.ins .acts a:hover { text-decoration: underline; }
+.ins .acts button { font: inherit; font-size: 0.82rem; background: none; border: 0; padding: 0; color: var(--ink-2); cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
+.ins .acts button:hover { color: var(--accent); }
 
 /* 프로젝트 정보 */
 .meta { border-top: 1px solid var(--rule); }
@@ -293,7 +309,7 @@ details.more > :not(summary) { margin-top: 14px; }
 .car:hover { transform: translateY(-3px); box-shadow: 0 10px 28px rgba(16, 24, 40, 0.10); }
 .car[aria-pressed="true"] { border-color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent); }
 .car .ph { display: block; position: relative; background: var(--card); aspect-ratio: 16 / 10; overflow: hidden; }
-.car .ph img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .6s var(--ease); }
+.car .ph img { width: 100%; height: 100%; object-fit: contain; display: block; transition: transform .6s var(--ease); }
 .car:hover .ph img { transform: scale(1.04); }
 .tag { display: inline-flex; align-items: center; gap: 6px; font-size: 0.7rem; font-weight: 500; padding: 2px 7px; background: rgba(255,255,255,0.94); color: #111418; }
 .tag i { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
@@ -535,12 +551,15 @@ footer .cols { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 
           <a class="btn ghost" href="#result">계산기 바로 가기</a>
         </div>
       </div>
-      <div class="rv d2">
-        <div class="finds stg" id="finds"></div>
-        <p class="finds-cap">기본 조건: 한국 전력 2021년 값 고정(국가 LCI DB), 20만 km, 플러그인 하이브리드 전기 주행 45.5%</p>
-      </div>
     </div>
   </div>
+
+  <section class="insights gut" id="insights" aria-label="숫자로 보는 반전 5가지">
+    <div class="wrap">
+      <div class="ins-head rv"><h2>숫자로 보는 반전 5가지</h2><span>기본 조건: 한국 전력 2021년 값 고정(국가 LCI DB), 20만 km, 플러그인 하이브리드 전기 주행 45.5%</span></div>
+      <div class="ins-grid stg" id="finds"></div>
+    </div>
+  </section>
 
   <div class="meta gut">
     <div class="wrap">
@@ -552,20 +571,6 @@ footer .cols { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 
       </dl>
     </div>
   </div>
-
-  <nav class="steps gut" aria-label="분석 순서">
-    <div class="wrap">
-      <ol>
-        <li><a href="#define"><span>01</span><b>목표와 범위</b><small>무엇을 어디까지 재나</small></a></li>
-        <li><a href="#data"><span>02</span><b>데이터 출처</b><small>숫자의 출처와 품질</small></a></li>
-        <li><a href="#result"><span>03</span><b>분석 결과</b><small>차종별 생애주기 배출</small></a></li>
-        <li><a href="#scope3"><span>04</span><b>Scope 3 공시</b><small>BMW 코리아 기준 산정</small></a></li>
-        <li><a href="#avoided"><span>05</span><b>회피배출 검증</b><small>감축 주장의 조건</small></a></li>
-        <li><a href="#trust"><span>06</span><b>불확실성</b><small>가정을 바꾸면</small></a></li>
-        <li><a href="#verdict"><span>07</span><b>결론</b><small>결과와 한계</small></a></li>
-      </ol>
-    </div>
-  </nav>
 
   <!-- 01 정의 -->
   <section class="block gut" id="define">
@@ -656,7 +661,7 @@ footer .cols { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 
         <p>분석할 차량을 선택하세요.</p>
       </div>
       <div class="cards five" id="cards"></div>
-      <p class="note">사진은 위키미디어 공용(CC BY-SA 4.0)이며 촬영자는 맨 아래에 적었습니다.</p>
+      <p class="note">차량 이미지 출처: BMW 공식 홈페이지</p>
 
       <div class="lab">
         <div class="panel controls" id="controls">
@@ -672,7 +677,7 @@ footer .cols { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 
               <button type="button" data-g="base">2021년<small>고정</small></button>
               <button type="button" data-g="life">전력계획<small>반영</small></button>
             </div>
-            <input type="range" id="grid" min="0.10" max="1.10" step="0.005" aria-label="전력 배출계수 직접 조정">
+            <input type="range" id="grid" min="0.10" max="1.50" step="0.005" aria-label="전력 배출계수 직접 조정">
             <div class="hint"><b>2021년 고정</b>: 15년 내내 국가 LCI DB 2021년 값으로 충전.<br><b>전력계획 반영</b>: 제11차 전력수급기본계획대로 해마다 낮아지는 계수의 2025~2039년 평균. 그 밖의 값은 막대로 직접 정할 수 있습니다.</div>
           </div>
           <div class="ctl">
@@ -1012,9 +1017,8 @@ footer .cols { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 
         </ol>
       </div>
       <div>
-        <h3>사진 (위키미디어 공용, CC BY-SA 4.0)</h3>
-        <ul id="photoCredits"></ul>
-        <p class="fine" style="margin-top:10px">크기를 줄이고 잘랐으며, M5 사진은 번호판을 흐리게 처리했습니다. 수정본도 같은 CC BY-SA 4.0 조건을 따릅니다.</p>
+        <h3>차량 이미지</h3>
+        <p>BMW 공식 홈페이지의 차량 이미지를 사용했습니다(520i, 530e, i5 eDrive40, M5, i5 M60). 이미지의 저작권은 BMW AG에 있습니다.</p>
       </div>
     </div>
   </div>
@@ -1039,13 +1043,6 @@ const PTS = { ICE: "가솔린", PHEV: "PHEV", BEV: "전기" };
 const PTV = { ICE: "--pt-ice", PHEV: "--pt-phev", BEV: "--pt-bev" };
 const IMG = { "520i": "img/520i.webp", "530e": "img/530e.webp", "i5_40": "img/i5.webp", "M5": "img/m5.webp", "i5_M60": "img/m60.webp" };
 const FEAT = { "520i": "2.0L 가솔린 + 48V 모터 · 190마력", "530e": "2.0L 가솔린 + 전기 모터 · 299마력", "i5_40": "전기 모터 1개 · 340마력", "M5": "4.4L V8 + 전기 모터 · 727마력", "i5_M60": "전기 모터 2개 · 601마력" };
-const PHOTO = [
-  ["520i", "Damian B Oh", "https://commons.wikimedia.org/wiki/File:BMW_G60_520i_M_Sport_Alpine_White_(1).jpg"],
-  ["530e", "Chanokchon", "https://commons.wikimedia.org/wiki/File:2024_BMW_5-Series_530e_M_Sport_Pro.jpg"],
-  ["i5 eDrive40", "Damian B Oh", "https://commons.wikimedia.org/wiki/File:BMW_G60E_i5_eDrive40_M_Sport_PRO_Alpine_White_(6).jpg"],
-  ["M5", "Alexander Migl", "https://commons.wikimedia.org/wiki/File:BMW_M5_(G90)_MYLE_Festival_2025_DSC_9648.jpg"],
-  ["i5 M60", "Alexander-93", "https://commons.wikimedia.org/wiki/File:BMW_i5_M60_IAA_2023_1X7A0397.jpg"],
-];
 const STAGES = [
   { k: "body", l: "차체 (폐차 포함)", v: "--st-body" },
   { k: "battery", l: "배터리", v: "--st-batt" },
@@ -1212,20 +1209,30 @@ const q3 = (n) => `<span class="q" aria-label="3점 중 ${n}점">${[0, 1, 2].map
 
 /* ---------- 요약 ---------- */
 function buildFinds() {
-  const B = Object.fromEntries(VEH.map(v => [v.id, life(v.id)]));
-  const inv = inventory(), units = inv.reduce((a, r) => a + r.units, 0);
-  const c11 = inv.reduce((a, r) => a + r.cat11_min, 0), c1 = inv.reduce((a, r) => a + r.cat1, 0), A = avoided().R1;
-  const be = breakeven("i5_40", "520i"), yrs = be / (D.meta.km / D.meta.years);
+  const T = (id, o) => life(id, P(o || {})).total;
+  const ice = T("520i"), coal = DS.elec_coal.ar6_short;
+  const m60 = T("i5_M60"), noCharge = T("530e", { uf: 0 }), real = T("530e"), maker = T("530e", { uf: 0.9 });
+  const evCoal = T("i5_40", { grid: coal }), evPlan = T("i5_40", { grid: FX.grid_life_avg.lcidb });
+  const bg = S3.bmw_group, c11 = bg.scope3["11"] / bg.scope3_total * 100;
+  const pc = (x) => (x > 0 ? "+" : x < 0 ? "−" : "") + fmt0(Math.abs(x)) + "%";
   const rows = [
-    { v: (B.i5_40.total / B["520i"].total - 1) * 100, f: pctTxt, b: "전기차가 가솔린차보다 덜 배출합니다",
-      s: `i5 eDrive40 ${fmt(B.i5_40.total)} t, 520i ${fmt(B["520i"].total)} t. 배터리를 만들며 더 낸 몫은 약 ${fmt0(yrs)}년(${fmtKm(be)} km)만 타면 만회합니다.` },
-    { v: c11 / 10000, f: (x) => fmt(x, 1) + "만 t", b: "공시에서 가장 큰 배출은 차가 팔린 뒤에 나옵니다",
-      s: `2025년 상반기 5시리즈 ${fmt0(units)}대가 도로에서 낼 배출(Scope 3 Cat 11 예시)로, 차를 만들 때의 약 ${fmt0(c11 / c1)}배입니다.` },
-    { v: A.fleet / 10000, f: (x) => fmt(x, 1) + "만 t", b: `i5 ${fmt0(SALES.i5_all)}대가 줄인 배출 (회피배출 예시)`,
-      s: `같은 수의 520i를 팔았을 때보다 1대당 ${fmt(A.per_unit)} t 적습니다. 이 값은 Scope 3에서 빼지 않고 따로 보고합니다.`, n: true },
+    { v: (m60 / ice - 1) * 100, f: pc, b: "601마력 전기차가 190마력 가솔린차보다 덜 배출합니다",
+      s: `i5 M60 ${fmt(m60)} t, 520i ${fmt(ice)} t. 출력보다 무엇으로 달리느냐가 더 중요합니다.`, href: "#result", go: { sel: "i5_M60", grp: "performance" } },
+    { v: (noCharge / ice - 1) * 100, f: pc, warn: true, b: "충전하지 않는 하이브리드는 가솔린차보다 더 배출합니다",
+      s: `530e를 충전 없이 타면 ${fmt(noCharge)} t. 배터리와 모터 무게만 더 싣고 다니는 셈입니다.`, href: "#trust", go: { sel: "530e", grp: "daily", uf: 0 } },
+    { v: (real / maker - 1) * 100, f: pc, warn: true, b: "제조사의 가정과 실제 운전은 다릅니다",
+      s: `BMW 보고서는 530e의 전기 주행을 90%로 가정하지만, 유럽 실제 평균은 45.5%입니다. 이 차이로 배출이 ${fmt(maker)} t → ${fmt(real)} t로 늘어납니다.`, href: "#trust", go: { sel: "530e", grp: "daily", uf: 0.9 }, goTxt: "제조사 가정으로 계산" },
+    { v: evCoal / evPlan, f: (x) => fmt(x, 1) + "배", b: "같은 전기차도 충전하는 전기에 따라 배출이 달라집니다",
+      s: `석탄 발전 전기로만 충전하면 i5 eDrive40은 ${fmt(evCoal)} t으로 520i보다 ${fmt0((evCoal / ice - 1) * 100)}% 많고, 전력계획대로 깨끗해지면 ${fmt(evPlan)} t입니다.`, href: "#result", go: { sel: "i5_40", grp: "daily", grid: coal, gridKey: null }, goTxt: "석탄 전기로 계산" },
+    { v: c11, f: (x) => fmt0(x) + "%", b: "자동차 회사 탄소의 대부분은 고객의 운전에서 나옵니다",
+      s: `BMW 그룹 Scope 3의 ${fmt0(c11)}%가 판매한 차의 사용(Cat 11)입니다. 공장보다 도로에서 훨씬 많이 나옵니다.`, href: "#scope3" },
   ];
-  $("finds").innerHTML = rows.map((r, i) => `<div class="find"><span class="v${r.n ? " neutral" : ""}" data-f="${i}">${r.f(r.v)}</span><div><b>${r.b}</b><span>${r.s}</span></div></div>`).join("");
+  $("finds").innerHTML = rows.map((r, i) => `<div class="ins"><span class="v${r.warn ? " warn" : ""}" data-f="${i}">${r.f(r.v)}</span><b>${r.b}</b><p>${r.s}</p>
+    <div class="acts">${r.go ? `<button type="button" data-go="${i}">${r.goTxt || "계산기로 확인"}</button>` : ""}<a href="${r.href}">자세히 보기 →</a></div></div>`).join("");
   rows.forEach((r, i) => { const el = document.querySelector(`[data-f="${i}"]`); el._target = r.v; el._fmt = r.f; });
+  document.querySelectorAll("[data-go]").forEach(btn => btn.addEventListener("click", () => {
+    Object.assign(S, DEF, rows[+btn.dataset.go].go); renderAll(); $("result").scrollIntoView({ behavior: RM ? "auto" : "smooth" });
+  }));
 }
 
 /* ---------- 01 정의 ---------- */
@@ -1654,7 +1661,6 @@ function fillStatic() {
   $("gridBody").innerHTML = `<tr><td>2021년 (기준)<span class="src">국가 LCI DB</span></td><td class="n">–</td><td class="n">–</td><td class="n">1.000</td><td class="n">0.451</td><td class="n"><b>${fmt(FX.grid.lcidb.base, 3)}</b></td></tr>` + ["2023", "2030", "2038"].map(y => `<tr><td>${y}년${y === "2023" ? " (실적)" : " (계획)"}</td><td class="n">${fmt(FX.share[y].coal * 100, 1)}%</td><td class="n">${fmt(FX.share[y].gas * 100, 1)}%</td><td class="n">${fmt(FX.grid_ratio[y], 3)}</td><td class="n">${fmt(FX.grid_direct[y], 3)}</td><td class="n"><b>${fmt(FX.grid.lcidb[y], 3)}</b></td></tr>`).join("") +
     `<tr><td>2025~2039년 평균<span class="src">전력계획 반영</span></td><td class="n">–</td><td class="n">–</td><td class="n">${fmt(FX.grid_life_avg.lcidb / FX.grid.lcidb.base, 3)}</td><td class="n">${fmt(FX.grid_life_avg.lcidb * FX.direct_share.lcidb, 3)}</td><td class="n"><b>${fmt(FX.grid_life_avg.lcidb, 3)}</b></td></tr>`;
   $("valBody").innerHTML = D.validation.map(v => `<tr><td>${v.case}<span class="src">${v.unit}</span></td><td class="n">${fmt(v.ref, v.ref < 10 ? 4 : 1)}</td><td class="n">${fmt(v.model, v.model < 10 ? 4 : 1)}</td><td class="n">${v.diff_pct >= 0 ? "+" : "−"}${fmt(Math.abs(v.diff_pct), 1)}%</td></tr>`).join("");
-  $("photoCredits").innerHTML = PHOTO.map(p => `<li>${p[0]} · <a href="${p[2]}" target="_blank" rel="noopener">${p[1]}</a></li>`).join("");
   const pp = (x) => x >= 1 ? "100%" : (x * 100).toFixed(x > 0.99 ? 1 : 0) + "%";
   const mc = D.monte_carlo.prob;
   $("probs").innerHTML = `<div><span class="v">${pp(mc.i5_40_lt_520i)}</span><span class="l">i5 eDrive40 쪽이 520i보다 적게 배출</span></div><div><span class="v">${pp(mc.i5_M60_lt_M5)}</span><span class="l">i5 M60 쪽이 M5보다 적게 배출</span></div><div><span class="v neutral">${pp(mc["530e_lt_520i"])}</span><span class="l">530e가 520i보다 적게 배출</span></div>`;

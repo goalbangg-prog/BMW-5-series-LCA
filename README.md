@@ -48,7 +48,7 @@ BMW 5시리즈 다섯 차종이 만들어져 폐차될 때까지 배출하는 �
 
 ```
 index.html                 # 웹페이지
-img/                       # 차량 사진 (위키미디어 공용, CC BY-SA 4.0)
+img/                       # 차량 이미지 (BMW 공식 홈페이지)
 data/vehicles.csv          # 차종별 입력값과 출처
 data/factors.json          # 배출계수, 국가 LCI DB 데이터셋 값, Scope 3 입력값과 출처
 analysis/lca_model.py      # 계산 모델 (Python: Pandas, NumPy). 몬테카를로는 NumPy 난수로 계산
@@ -77,9 +77,9 @@ python web/build.py
 - 공개 비교 LCA는 ISO 14044상 외부 전문가 검토 대상이지만 검토를 받지 않았습니다.
 - Scope 3와 회피배출 계산은 방법을 보여주기 위한 예시이며 BMW의 공식 수치가 아닙니다. BMW 코리아의 실제 운임 부담 조건과 트림별 판매 대수는 반영하지 못했습니다.
 
-## 사진
+## 차량 이미지
 
-위키미디어 공용 CC BY-SA 4.0: [Damian B Oh](https://commons.wikimedia.org/wiki/File:BMW_G60_520i_M_Sport_Alpine_White_(1).jpg)(520i), [Chanokchon](https://commons.wikimedia.org/wiki/File:2024_BMW_5-Series_530e_M_Sport_Pro.jpg)(530e), [Damian B Oh](https://commons.wikimedia.org/wiki/File:BMW_G60E_i5_eDrive40_M_Sport_PRO_Alpine_White_(6).jpg)(i5 eDrive40), [Alexander Migl](https://commons.wikimedia.org/wiki/File:BMW_M5_(G90)_MYLE_Festival_2025_DSC_9648.jpg)(M5), [Alexander-93](https://commons.wikimedia.org/wiki/File:BMW_i5_M60_IAA_2023_1X7A0397.jpg)(i5 M60). 크기를 줄이고 잘랐으며 M5 사진의 번호판을 흐리게 처리했습니다. 수정본도 같은 CC BY-SA 4.0 조건을 따릅니다.
+BMW 공식 홈페이지의 차량 이미지를 사용했습니다(520i, 530e, i5 eDrive40, M5, i5 M60). 배경을 투명하게 두고 크기만 맞췄으며, 이미지의 저작권은 BMW AG에 있습니다.
 
 BMW와 관계없는 개인 분석입니다. BMW, 5시리즈, M5, i5는 BMW AG의 상표입니다.
 
