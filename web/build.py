@@ -5,14 +5,11 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 r = json.loads((ROOT / "outputs" / "results.json").read_text(encoding="utf-8"))
-mc = r["monte_carlo"]
 data = {
     "factors": r["factors"],
     "meta": r["meta"],
     "vehicles": r["vehicles"],
     "sensitivity": r["sensitivity"],
-    "monte_carlo": {"n": mc["n"], "prob": mc["prob"], "hist_edges": mc["hist_edges"], "hist": mc["hist"],
-                     "pct": {k: {str(q): v for q, v in d.items()} for k, d in mc["pct"].items()}, "avoided_pct": mc["avoided_pct"]},
     "validation": r["validation"],
     "reference_flows": r["reference_flows"],
     "datasets": r["datasets"],

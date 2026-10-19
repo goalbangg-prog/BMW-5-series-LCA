@@ -427,37 +427,6 @@ def main():
     sens_df = sens_df.sort_values("swing", ascending=False)
     sens_df.to_csv(OUT / "sensitivity.csv", index=False, encoding="utf-8-sig")
 
-    # 몬테카를로
-    rng = np.random.default_rng(20261017)
-    N = 20_000
-    d = {
-        "grid": rng.uniform(grid_year(2023), grid_now(), N),
-        "wtt": rng.triangular(gasoline_upstream("desnz"), gasoline_upstream(), gasoline_upstream(longterm=True), N),
-        "b_bev": rng.triangular(50, B_BEV, 115, N),
-        "body_mult": rng.normal(1, 0.08, N), "m_mult": rng.normal(1, 0.10, N),
-        "elec_mult": rng.triangular(0.95, 1.0, 1.25, N), "fuel_mult": rng.triangular(0.95, 1.0, 1.2, N),
-        "uf": rng.triangular(0.15, F["phev_uf"]["base"], 0.75, N),
-        "km": rng.triangular(120_000, LIFE["km"], 300_000, N),
-        "i5": rng.choice([4.1, 4.6, 4.8], N),
-    }
-    mc = {v: np.empty(N) for v in ids}
-    for i in range(N):
-        p = Params(lifetime_km=d["km"][i], grid=d["grid"][i], gas_wtt=d["wtt"][i],
-                   body_mult=d["body_mult"][i], b_bev=d["b_bev"][i], b_phev=d["b_bev"][i] * B_PHEV / B_BEV,
-                   m_mult=d["m_mult"][i], elec_mult=d["elec_mult"][i], fuel_mult=d["fuel_mult"][i],
-                   uf=d["uf"][i], i5_elec=d["i5"][i])
-        for v in ids:
-            mc[v][i] = lifecycle(v, p)["total"]
-    mcd = pd.DataFrame(mc)
-    mcd.describe(percentiles=[0.05, 0.5, 0.95]).to_csv(OUT / "monte_carlo_summary.csv", encoding="utf-8-sig")
-    prob = {"i5_40_lt_520i": float((mcd.i5_40 < mcd["520i"]).mean()), "530e_lt_520i": float((mcd["530e"] < mcd["520i"]).mean()),
-            "i5_40_lt_530e": float((mcd.i5_40 < mcd["530e"]).mean()), "i5_M60_lt_M5": float((mcd.i5_M60 < mcd.M5).mean())}
-    edges = np.arange(10, 107.5, 2.5)
-    hist = {v: np.histogram(mcd[v], bins=edges)[0].tolist() for v in ids}
-    pct = {v: {str(q): float(np.percentile(mcd[v], q)) for q in (5, 50, 95)} for v in ids}
-    av_mc = (mcd["520i"] - mcd.i5_40)
-    av_pct = {str(q): float(np.percentile(av_mc, q)) for q in (5, 50, 95)}
-
     # 데이터셋끼리 맞는지: 발전원별 데이터셋 × 2023 발전 비중 vs 시장 믹스 데이터셋
     g = g23
     per_src = {
@@ -505,7 +474,6 @@ def main():
         "grid_scenarios": scen_df.round(4).to_dict(orient="records"),
         "grid_tie": tie,
         "sensitivity": {"base_saving": b0, "rows": sens_df.round(3).to_dict(orient="records")},
-        "monte_carlo": {"n": N, "prob": prob, "hist_edges": edges.tolist(), "hist": hist, "pct": pct, "avoided_pct": av_pct},
         "validation": validation,
         "datasets": DS,
         "scope3": {"per_vehicle": smap, "korea_h1_2025": inv, "korea_h1_2025_life_grid": inv_life,
@@ -528,7 +496,6 @@ def main():
     print(scen_df.pivot(index="scenario", columns="id", values="total").round(2))
     print("tie", {k: round(v, 3) for k, v in tie.items()})
     print(sens_df[["label", "lo_txt", "hi_txt", "saving_lo", "saving_hi", "swing"]].round(2), "base", round(b0, 2))
-    print("prob", prob, "avoided pct", av_pct)
     print(pd.DataFrame(validation).round(4))
     print(pd.DataFrame(smap).T.round(2))
     print(pd.DataFrame(inv).round(0))
