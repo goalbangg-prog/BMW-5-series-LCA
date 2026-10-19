@@ -708,7 +708,6 @@ footer .cols { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 
         <h3 class="sub-h">이 분석에서 산정한 Scope 3 항목 4개<small>15개 항목 중 수입·판매사인 BMW 코리아 기준으로 산정한 항목입니다.</small></h3>
         <div class="s3key"><span><span class="badge b">산정</span> 이 분석에서 계산한 항목</span><span><span class="badge">BMW 그룹 보고</span> BMW 그룹 2025년 보고값 (전 세계) · Scope 3 합계 대비 비중</span></div>
         <div class="s3grid s3four stg" id="s3On"></div>
-        <details class="more"><summary>나머지 11개 항목 보기</summary><ul class="s3rest" id="s3Rest"></ul></details>
       </div>
 
       <div class="gap-l two">
@@ -774,15 +773,8 @@ footer .cols { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 
         <p class="note">WBCSD는 같은 차급 신차의 시장 평균을 기준으로 권합니다. 국내 준대형 세단 전체(E클래스, G80 등)의 자료가 없어 R2는 i5를 뺀 5시리즈 판매 평균으로 대신했습니다. i5 판매 대수는 트림 구분이 없어 모두 eDrive40 값을 썼습니다.</p>
       </div>
 
-      <div class="gap-l two">
+      <div class="gap-l">
         <div class="rv">
-          <h3 class="sub-h">이렇게 쓰면 안 되고, 이렇게 써야 합니다</h3>
-          <div class="dodont">
-            <div><b style="color:var(--warn)">✗ 잘못된 문장</b><p id="badLine"></p><small>회피배출을 Scope 3에서 빼는 것은 지침이 금지합니다.</small></div>
-            <div class="ok"><b style="color:var(--accent)">✓ 올바른 문장</b><p id="goodLine"></p><small>비교 기준, 기간, 계산 방식을 밝히고 Scope 1~3와 따로 보고합니다.</small></div>
-          </div>
-        </div>
-        <div class="rv d1">
           <h3 class="sub-h">회피배출을 공개할 때 함께 밝혀야 할 것</h3>
           <ul class="checks stg" id="checks"></ul>
         </div>
@@ -1475,7 +1467,6 @@ function buildScope3() {
     return `<div class="s3 ${st}"><span class="no">Cat ${no}</span><span class="nm">${nm}<small>${desc}</small></span><span class="tags">${st === "on" ? '<span class="badge b">산정</span>' : ""}${rep ? '<span class="badge">BMW 그룹 보고</span>' : ""}${val ? `<span class="val"><b>${fmtMan(val)}</b> <em>${shareTxt(val / bg.scope3_total)}</em></span>` : ""}</span></div>`;
   };
   $("s3On").innerHTML = CATS.filter(c => c[3] === "on").map(tile).join("");
-  $("s3Rest").innerHTML = CATS.filter(c => c[3] !== "on").map(([no, nm, desc, , rep]) => `<li><b>${no}</b><span><b>${nm}</b> · ${desc}${rep ? ` <span class="badge">BMW 그룹 보고 ${fmtMan(bg.scope3[String(no)])}</span>` : ""}</span></li>`).join("");
 
   buildBars($("scBars"), ALL.map(id => ({ id })), SC, { clickable: false });
   $("scLegend").innerHTML = SC.map(s => `<span><i style="background:var(${s.v})"></i>${s.l}</span>`).join("");
@@ -1526,8 +1517,6 @@ function updateAvoided() {
     q("fleet").textContent = a.fleet != null ? `${fmt0(SALES.i5_all)}대 × ${fmt(a.per_unit)} t = ${fmt0(a.fleet)} t` : "판매 대수 미산정";
   });
   const r1 = A.R1;
-  $("badLine").textContent = `"i5를 ${fmt0(SALES.i5_all)}대 팔아 BMW 코리아의 Scope 3 배출을 ${fmt0(r1.fleet)} t 줄였다."`;
-  $("goodLine").textContent = `"2025년 상반기에 판매한 i5 ${fmt0(SALES.i5_all)}대는 같은 수의 520i가 팔렸을 때보다 생애주기 동안 약 ${fmt0(r1.fleet)} t을 덜 배출할 것으로 추정된다(판매 연도 일괄 계상, ${fmtKm(S.km)} km, ${gridTxt()}). 이 값은 Scope 1~3 배출량과 별도로 보고한다."`;
   const mcA = D.monte_carlo.avoided_pct;
   const ck = [
     ["비교 기준과 근거", "R1(같은 차급 가솔린)과 R2(i5를 뺀 판매 평균)를 함께 제시"],
