@@ -6,7 +6,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+KR:wght@400;500;700&display=swap">
 <style>
 /* 톤: 검정 상단 바, 흰 바탕, 파랑은 강조와 선택에만.
-  흐름: 요약 → 01 분석 기준 → 02 결과(계산기) → 03 Scope 3 → 04 회피배출 → 05 불확실성 → 06 데이터 출처 → 07 결론 → 부록 */
+  흐름: 요약 → 01 결과(앞머리에 분석 기준 요약) → 02 Scope 3 → 03 회피배출 → 04 불확실성 → 05 분석 방법 → 06 결론 → 부록 */
 :root {
   --bg: #ffffff; --bg-2: #f4f6f8; --card: #eef1f4;
   --ink: #111418; --ink-2: #3d4450; --ink-3: #6b7280;
@@ -175,7 +175,14 @@ body { min-width: 1000px; }
 .find b { display: block; font-size: 0.96rem; }
 .find span { display: block; font-size: 0.84rem; color: var(--ink-2); line-height: 1.55; }
 .finds-cap { font-size: 0.78rem; color: var(--ink-3); margin-top: 10px; }
-/* 01 분석 기준 요약 카드 */
+/* 01 결과 앞머리: 분석 기준 요약 */
+.basis { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 20px; padding: 14px 18px; margin-bottom: 20px; border: 1px solid var(--rule); border-left: 3px solid var(--accent); background: var(--bg-2, var(--bg)); }
+.basis .bl { font-size: 0.78rem; font-weight: 700; color: var(--accent); white-space: nowrap; }
+.basis dl { display: grid; grid-template-columns: 1fr 1.4fr 1.4fr 1.1fr; gap: 16px; margin: 0; }
+.basis dt { font-size: 0.72rem; color: var(--ink-3); }
+.basis dd { margin: 2px 0 0; font-size: 0.86rem; font-weight: 600; line-height: 1.45; }
+.basis a { font-size: 0.82rem; white-space: nowrap; }
+/* (구) 요약 카드 */
 .msum { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
 .msum > div { border-top: 2px solid var(--ink); padding-top: 14px; display: grid; gap: 6px; align-content: start; }
 .msum span { font-size: 0.76rem; font-weight: 700; color: var(--accent); letter-spacing: 0.04em; }
@@ -430,12 +437,14 @@ section.alt .s-seg { box-shadow: inset -2px 0 0 var(--bg); }
 @media (max-width: 900px) { .s3grid { grid-template-columns: minmax(0, 1fr); } }
 .s3col h4 { font-size: 0.86rem; font-weight: 700; color: var(--ink-3); margin-bottom: 8px; display: flex; justify-content: space-between; }
 .s3list { display: grid; gap: 6px; }
-.s3 { display: grid; grid-template-columns: 34px minmax(0, 1fr) auto; gap: 4px 12px; align-items: start; padding: 12px; border: 1px solid var(--rule); background: var(--bg); }
-.s3 .no { font-size: 1.1rem; font-weight: 700; color: var(--ink-3); font-variant-numeric: tabular-nums; line-height: 1.3; }
+.s3 { display: grid; grid-template-columns: 62px minmax(0, 1fr) auto; gap: 4px 12px; align-items: start; padding: 12px; border: 1px solid var(--rule); background: var(--bg); }
+.s3 .no { white-space: nowrap; font-size: 1.1rem; font-weight: 700; color: var(--ink-3); font-variant-numeric: tabular-nums; line-height: 1.3; }
 .s3 .nm { font-size: 0.92rem; font-weight: 700; line-height: 1.35; }
 .s3 .nm small { display: block; font-weight: 400; font-size: 0.78rem; color: var(--ink-2); margin-top: 2px; line-height: 1.5; }
 .s3 .tags { display: flex; flex-direction: column; gap: 4px; align-items: flex-end; }
 .s3 .val { font-size: 0.78rem; color: var(--ink-3); font-variant-numeric: tabular-nums; white-space: nowrap; text-align: right; }
+.s3 .val b { font-size: 1.05rem; color: var(--accent); }
+.s3 .val em { font-style: normal; font-weight: 700; color: var(--ink-2); margin-left: 4px; }
 .s3.on { border-color: var(--accent); box-shadow: inset 3px 0 0 var(--accent); }
 .s3.on .no { color: var(--accent); }
 .s3.na { background: transparent; }
@@ -551,12 +560,11 @@ footer .cols { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 
   <div class="wrap">
     <a class="wordmark" href="#top" aria-label="맨 위로"><i aria-hidden="true"></i>5 SERIES <span>CARBON LCA</span></a>
     <nav aria-label="목차" id="nav"><span class="ind" id="navInd" aria-hidden="true"></span>
-      <a href="#define">분석 기준</a>
       <a href="#result">결과</a>
       <a href="#scope3">Scope 3</a>
       <a href="#avoided">회피배출</a>
       <a href="#trust">불확실성</a>
-      <a href="#data">데이터</a>
+      <a href="#method">분석 방법</a>
       <a href="#verdict">결론</a>
       <a href="#appendix">부록</a>
     </nav>
@@ -572,7 +580,7 @@ footer .cols { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 
         <p class="lede rv d2">BMW 5시리즈가 생애주기 동안 얼마나 많은 온실가스를 배출하는지 비교했습니다. 가솔린, 하이브리드, 전기차의 배출량을 비교하고, 그 결과가 기후공시에 어떻게 쓰이는지 확인해보세요.</p>
         <div class="cta rv d3">
           <a class="btn" href="#result">결과부터 보기 <span class="arr" aria-hidden="true">→</span></a>
-          <a class="btn ghost" href="#define">분석 기준 보기</a>
+          <a class="btn ghost" href="#method">분석 방법 보기</a>
         </div>
       </div>
       <div class="hero-art rv" aria-hidden="true">
@@ -586,85 +594,27 @@ footer .cols { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 
 
   <section class="insights gut" id="insights" aria-label="숫자로 보는 반전 5가지">
     <div class="wrap">
-      <div class="ins-head rv"><h2>숫자로 보는 반전 5가지</h2><span>기본 조건: 한국 전력 2021년 값 고정(국가 LCI DB), 20만 km, 플러그인 하이브리드 전기 주행 45.5%</span></div>
+      <div class="ins-head rv"><h2>숫자로 보는 반전 5가지</h2><span>기본 조건: 20만 km · 2021년 전력 · PHEV 전기 주행 45.5%</span></div>
       <div class="ins-grid stg" id="finds"></div>
     </div>
   </section>
 
-  <div class="meta gut">
-    <div class="wrap">
-      <dl>
-        <div><dt>수행</dt><dd>김수현<br>기획·데이터 수집·모델링·웹 구현</dd></div>
-        <div><dt>기간</dt><dd>2026년 10월</dd></div>
-        <div><dt>도구</dt><dd>Python (Pandas, NumPy)<br>JavaScript · HTML/CSS · GitHub Pages</dd></div>
-        <div><dt>기준</dt><dd>ISO 14040·14044·14067<br>GHG Protocol · WBCSD</dd></div>
-      </dl>
-    </div>
-  </div>
-
-  <!-- 01 분석 기준 -->
-  <section class="block alt gut" id="define">
-    <div class="wrap">
-      <div class="head rv">
-        <div><span class="idx">01 분석 기준</span><h2>무엇을 어디까지 비교하나</h2></div>
-        <p>계산에 앞서 ISO 14044에 따라 기능단위, 시스템 경계, 기준흐름을 정했습니다.<br>다섯 차종 모두 같은 기준으로 비교합니다.</p>
-      </div>
-      <div class="msum stg">
-        <div><span>기능단위</span><b>승용차 1대로 20만 km 주행</b><p>BMW 자료와 같은 거리입니다. 2025년부터 15년 동안 탄다고 보았습니다.</p></div>
-        <div><span>시스템 경계</span><b>요람에서 무덤까지</b><p>원료 채굴부터 폐차까지 셉니다. 정비·소모품·인프라는 제외했습니다.</p></div>
-        <div><span>영향평가</span><b>기후변화 (GWP100)</b><p>ISO 14067에 따라 IPCC 6차 보고서 값으로 계산했습니다.</p></div>
-      </div>
-
-      <div class="gap-l rv">
-        <h3 class="sub-h">시스템 경계: 요람에서 무덤까지 (정비·소모품·인프라 제외)<small>네 단계는 계산기의 막대 색과 같습니다. 각 단계에 직접 계산한 것인지, 인용·추정한 것인지 표시했습니다.</small></h3>
-        <div class="boundary">
-          <div class="bx stg">
-            <div><span class="sw" style="background:var(--st-body)"></span><b>차체 제조</b><span>원료 채굴, 부품, 조립, 물류. 폐차·재활용 처리도 이 색에 포함</span><em><i class="pt cite">인용</i>BMW 공개 결과 · M5·i5 M60은 추정</em></div>
-            <div><span class="sw" style="background:var(--st-batt)"></span><b>배터리 제조</b><span>셀 원료와 셀·팩 생산</span><em><i class="pt est">추정</i>BMW 제조 합계에서 차체 몫을 빼서 역산</em></div>
-            <div><span class="sw" style="background:var(--st-energy)"></span><b>연료·전기 생산</b><span>원유 채굴~정제, 발전·송배전</span><em><i class="pt calc">직접 계산</i>국가 LCI DB 데이터셋</em></div>
-            <div><span class="sw" style="background:var(--st-tail)"></span><b>주행 배기</b><span>휘발유 연소. 전기 주행은 0</span><em><i class="pt calc">직접 계산</i>IPCC 2006 + 국내 발열량</em></div>
-          </div>
-          <div class="out">
-            <b><i class="pt out">제외</i>경계 밖</b>
-            <ul>
-              <li>정비, 타이어·오일 교체</li>
-              <li>배터리 교체</li>
-              <li>공장·공구 설비 건설</li>
-              <li>도로, 충전 인프라</li>
-              <li>재활용 크레딧</li>
-            </ul>
-          </div>
-        </div>
-        <div class="ptkey"><span><i class="pt calc">직접 계산</i>원자료로 이 분석에서 계산</span><span><i class="pt cite">인용</i>공개된 결과값을 그대로 사용</span><span><i class="pt est">추정</i>공개 자료로 역산하거나 가정</span><span><i class="pt out">제외</i>계산하지 않음</span></div>
-      </div>
-      <div class="gap-l rv">
-        <h3 class="sub-h">기준흐름: 기능단위를 채우는 데 드는 양<small>20만 km를 달리는 데 차마다 필요한 휘발유와 전기. 모든 계산이 이 양에서 출발합니다.</small></h3>
-        <div class="tablewrap">
-          <table>
-            <thead><tr><th>차종</th><th class="n">차</th><th class="n">무게 (DIN)</th><th class="n">배터리</th><th class="n">휘발유</th><th class="n">전기</th><th>근거</th></tr></thead>
-            <tbody class="stg" id="rfBody"></tbody>
-          </table>
-        </div>
-        <p class="note">휘발유 = 20만 km × (1 − 전기 주행 비율) ÷ 공인 연비. 전기 = 20만 km × 전기 주행 비율 ÷ 공인 전비. 플러그인 하이브리드의 전기 주행 비율은 45.5%, 휘발유 밀도는 0.74 kg/L(가정)입니다.</p>
-      </div>
-
-      <details class="more"><summary>목표·범위 정의 전체 보기 (<span id="defN"></span>개 항목)</summary>
-        <div class="tablewrap">
-          <table class="deftable">
-            <thead><tr><th>항목</th><th>이 분석에서는</th></tr></thead>
-            <tbody id="defBody"></tbody>
-          </table>
-        </div>
-      </details>
-    </div>
-  </section>
-
-  <!-- 02 결과 -->
+  <!-- 01 결과 -->
   <section class="block gut" id="result">
     <div class="wrap">
       <div class="head rv">
-        <div><span class="idx">02 분석 결과</span><h2>차 한 대가 평생 배출하는 온실가스</h2></div>
+        <div><span class="idx">01 분석 결과</span><h2>차 한 대가 평생 배출하는 온실가스</h2></div>
         <p>분석할 차량을 선택하세요.</p>
+      </div>
+      <div class="basis rv">
+        <span class="bl">분석 기준</span>
+        <dl>
+          <div><dt>기능단위</dt><dd>승용차 1대 × 20만 km<br>(2025년부터 15년)</dd></div>
+          <div><dt>시스템 경계</dt><dd>요람에서 무덤까지<br>(정비·인프라 제외)</dd></div>
+          <div><dt>기준흐름</dt><dd id="rfShort"></dd></div>
+          <div><dt>영향평가</dt><dd>ISO 14067<br>(IPCC 6차 보고서)</dd></div>
+        </dl>
+        <a href="#method">자세히 →</a>
       </div>
       <div class="cards five" id="cards"></div>
       <p class="note">차량 이미지 출처: BMW 공식 홈페이지</p>
@@ -684,7 +634,7 @@ footer .cols { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 
               <button type="button" data-g="life">전력계획<small>반영</small></button>
             </div>
             <input type="range" id="grid" min="0.10" max="1.50" step="0.005" aria-label="전력 배출계수 직접 조정">
-            <div class="hint"><b>2021년 고정</b>: 15년 내내 국가 LCI DB 2021년 값으로 충전.<br><b>전력계획 반영</b>: 제11차 전력수급기본계획대로 해마다 낮아지는 계수의 2025~2039년 평균. 그 밖의 값은 막대로 직접 정할 수 있습니다.</div>
+            <div class="hint"><b>2021년 고정</b>: 15년간 국가 LCI DB 2021년 값 적용.<br><b>전력계획 반영</b>: 제11차 전력수급기본계획의 2025~2039년 평균. 막대로 직접 정할 수도 있습니다.</div>
           </div>
           <div class="ctl">
             <div class="lbl">플러그인 하이브리드 충전 습관 <span class="val" id="ufVal"></span></div>
@@ -694,7 +644,7 @@ footer .cols { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 
               <button type="button" data-uf="0.455">실제 평균<small>45.5%</small></button>
               <button type="button" data-uf="0.75">매일<small>75%</small></button>
             </div>
-            <div class="hint">530e·M5가 전체 거리 중 전기로 달리는 비율. 45.5%는 유럽 PHEV 45만여 대의 실제 기록 평균입니다.</div>
+            <div class="hint">전체 거리 중 전기 주행 비율. 45.5%는 유럽 PHEV 약 45만 대의 실측 평균입니다.</div>
           </div>
           <details class="adv" id="adv">
             <summary>세부 가정 바꾸기</summary>
@@ -745,18 +695,18 @@ footer .cols { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 
     </div>
   </section>
 
-  <!-- 03 Scope 3 -->
+  <!-- 02 Scope 3 -->
   <section class="block alt gut" id="scope3">
     <div class="wrap">
       <div class="head rv">
-        <div><span class="idx">03 Scope 3 공시</span><h2>BMW 코리아의 Scope 3로 옮기면</h2></div>
+        <div><span class="idx">02 Scope 3 공시</span><h2>BMW 코리아의 Scope 3로 옮기면</h2></div>
         <p>BMW 코리아는 독일에서 만든 차를 들여와 파는 회사입니다.<br>차량 LCA 결과를 이 회사의 Scope 3 항목으로 나누고, 2025년 상반기 판매분으로 산정했습니다.</p>
       </div>
       <div class="cond rv" data-cond></div>
 
       <div class="rv">
-        <h3 class="sub-h">이 분석에서 산정한 Scope 3 항목 4개<small>Scope 3는 15개 항목으로 나뉩니다. 수입·판매사인 BMW 코리아 기준으로 설명했습니다.</small></h3>
-        <div class="s3key"><span><span class="badge b">산정</span> 이 분석에서 계산한 항목</span><span><span class="badge">BMW 그룹 보고</span> 제조사 BMW 그룹이 2025년에 값을 공개한 항목 (전 세계)</span></div>
+        <h3 class="sub-h">이 분석에서 산정한 Scope 3 항목 4개<small>15개 항목 중 수입·판매사인 BMW 코리아 기준으로 산정한 항목입니다.</small></h3>
+        <div class="s3key"><span><span class="badge b">산정</span> 이 분석에서 계산한 항목</span><span><span class="badge">BMW 그룹 보고</span> BMW 그룹 2025년 보고값 (전 세계) · Scope 3 합계 대비 비중</span></div>
         <div class="s3grid s3four stg" id="s3On"></div>
         <details class="more"><summary>나머지 11개 항목 보기</summary><ul class="s3rest" id="s3Rest"></ul></details>
       </div>
@@ -769,10 +719,10 @@ footer .cols { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 
         </div>
         <div class="prose rv d1">
           <h3>Cat 11(판매한 제품의 사용)은 필수 범위와 선택 범위로 나뉩니다</h3>
-          <p><strong>필수 범위</strong>는 차 사용자의 Scope 1·2, 즉 배기가스와 충전 전기의 발전소 배출입니다. 전기에는 <strong>2023년 국가 전력배출계수 0.4173 kg/kWh</strong>를 곱합니다.</p>
-          <p>2025년 판매분을 보고하는 시점의 최신 공표값이 2023년 계수라서 이 값을 썼습니다. 공시용 값이라 계산기의 전력 조건과 관계없이 고정입니다. LCA 결과(02)는 국가 LCI DB 2021년 데이터셋을 그대로 씁니다.</p>
-          <p>원유 채굴·정제와 발전 연료 채굴·송배전 배출은 <strong>선택 범위</strong>입니다(연한 파랑). 두 범위를 섞으면 다른 회사와 비교할 수 없습니다.</p>
-          <p>같은 차라도 보고하는 회사에 따라 항목이 달라집니다. 제조사 BMW 그룹이라면 공장 배출(0.7 t)은 Scope 1·2, 부품·소재만 Cat 1입니다. 수입사 BMW 코리아에게는 공장 배출까지 포함한 차량 전체가 Cat 1입니다.</p>
+          <p><strong>필수 범위</strong>는 차 사용자의 Scope 1·2(배기가스, 충전 전기의 발전 배출)입니다. 전기에는 <strong>2023년 국가 전력배출계수 0.4173 kg/kWh</strong>를 곱합니다.</p>
+          <p>2025년 판매분 보고 시점의 최신 공표값이라 이 계수를 썼고, 계산기 조건과 관계없이 고정입니다. LCA 결과(01)는 국가 LCI DB 2021년 값을 그대로 씁니다.</p>
+          <p>원유 채굴·정제, 발전 연료 채굴·송배전은 <strong>선택 범위</strong>(연한 파랑)입니다. 두 범위를 섞으면 다른 회사와 비교할 수 없습니다.</p>
+          <p>보고 주체에 따라 항목도 달라집니다. BMW 그룹에게 공장 배출(0.7 t)은 Scope 1·2지만, 수입사 BMW 코리아에게는 차량 전체가 Cat 1입니다.</p>
         </div>
       </div>
 
@@ -800,20 +750,20 @@ footer .cols { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 
     </div>
   </section>
 
-  <!-- 04 회피배출 -->
+  <!-- 03 회피배출 -->
   <section class="block gut" id="avoided">
     <div class="wrap">
       <div class="head rv">
-        <div><span class="idx">04 회피배출 검증</span><h2>"전기차로 탄소를 줄였다"<br>이 말이 성립하려면</h2></div>
-        <p>제품을 쓰면 다른 선택보다 배출이 얼마나 줄어드는지를 회피배출이라고 합니다. WBCSD 회피배출 가이드(2023)로 검증했습니다. 흔히 "Scope 4"라고 부르지만, 지침은 Scope 1~3과 혼동된다는 이유로 이 표현을 권하지 않습니다.</p>
+        <div><span class="idx">03 회피배출 검증</span><h2>"전기차로 탄소를 줄였다"<br>이 말이 성립하려면</h2></div>
+        <p>다른 선택보다 줄어든 배출을 회피배출이라고 합니다. WBCSD 가이드(2023)로 검증했습니다.<br>흔히 "Scope 4"라 부르지만, 지침은 Scope 1~3과 혼동된다며 이 표현을 권하지 않습니다.</p>
       </div>
 
       <div class="rv">
         <h3 class="sub-h">회피배출을 주장하기 위한 3가지 조건</h3>
         <div class="gates stg">
-          <div class="gate"><span class="gn">조건 1 · 회사</span><h4>기후 목표를 공개하고 지키는가</h4><p>Scope 1~3 전체에 과학기반 감축 목표가 있고 진행 상황을 공개해야 합니다. BMW는 2030년 감축 목표가 SBTi(과학기반 감축목표 이니셔티브)의 검증을 받았다고 밝혔고(2021년), Scope 3 실적(2019년 1억 4,890만 t → 2025년 1억 1,870만 t)을 매년 공개합니다.</p><div class="res"><span class="mark ok">✓</span>SBTi 검증 목표 보유, 실적 매년 공개</div></div>
+          <div class="gate"><span class="gn">조건 1 · 회사</span><h4>기후 목표를 공개하고 지키는가</h4><p>Scope 1~3 전체에 과학기반 감축 목표가 있고 실적을 공개해야 합니다. BMW는 2030년 목표가 SBTi 검증을 받았고(2021년), Scope 3 실적(2019년 1억 4,890만 t → 2025년 1억 1,870만 t)을 매년 공개합니다.</p><div class="res"><span class="mark ok">✓</span>SBTi 검증 목표 보유, 실적 매년 공개</div></div>
           <div class="gate"><span class="gn">조건 2 · 제품</span><h4>최신 기후과학에 맞는 제품인가</h4><p>IPCC 6차 보고서나 EU 택소노미가 감축 수단으로 인정해야 합니다. 배기가스가 없는 전기 승용차는 EU 택소노미의 저탄소 운송 활동에 해당합니다.</p><div class="res"><span class="mark ok">✓</span>i5 해당. 530e는 2026년부터 기준 밖</div></div>
-          <div class="gate"><span class="gn">조건 3 · 기여</span><h4>직접적이고 의미 있게 줄이는가</h4><p>완성차는 사용 단계에서 연료를 대체하는 최종 제품이라 직접 기여에 해당합니다. 부품만 납품하는 회사는 이 조건을 충족하지 못할 수 있습니다.</p><div class="res"><span class="mark ok">✓</span>완성차는 직접 기여</div></div>
+          <div class="gate"><span class="gn">조건 3 · 기여</span><h4>직접적이고 의미 있게 줄이는가</h4><p>완성차는 연료 사용을 대체하는 최종 제품이라 직접 기여에 해당합니다. 부품 납품사는 충족하지 못할 수 있습니다.</p><div class="res"><span class="mark ok">✓</span>완성차는 직접 기여</div></div>
         </div>
         <p class="note">EU 택소노미(위임규정 2021/2139, 활동 6.5)의 승용차 기준은 2025년 말까지 WLTP 50 g/km 미만, 2026년부터 0 g/km입니다. WLTP 16 g/km인 530e는 2026년부터 기준을 넘습니다.</p>
       </div>
@@ -821,7 +771,7 @@ footer .cols { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 
       <div class="gap-l rv">
         <h3 class="sub-h">비교 대상(기준 시나리오)에 따라 숫자가 달라집니다<small>"i5를 사지 않았다면 무엇을 샀을까". 1대의 생애주기 기준이며, 2025년 상반기 i5 판매 대수를 곱했습니다.</small></h3>
         <div class="refs" id="refs"></div>
-        <p class="note">WBCSD는 새 수요의 기준으로 같은 차급 신차의 시장 평균을 권합니다. 국내 준대형 세단 전체(E클래스, G80 등)의 생애주기 배출 자료가 없어 R2는 i5를 뺀 5시리즈 판매 평균으로 대신했습니다. R1은 특정 고객의 대안입니다. 판매한 해에 생애주기 전체를 계상했고, i5 판매 대수는 트림 구분 없는 합계라 모두 eDrive40 값을 썼습니다.</p>
+        <p class="note">WBCSD는 같은 차급 신차의 시장 평균을 기준으로 권합니다. 국내 준대형 세단 전체(E클래스, G80 등)의 자료가 없어 R2는 i5를 뺀 5시리즈 판매 평균으로 대신했습니다. i5 판매 대수는 트림 구분이 없어 모두 eDrive40 값을 썼습니다.</p>
       </div>
 
       <div class="gap-l two">
@@ -841,12 +791,12 @@ footer .cols { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 
     </div>
   </section>
 
-  <!-- 05 불확실성 -->
+  <!-- 04 불확실성 -->
   <section class="block alt gut" id="trust">
     <div class="wrap">
       <div class="head rv">
-        <div><span class="idx">05 불확실성</span><h2>가정을 바꿔도<br>결론은 같을까</h2></div>
-        <p>가정을 하나씩 끝까지 바꿔 보고(민감도 분석), 모든 가정을 무작위로 섞어 2만 번 다시 계산했습니다(몬테카를로 시뮬레이션). 이 부분은 기본 조건 기준입니다.</p>
+        <div><span class="idx">04 불확실성</span><h2>가정을 바꿔도<br>결론은 같을까</h2></div>
+        <p>가정을 하나씩 바꿔 보고(민감도 분석), 모든 가정을 무작위로 섞어 2만 번 다시 계산했습니다(몬테카를로 시뮬레이션). 기본 조건 기준입니다.</p>
       </div>
       <div class="pair">
         <div class="rv">
@@ -872,11 +822,11 @@ footer .cols { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 
           </div>
           <div class="legend" id="mcLegend" style="margin-bottom:10px"></div>
           <div class="chart" id="mcChart" role="img" aria-label="무작위 계산 2만 번의 결과 분포"></div>
-          <p class="note">왼쪽일수록 적게 배출합니다. 점선은 중앙값입니다. 주행거리·실제 연비의 범위를 늘어나는 쪽으로 넓게 잡아 중앙값이 기본 조건 결과보다 조금 높습니다. 이 분포는 아래 가정에서 나온 결과가 퍼지는 폭이며, 통계적 신뢰구간이 아닙니다.</p>
+          <p class="note">왼쪽일수록 적게 배출하며, 점선은 중앙값입니다. 주행거리·실제 연비 범위를 늘어나는 쪽으로 넓게 잡아 중앙값이 기본 결과보다 조금 높습니다. 통계적 신뢰구간이 아니라 가정한 범위에서 결과가 퍼지는 폭입니다.</p>
         </div>
         <div class="prose rv d1">
           <h3>무작위 계산 <span class="tnum" data-fill="mcN"></span>번</h3>
-          <p>아래 변수를 각자의 범위에서 무작위로 골라 다시 계산했습니다. 범위 일부는 자료에 근거하지만, 분포 모양(삼각·균등·정규)과 변수끼리 서로 독립이라는 점은 가정입니다. 그래서 확률은 "이 가정 아래에서"의 결과로 읽어야 합니다.</p>
+          <p>각 변수를 범위 안에서 무작위로 골라 다시 계산했습니다. 범위 일부는 자료에 근거하지만, 분포 모양과 변수 간 독립은 가정입니다. 확률은 "이 가정 아래에서"의 결과입니다.</p>
           <div class="probs stg" id="probs"></div>
           <p id="mcText"></p>
           <details class="more"><summary>변수별 범위와 근거 보기</summary>
@@ -887,22 +837,63 @@ footer .cols { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 
     </div>
   </section>
 
-  <!-- 06 데이터 출처 -->
-  <section class="block gut" id="data">
+  <!-- 05 분석 방법 -->
+  <section class="block gut" id="method">
     <div class="wrap">
       <div class="head rv">
-        <div><span class="idx">06 데이터 출처</span><h2>숫자는 어디서 왔나</h2></div>
-        <p>KEITI의 국가 LCI DB를 내려받은 후,<br>ISO 14067 기준(IPCC 6차 보고서 값)으로 계산하였습니다.</p>
+        <div><span class="idx">05 분석 방법</span><h2>분석 전에 정한 것</h2></div>
+        <p>계산에 앞서 ISO 14044에 따라 정한 범위와 데이터입니다.<br>KEITI의 국가 LCI DB를 내려받은 후, ISO 14067 기준(IPCC 6차 보고서 값)으로 계산하였습니다.</p>
       </div>
       <div class="rv">
-        <h3 class="sub-h">핵심 입력값<small>결과에 가장 큰 영향을 주는 입력값 6개입니다.</small></h3>
+        <h3 class="sub-h">시스템 경계: 요람에서 무덤까지 (정비·소모품·인프라 제외)<small>색은 계산기 막대와 같고, 단계마다 직접 계산·인용·추정을 표시했습니다.</small></h3>
+        <div class="boundary">
+          <div class="bx stg">
+            <div><span class="sw" style="background:var(--st-body)"></span><b>차체 제조</b><span>원료 채굴, 부품, 조립, 물류. 폐차·재활용 처리도 이 색에 포함</span><em><i class="pt cite">인용</i>BMW 공개 결과 · M5·i5 M60은 추정</em></div>
+            <div><span class="sw" style="background:var(--st-batt)"></span><b>배터리 제조</b><span>셀 원료와 셀·팩 생산</span><em><i class="pt est">추정</i>BMW 제조 합계에서 차체 몫을 빼서 역산</em></div>
+            <div><span class="sw" style="background:var(--st-energy)"></span><b>연료·전기 생산</b><span>원유 채굴~정제, 발전·송배전</span><em><i class="pt calc">직접 계산</i>국가 LCI DB 데이터셋</em></div>
+            <div><span class="sw" style="background:var(--st-tail)"></span><b>주행 배기</b><span>휘발유 연소. 전기 주행은 0</span><em><i class="pt calc">직접 계산</i>IPCC 2006 + 국내 발열량</em></div>
+          </div>
+          <div class="out">
+            <b><i class="pt out">제외</i>경계 밖</b>
+            <ul>
+              <li>정비, 타이어·오일 교체</li>
+              <li>배터리 교체</li>
+              <li>공장·공구 설비 건설</li>
+              <li>도로, 충전 인프라</li>
+              <li>재활용 크레딧</li>
+            </ul>
+          </div>
+        </div>
+        <div class="ptkey"><span><i class="pt calc">직접 계산</i>원자료로 이 분석에서 계산</span><span><i class="pt cite">인용</i>공개된 결과값을 그대로 사용</span><span><i class="pt est">추정</i>공개 자료로 역산하거나 가정</span><span><i class="pt out">제외</i>계산하지 않음</span></div>
+      </div>
+      <div class="gap-l rv">
+        <h3 class="sub-h">기준흐름: 기능단위를 채우는 데 드는 양<small>20만 km를 달리는 데 차마다 필요한 휘발유와 전기. 모든 계산이 이 양에서 출발합니다.</small></h3>
+        <div class="tablewrap">
+          <table>
+            <thead><tr><th>차종</th><th class="n">차</th><th class="n">무게 (DIN)</th><th class="n">배터리</th><th class="n">휘발유</th><th class="n">전기</th><th>근거</th></tr></thead>
+            <tbody class="stg" id="rfBody"></tbody>
+          </table>
+        </div>
+        <p class="note">휘발유 = 20만 km × (1 − 전기 주행 비율) ÷ 공인 연비. 전기 = 20만 km × 전기 주행 비율 ÷ 공인 전비. 플러그인 하이브리드의 전기 주행 비율은 45.5%, 휘발유 밀도는 0.74 kg/L(가정)입니다.</p>
+      </div>
+
+      <details class="more"><summary>목표·범위 정의 전체 보기 (<span id="defN"></span>개 항목)</summary>
+        <div class="tablewrap">
+          <table class="deftable">
+            <thead><tr><th>항목</th><th>이 분석에서는</th></tr></thead>
+            <tbody id="defBody"></tbody>
+          </table>
+        </div>
+      </details>
+      <div class="gap-l rv" id="data">
+        <h3 class="sub-h">데이터 출처: 핵심 입력값<small>결과에 가장 큰 영향을 주는 입력값 6개입니다.</small></h3>
         <div class="tablewrap">
           <table class="regcore">
             <thead><tr><th>입력값</th><th class="n">값</th><th>출처</th><th>검증</th></tr></thead>
             <tbody class="stg" id="regCore"></tbody>
           </table>
         </div>
-        <p class="note"><b>검증 상태</b> 확인: 원자료에서 값과 단위까지 대조함 · 부분 확인: 출처는 확인했으나 쪽수·표 위치를 기록하지 못했거나 언론 보도 등 2차 경로로 확인함 · 추정·가정: 이 분석에서 정한 값. 모든 입력은 공개된 2차 자료이며, 직접 측정한 1차 자료는 없습니다.</p>
+        <p class="note"><b>검증 상태</b> 확인: 원자료와 값·단위 대조 · 부분 확인: 출처는 확인했으나 쪽수 미기록 또는 2차 경로로 확인 · 추정·가정: 이 분석에서 정한 값. 모든 입력은 공개된 2차 자료입니다.</p>
         <p class="note"><a href="#appendix" class="tolink" data-tab="t-reg">전체 입력값 <span id="regN"></span>개와 품질 평가는 부록에 있습니다 →</a></p>
       </div>
 
@@ -913,11 +904,11 @@ footer .cols { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 
     </div>
   </section>
 
-  <!-- 07 결론 -->
+  <!-- 06 결론 -->
   <section class="block alt gut" id="verdict">
     <div class="wrap">
       <div class="head rv">
-        <div><span class="idx">07 결론</span><h2>결과와 한계</h2></div>
+        <div><span class="idx">06 결론</span><h2>결과와 한계</h2></div>
         <p>문장 속 숫자는 계산기 조건에 따라 바뀝니다.</p>
       </div>
       <div class="verdict rv stg">
@@ -926,15 +917,11 @@ footer .cols { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 
         <div><h3>회피배출<small>WBCSD 기준</small></h3><p id="vAvoid"></p></div>
         <div><h3>이 분석의 한계</h3>
           <ul>
-            <li>BMW와 관계없이 공개자료로 수행한 개인 분석입니다. 인증된 EPD, 제3자 검증을 받은 제품 탄소발자국(PCF), 회사의 공식 Scope 3 인벤토리가 아니며, Scope 3와 회피배출은 방법을 보여주기 위한 예시입니다. BMW, 5시리즈, M5, i5는 BMW AG의 상표입니다.</li>
-            <li>온실가스 배출량만 산정했습니다. 다른 환경 영향은 고려하지 않았습니다.</li>
-            <li>제조 단계는 BMW가 공개한 결과값이라, 부품별 투입물을 직접 모은 것은 아닙니다. M5와 i5 M60은 다른 세 차종 자료로 추정했습니다.</li>
-            <li>국가 LCI DB 데이터셋은 2020~2022년 자료이고, 전력 배출계수는 2021년 값을 사용하여 전기차에게 불리하게 계산되는 한계점이 있습니다.</li>
-            <li>폐차 처리는 BMW 자료대로 세 차종 모두 0.6 t입니다. 큰 배터리의 해체·재활용 부담 차이는 따로 반영하지 못했습니다.</li>
-            <li>제조 단계는 BMW 보고서의 기후변화 값을 그대로 써서, 사용 단계(IPCC 6차 보고서 값)와 온실가스 환산 기준이 다를 수 있습니다. 메탄·아산화질소 비중이 작아 영향은 1% 미만으로 봅니다.</li>
-            <li>Scope 3는 BMW 코리아의 실제 운임 부담 조건과 트림별 판매 대수를 모르는 상태의 예시입니다.</li>
-            <li>충전 습관은 국내 통계가 없어 유럽 자료를 썼습니다.</li>
-            <li>공개 비교를 하는 LCA는 ISO 14044상 외부 전문가 검토를 받아야 하지만, 이 분석은 검토를 받지 않은 개인 연구입니다.</li>
+            <li>BMW와 관계없는 개인 분석입니다. 인증 EPD, 제3자 검증 PCF, 공식 Scope 3 인벤토리가 아니며, ISO 14044의 외부 전문가 검토도 받지 않았습니다. Scope 3와 회피배출은 방법을 보여주는 예시입니다. BMW, 5시리즈, M5, i5는 BMW AG의 상표입니다.</li>
+            <li>제조 단계는 BMW 공개 결과값을 썼고(M5·i5 M60은 추정), 환산 기준이 사용 단계(IPCC 6차)와 다를 수 있으나 영향은 1% 미만입니다.</li>
+            <li>국가 LCI DB는 2020~2022년 자료이고 전력은 2021년 값이라, 전기차에 불리하게 계산됐을 수 있습니다.</li>
+            <li>폐차는 세 차종 모두 0.6 t으로, 큰 배터리의 해체·재활용 부담 차이는 반영하지 못했습니다.</li>
+            <li>Scope 3는 실제 운임 부담 조건과 트림별 판매 대수를 모르는 상태의 예시이고, 충전 습관은 유럽 자료를 썼습니다.</li>
           </ul>
         </div>
       </div>
@@ -946,7 +933,7 @@ footer .cols { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 
     <div class="wrap">
       <div class="head rv">
         <div><span class="idx">부록</span><h2>계산 세부 내용</h2></div>
-        <p>숫자의 출처는 06 데이터 출처에, 계산 과정과 전체 자료는 여기에 모았습니다.<br>전체 입력값, 차량 제원, 계산식, 전력 계수, 검증 결과입니다.</p>
+        <p>숫자의 출처는 05 분석 방법에, 계산 과정과 전체 자료는 여기에 모았습니다.<br>전체 입력값, 차량 제원, 계산식, 전력 계수, 검증 결과입니다.</p>
       </div>
       <div class="tabs" role="tablist" aria-label="부록">
         <button type="button" role="tab" id="t-reg" aria-controls="p-reg" aria-selected="true">입력값 전체</button>
@@ -1234,15 +1221,15 @@ function buildFinds() {
   const pc = (x) => (x > 0 ? "+" : x < 0 ? "−" : "") + fmt0(Math.abs(x)) + "%";
   const rows = [
     { v: (m60 / ice - 1) * 100, f: pc, b: "601마력 전기차가 190마력 가솔린차보다 덜 배출합니다",
-      s: `i5 M60 ${fmt(m60)} t, 520i ${fmt(ice)} t. 출력보다 무엇으로 달리느냐가 더 중요합니다.`, href: "#result", go: { sel: "i5_M60", grp: "performance" } },
+      s: `i5 M60 ${fmt(m60)} t, 520i ${fmt(ice)} t. 출력보다 동력원이 더 중요합니다.`, href: "#result", go: { sel: "i5_M60", grp: "performance" } },
     { v: (noCharge / ice - 1) * 100, f: pc, warn: true, b: "충전하지 않는 하이브리드는 가솔린차보다 더 배출합니다",
-      s: `530e를 충전 없이 타면 ${fmt(noCharge)} t. 배터리와 모터 무게만 더 싣고 다니는 셈입니다.`, href: "#result", go: { sel: "530e", grp: "daily", uf: 0 } },
-    { v: (real / maker - 1) * 100, f: pc, warn: true, b: "제조사의 가정과 실제 운전은 다릅니다",
-      s: `BMW 보고서는 530e의 전기 주행을 90%로 가정하지만, 유럽 실제 평균은 45.5%입니다. 이 차이로 배출이 ${fmt(maker)} t → ${fmt(real)} t로 늘어납니다.`, href: "#result", go: { sel: "530e", grp: "daily", uf: 0.9 }, goTxt: "제조사 가정으로 계산" },
-    { v: evCoal / evPlan, f: (x) => fmt(x, 1) + "배", b: "같은 전기차도 충전하는 전기에 따라 배출이 달라집니다",
-      s: `석탄 발전 전기로만 충전하면 i5 eDrive40은 ${fmt(evCoal)} t으로 520i보다 ${fmt0((evCoal / ice - 1) * 100)}% 많고, 전력계획대로 깨끗해지면 ${fmt(evPlan)} t입니다.`, href: "#result", go: { sel: "i5_40", grp: "daily", grid: coal, gridKey: null }, goTxt: "석탄 전기로 계산" },
+      s: `530e를 충전 없이 타면 ${fmt(noCharge)} t. 무거운 배터리만 싣고 다니는 셈입니다.`, href: "#result", go: { sel: "530e", grp: "daily", uf: 0 } },
+    { v: (real / maker - 1) * 100, f: pc, warn: true, b: "제조사 가정과 실제 운전은 다릅니다",
+      s: `530e 전기 주행 비율: BMW 가정 90%, 유럽 실측 45.5%. 배출은 ${fmt(maker)} t → ${fmt(real)} t.`, href: "#result", go: { sel: "530e", grp: "daily", uf: 0.9 }, goTxt: "제조사 가정으로 계산" },
+    { v: evCoal / evPlan, f: (x) => fmt(x, 1) + "배", b: "같은 전기차도 충전 전기에 따라 달라집니다",
+      s: `i5 eDrive40을 석탄 전기로만 충전하면 ${fmt(evCoal)} t, 제11차 전력수급기본계획을 반영하면 ${fmt(evPlan)} t.`, href: "#result", go: { sel: "i5_40", grp: "daily", grid: coal, gridKey: null }, goTxt: "석탄 전기로 계산" },
     { v: c11, f: (x) => fmt0(x) + "%", b: "자동차 회사 탄소의 대부분은 고객의 운전에서 나옵니다",
-      s: `BMW 그룹 Scope 3의 ${fmt0(c11)}%가 판매한 차의 사용(Cat 11)입니다. 공장보다 도로에서 훨씬 많이 나옵니다.`, href: "#scope3" },
+      s: `BMW 그룹 Scope 3의 ${fmt0(c11)}%가 판매한 차의 사용(Cat 11)입니다.`, href: "#scope3" },
   ];
   $("finds").innerHTML = rows.map((r, i) => `<div class="ins"><span class="v${r.warn ? " warn" : ""}" data-f="${i}">${r.f(r.v)}</span><b>${r.b}</b><p>${r.s}</p>
     <div class="acts">${r.go ? `<button type="button" data-go="${i}">${r.goTxt || "계산기로 확인"}</button>` : ""}<a href="${r.href}">자세히 보기 →</a></div></div>`).join("");
@@ -1270,14 +1257,14 @@ function buildDefs() {
     r("시스템 경계", "System boundary", "어느 공정부터 어느 공정까지 셀지", "요람에서 무덤까지: 원료 채굴 → 제조·물류 → 연료·전기 생산 → 주행 → 폐차 (아래 그림). 정비·소모품·배터리 교체·인프라는 제외"),
     r("컷오프 기준", "Cut-off criteria", "너무 작아서 빼는 기준", "제조 단계는 BMW LCA 보고서의 기준(공구·설비 제외)을 따름. 사용 단계의 엔진오일·타이어 등 소모품은 제외(크기는 정량 검토하지 않음)"),
     r("할당 방법", "Allocation", "여러 제품이 함께 나오는 공정의 배출을 나누는 법", "정유 공정의 제품별 배분은 국가 LCI DB 데이터셋 방식을 그대로 따름. 폐차 재활용은 컷오프 방식(재활용 크레딧 없음, BMW와 같음)"),
-    r("영향 범주·평가 방법", "Impact category, LCIA", "어떤 환경 영향을 어떤 계수로 잴지", "기후변화 1개. ISO 14067에 따라 IPCC 6차 보고서(AR6)의 100년 지구온난화지수(메탄 화석 29.8·비화석 27.0, 아산화질소 273). 국내 배출권거래제 기준(2차 보고서)은 민감도로 비교. 생물기원 CO₂는 흡수와 상쇄되는 것으로 보고 0, 100년 이후 장기 배출 제외"),
+    r("영향 범주·평가 방법", "Impact category, LCIA", "어떤 환경 영향을 어떤 계수로 잴지", "기후변화 1개. ISO 14067에 따라 IPCC 6차 보고서(AR6)의 100년 지구온난화지수(메탄 화석 29.8·비화석 27.0, 아산화질소 273). 국내 배출권거래제 기준(2차 보고서)은 민감도로 비교. 생물기원 CO₂는 흡수 및 상쇄되는 것으로 가정, 100년 이후 장기 배출 제외"),
     r("데이터 품질 요구사항", "Data quality requirements", "어떤 데이터를 써도 되는지 미리 정한 조건", "시간: 2020년 이후 / 지역: 사용은 한국, 제조는 독일 / 기술: 현행 모델. 공식 통계와 검토받은 데이터셋 우선"),
     r("가정과 가치 선택", "Assumptions, value choices", "판단이 들어간 부분", "주행거리 20만 km, 충전 습관 45.5%, 휘발유 밀도 0.74 kg/L, M5·i5 M60 제조 배출 추정, 100년 이후 장기 배출 제외"),
     r("비판적 검토", "Critical review", "제3자가 방법을 점검했는가", "받지 않음 (개인 연구)"),
     g("탄소발자국 추가 항목 (ISO 14067)"),
     r("시간 경계", "Time boundary", "언제 배출되는 것까지 셀지", "2025년에 판매되어 2025~2039년 15년 사용. 배출 시점에 따른 가중은 하지 않음"),
     r("전력 모델링", "Electricity", "어떤 전기를 썼다고 볼지", "한국 평균 소비 믹스(위치 기반). 국가 LCI DB 데이터셋(2021년 자료) 그대로. 재생에너지 구매 계약은 반영하지 않음"),
-    r("생물기원 탄소", "Biogenic carbon", "식물에서 온 탄소를 어떻게 다룰지", "해당 흐름이 매우 작음. 생물기원 CO₂는 제외"),
+    r("생물기원 탄소", "Biogenic carbon", "식물에서 온 탄소를 어떻게 다룰지", "해당 흐름이 매우 작음. 생물기원 CO₂는 흡수 및 상쇄되는 것으로 가정"),
   ];
   // 핵심 항목만 먼저 보이고 나머지는 접어 둠
   let h = "", n = 0; ROWS.forEach(x => { if (x.g) h += `<tr class="grp"><td colspan="2">${x.g}</td></tr>`; else { h += x.h; n++; } });
@@ -1285,6 +1272,7 @@ function buildDefs() {
 }
 function buildRF() {
   const RF = D.reference_flows;
+  $("rfShort").innerHTML = `520i 휘발유 ${fmt0(RF["520i"].gasoline_L)} L<br>i5 eDrive40 전기 ${fmt0(RF.i5_40.electricity_kWh)} kWh 등`;
   $("rfBody").innerHTML = ALL.map(id => {
     const r = RF[id], v = V[id];
     const src = v.powertrain === "ICE" ? `공인 연비 ${v.kr_fuel_km_l} km/L` : v.powertrain === "BEV" ? `공인 전비 ${id === "i5_40" ? 4.6 : v.kr_elec_km_kwh} km/kWh` : `공인 ${v.kr_fuel_km_l} km/L · ${v.kr_elec_km_kwh} km/kWh, 전기 주행 45.5%`;
@@ -1484,7 +1472,7 @@ function buildScope3() {
   const bg = S3.bmw_group;
   const tile = ([no, nm, desc, st, rep]) => {
     const val = bg.scope3[String(no)];
-    return `<div class="s3 ${st}"><span class="no">${no}</span><span class="nm">${nm}<small>${desc}</small></span><span class="tags">${st === "on" ? '<span class="badge b">산정</span>' : ""}${rep ? '<span class="badge">BMW 그룹 보고</span>' : ""}${val ? `<span class="val">${fmtMan(val)}</span>` : ""}</span></div>`;
+    return `<div class="s3 ${st}"><span class="no">Cat ${no}</span><span class="nm">${nm}<small>${desc}</small></span><span class="tags">${st === "on" ? '<span class="badge b">산정</span>' : ""}${rep ? '<span class="badge">BMW 그룹 보고</span>' : ""}${val ? `<span class="val"><b>${fmtMan(val)}</b> <em>${shareTxt(val / bg.scope3_total)}</em></span>` : ""}</span></div>`;
   };
   $("s3On").innerHTML = CATS.filter(c => c[3] === "on").map(tile).join("");
   $("s3Rest").innerHTML = CATS.filter(c => c[3] !== "on").map(([no, nm, desc, , rep]) => `<li><b>${no}</b><span><b>${nm}</b> · ${desc}${rep ? ` <span class="badge">BMW 그룹 보고 ${fmtMan(bg.scope3[String(no)])}</span>` : ""}</span></li>`).join("");
@@ -1554,7 +1542,7 @@ function updateAvoided() {
 function buildTornado() {
   const all = D.sensitivity.rows, base = D.sensitivity.base_saving, rows = all.slice(0, 7), rest = all.slice(7);
   const restMax = Math.max(...rest.map(r => Math.abs(r.saving_hi - r.saving_lo)));
-  $("tornRest").innerHTML = `영향이 작은 ${rest.length}개(${rest.map(r => r.label).join(", ")})는 차이가 ${fmt(Math.ceil(restMax * 10) / 10)} t 이하라 그래프에서 뺐습니다. 이 중 배경 데이터 출처(국가 LCI DB와 영국 DESNZ)와 온실가스 환산 기준(IPCC 2차와 6차)은 결과를 거의 바꾸지 않습니다.`;
+  $("tornRest").innerHTML = `영향이 작은 ${rest.length}개(${rest.map(r => r.label).join(", ")})는 차이가 ${fmt(Math.ceil(restMax * 10) / 10)} t 이하라 그래프에서 뺐습니다.`;
   const hi = nice(Math.max(...rows.flatMap(r => [r.saving_lo, r.saving_hi])), 10), step = 10;
   const pc = (v) => v / hi * 100;
   let h = "";
@@ -1596,11 +1584,11 @@ function updateText(R) {
   const be1 = breakeven("i5_40", "520i");
   const tie = gridTie("i5_40", "520i");
   const extra = R.i5_40.bodyOnly + R.i5_40.battery - R["520i"].bodyOnly, diff = R["520i"].total - R.i5_40.total;
-  $("vDaily").innerHTML = brk(`i5 eDrive40의 생애주기 배출량은 <b class="tnum">${fmt(R.i5_40.total)} t</b>으로 520i(<b class="tnum">${fmt(R["520i"].total)} t</b>)보다 <b class="tnum">${fmt(Math.abs(diff))} t</b> ${diff >= 0 ? "적습니다" : "많습니다"}. 배터리를 만들면서 ${fmt(extra)} t을 더 배출하지만 ${isFinite(be1) ? `약 ${fmtKm(be1)} km를 달리면 만회합니다` : "생애주기 동안 만회하지 못합니다"}. 순위가 뒤집히려면 전력 배출계수가 ${fmt(tie, 2)} kg/kWh까지 올라가야 하는데, 이 분석의 한국 전력은 ${fmt(FX.grid[S.set].base, 2)} kg/kWh입니다.`);
+  $("vDaily").innerHTML = brk(`i5 eDrive40은 <b class="tnum">${fmt(R.i5_40.total)} t</b>으로 520i(<b class="tnum">${fmt(R["520i"].total)} t</b>)보다 <b class="tnum">${fmt(Math.abs(diff))} t</b> ${diff >= 0 ? "적습니다" : "많습니다"}. 배터리 제조로 ${fmt(extra)} t을 더 배출하지만 ${isFinite(be1) ? `약 ${fmtKm(be1)} km면 만회합니다` : "생애주기 안에 만회하지 못합니다"}. 전력 배출계수가 ${fmt(tie, 2)} kg/kWh를 넘어야 순위가 뒤집히며, 이 분석의 값은 ${fmt(FX.grid[S.set].base, 2)} kg/kWh입니다.`);
   const inv = inventory(), c11 = inv.reduce((a, r) => a + r.cat11_min, 0), all = inv.reduce((a, r) => a + r.cat11_min + r.cat1 + r.cat4 + r.cat12, 0);
-  $("vScope").innerHTML = brk(`판매한 차의 사용(Cat 11)이 Scope 3에서 가장 큰 항목입니다. 2025년 상반기 판매분의 Cat 11 필수 범위는 <b class="tnum">${fmt(c11 / 1e4, 1)}만 t</b>으로, 산정 합계(선택 범위 제외)의 ${fmt(c11 / all * 100, 0)}%입니다. LCA 결과를 공시에 옮길 때는 필수 범위(배기 + 충전 전기)와 선택 범위(연료·전기 생산)를 나눠야 합니다.`);
+  $("vScope").innerHTML = brk(`판매한 차의 사용(Cat 11)이 가장 큰 항목입니다. 2025년 상반기 판매분의 Cat 11 필수 범위는 <b class="tnum">${fmt(c11 / 1e4, 1)}만 t</b>으로 산정 합계의 ${fmt(c11 / all * 100, 0)}%입니다. 공시할 때는 필수 범위와 선택 범위를 나눠야 합니다.`);
   const A = avoided();
-  $("vAvoid").innerHTML = brk(`i5 상반기 판매분의 회피배출은 같은 차급 가솔린 대비 약 <b class="tnum">${fmt0(A.R1.fleet)} t</b>, i5를 뺀 판매 평균 대비 약 <b class="tnum">${fmt0(A.R2.fleet)} t</b>입니다. 어느 쪽이든 Scope 3에서 빼지 않고 따로 보고하며, 비교 기준을 함께 밝혀야 합니다.`);
+  $("vAvoid").innerHTML = brk(`i5 상반기 판매분의 회피배출은 R1(520i) 대비 약 <b class="tnum">${fmt0(A.R1.fleet)} t</b>, R2(판매 평균) 대비 약 <b class="tnum">${fmt0(A.R2.fleet)} t</b>입니다. Scope 3에서 빼지 않고 비교 기준과 함께 따로 보고합니다.`);
 }
 
 /* ---------- 부록 ---------- */
@@ -1634,7 +1622,7 @@ function fillStatic() {
     ["방법", "Σ 대기 배출량(kg) × GWP100"],
     ["계수", "CO₂ 1 · CH₄ 화석 29.8 · 비화석 27.0 · N₂O 273 · SF₆ 25,200 · HFC·PFC 해당 값"],
     ["휘발유 1kg 예시", `CO₂ ${fmt(DS.gasoline.co2, 4)} + CH₄ ${DS.gasoline.ch4_fossil} × 29.8 + N₂O ${DS.gasoline.n2o} × 273 + …`, `${fmt(DS.gasoline.ar6_short, 4)} kgCO₂e`],
-  ], "ISO 14067에 따라 IPCC 6차 보고서의 GWP100을 썼고, 생물기원 CO₂와 100년 이후 장기 배출(long-term)은 제외했습니다.");
+  ], "ISO 14067에 따라 IPCC 6차 보고서의 100년 기준 계수를 썼습니다. 생물기원 CO₂는 흡수 및 상쇄되는 것으로 가정했고, 100년 이후 장기 배출은 제외했습니다.");
   const sh = FX.share["2023"];
   fbox("gridFormula", "전력 계수", [
     ["기준 계수", "국가 LCI DB 소비 믹스 (2021년 자료, AR6로 특성화)", `${fmt(FX.grid.lcidb.base, 4)} kg/kWh`],
@@ -1660,7 +1648,7 @@ function fillStatic() {
     ["휘발유 생산", "영국 DESNZ 값 ~ 장기 배출 포함 값 (삼각)", "두 자료 사이"],
     ["i5 공인 전비", "4.1·4.6·4.8 km/kWh 중 하나", "국내 인증값 3개"],
   ].map(r => `<tr><td>${r[0]}</td><td>${r[1]}</td><td><span class="src" style="margin:0">${r[2]}</span></td></tr>`).join("");
-  $("mcText").innerHTML = (mc.i5_40_lt_520i >= 1 && mc.i5_M60_lt_M5 >= 1 ? `두 전기차는 ${nTxt} 번 모두 비교 차량보다 적게 배출했습니다. ` : "") + `530e가 520i보다 적게 배출한 경우는 <strong>${pp(mc["530e_lt_520i"])}</strong>로, 충전 습관에 따라 결과가 갈립니다.`;
+  $("mcText").innerHTML = (mc.i5_40_lt_520i >= 1 && mc.i5_M60_lt_M5 >= 1 ? `두 전기차는 ${nTxt} 번 모두 비교 차량보다 적게 배출했습니다. ` : "") + `530e는 <strong>${pp(mc["530e_lt_520i"])}</strong>로, 충전 습관에 따라 갈립니다.`;
 }
 
 /* ---------- 컨트롤 ---------- */
