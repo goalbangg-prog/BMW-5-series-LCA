@@ -868,10 +868,10 @@ footer .cols { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 
       </div>
 
       <div class="gap-l rv">
-        <h3 class="sub-h">어떤 차를 대신 샀다고 보느냐에 따라 달라집니다<small>i5가 없었다면 고객이 대신 샀을 차 4가지와 비교했습니다. 1대의 생애주기 기준이며, 2025년 상반기 i5 판매 대수(828대)를 곱했습니다.</small></h3>
+        <h3 class="sub-h">어떤 차를 대신 샀다고 보느냐에 따라 달라집니다<small>i5가 없었다면 고객이 대신 샀을 같은 5시리즈 3가지와 비교했습니다. 1대의 생애주기 기준이며, 2025년 상반기 i5 판매 대수(828대)를 곱했습니다.</small></h3>
         <div class="refs" id="refs"></div>
         <p class="note" id="refRange"></p>
-        <p class="note">520i는 i5보다 약 2,500만 원 저렴해 실제 대안이라기보다 같은 차체에서 가장 효율 좋은 가솔린차입니다. 가격대가 비슷한 530i xDrive·E 300·G80은 520i보다 배출이 많아, <b>520i 기준이 회피배출을 가장 작게 잡은 보수적인 값</b>입니다. 다른 차의 제조 배출은 차량 무게 × BMW 차체 계수(1 kg당 6.30 kgCO₂eq)로 추정했고, 연비는 국내 공인 복합연비입니다. i5 구매자 중 원래 다른 전기차를 사려던 사람이 있다면, 그만큼 회피배출은 줄어듭니다.</p>
+        <p class="note">530e와 530i xDrive는 i5와 가격대가 같아 가장 현실적인 대안이고, 520i는 같은 차체의 기본형입니다. 이 중 <b>530e 기준이 회피배출을 가장 작게 잡은 보수적인 값</b>입니다. 530e·520i는 BMW가 공개한 제조값을 그대로 썼고, 530i xDrive는 같은 차체·같은 2.0 가솔린 계열인 520i의 제조값을 무게 비율로 보정했습니다. 벤츠 E클래스·제네시스 G80 같은 경쟁사 차량은 국내 판매 차종의 제조사 LCA가 공개되지 않아 정량 비교에서 제외했습니다. i5 구매자 중 원래 다른 전기차를 사려던 사람이 있다면, 그만큼 회피배출은 줄어듭니다.</p>
       </div>
 
       <div class="gap-l">
@@ -1495,9 +1495,9 @@ function updateAvoided() {
   const r1 = A["520i"], vals = Object.values(A).map(a => a.fleet), lo = Math.min(...vals), hi = Math.max(...vals);
   const sr = D.sensitivity.rows, sLo = Math.min(...sr.map(x => x.saving_lo)), sHi = Math.max(...sr.map(x => x.saving_hi));
   const A21 = avoided(P({ grid: FX.grid.lcidb.base })), APL = avoided(P({ grid: FX.grid_life_avg.lcidb }));
-  $("refRange").innerHTML = `지금 조건에서 회피배출은 비교 차량에 따라 <b>약 ${fmt(lo / 1e4, 1)}만~${fmt(hi / 1e4, 1)}만 tCO₂eq</b>입니다. 전력 조건도 결과를 바꿉니다. 520i 기준으로 2021년 전력 고정이면 약 ${fmt(A21["520i"].fleet / 1e4, 1)}만, 전력계획 반영이면 약 ${fmt(APL["520i"].fleet / 1e4, 1)}만 tCO₂eq입니다.`;
+  $("refRange").innerHTML = `지금 조건에서 회피배출은 비교 차량에 따라 <b>약 ${fmt(lo / 1e4, 1)}만~${fmt(hi / 1e4, 1)}만 tCO₂eq</b>입니다. 전력 조건도 결과를 바꿉니다. 530e 기준으로 2021년 전력 고정이면 약 ${fmt(A21["530e"].fleet / 1e4, 1)}만, 전력계획 반영이면 약 ${fmt(APL["530e"].fleet / 1e4, 1)}만 tCO₂eq입니다.`;
   const ck = [
-    ["비교 기준과 근거", "대신 샀을 차 4가지와 고른 이유를 함께 제시하고, 가장 보수적인 값(520i 기준)을 밝힘"],
+    ["비교 기준과 근거", "같은 가격대 대안(530e·530i xDrive)과 기본형(520i)을 고른 이유와 함께 제시하고, 가장 보수적인 값(530e 기준)을 밝힘"],
     ["제품 자체의 배출", `i5 eDrive40 생애주기 ${fmt(r1.solution_total)} tCO₂eq/대. 회피배출과 함께 공개`],
     ["불확실성", `민감도 분석(가정을 하나씩 바꿈) 1대당 ${fmt(sLo)}~${fmt(sHi)} tCO₂eq, 전력 조건에 따른 범위 제시`],
     ["기여 주체", "BMW AG(제조)·BMW 코리아(판매)·전력회사가 함께 만든 감축이라, 각자 역할을 밝히고 주장"],
@@ -1555,7 +1555,7 @@ function updateText(R) {
       s: `2025년 상반기 판매분의 Cat 11 필수 범위는 ${fmt(c11 / 1e4, 1)}만 tCO₂eq로, 산정 합계의 ${fmt0(c11 / all * 100)}%입니다.`,
       imp: "필수 범위와 선택 범위(연료·전기 생산)를 나눠 보고해야 다른 회사와 비교할 수 있습니다." },
     { v: `${fmt(avLo / 1e4, 1)}~${fmt(avHi / 1e4, 1)}만 tCO₂eq`, b: "i5 판매로 피한 배출(회피배출)은 비교 기준에 따라 달라집니다",
-      s: `2025년 상반기 i5 828대를 520i·530i xDrive·E 300·G80과 비교한 범위입니다. 같은 차체의 520i 기준(${fmt0(A["520i"].fleet)} tCO₂eq)이 가장 보수적인 값입니다.`,
+      s: `2025년 상반기 i5 828대를 같은 가격대의 530e·530i xDrive, 기본형 520i와 비교한 범위입니다. 530e 기준(${fmt0(A["530e"].fleet)} tCO₂eq)이 가장 보수적인 값입니다.`,
       imp: "회피배출은 비교 기준을 함께 밝히고, Scope 3에서 빼지 않고 따로 보고해야 합니다." },
   ];
   $("concl").innerHTML = C.map(c => `<div class="ins"><span class="v${c.warn ? " warn" : ""}">${c.v}</span><b>${c.b}</b><p>${c.s}</p><p class="imp"><b>시사점</b>${c.imp}</p></div>`).join("");
