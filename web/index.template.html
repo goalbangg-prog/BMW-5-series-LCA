@@ -5,7 +5,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+KR:wght@400;500;700&display=swap">
 <style>
 /* 톤: 검정 상단 바, 흰 바탕, 파랑은 강조와 선택에만.
-  흐름: 요약 → 01 결과(앞머리에 분석 기준 요약) → 02 Scope 3 → 03 회피배출 → 04 불확실성 → 05 분석 방법 → 06 결론 → 부록 */
+  흐름: 반전 5가지 → PART 1 제품 LCA(01 결과 · 02 분석 방법 · 03 민감도) → PART 2 실무 확장(04 Scope 3 · 05 회피배출) → PART 3 결론(06) → 부록 */
 :root {
   --bg: #ffffff; --bg-2: #f4f6f8; --card: #eef1f4;
   --ink: #111418; --ink-2: #3d4450; --ink-3: #6b7280;
@@ -102,9 +102,6 @@ b, strong { font-weight: 700; }
 @keyframes settle { from { transform: scale(1.14); } to { transform: scale(1); } }
 /* 막대: 처음 나타날 때 줄마다 차례로 자람 */
 .sbars.intro .s-seg { transition-delay: calc(var(--r, 0) * 90ms); }
-/* 분포 그래프: 아래에서 솟아오름 */
-.js .chart .grow { transform-box: fill-box; transform-origin: 50% 100%; transform: scaleY(0); transition: transform 1.1s var(--ease); }
-.js .chart.play .grow { transform: scaleY(1); }
 /* 시스템 경계 화살표: 흐름 방향으로 살짝 움직임 */
 .bx > div::after { animation: nudge 1.8s var(--ease) infinite; }
 @keyframes nudge { 0%, 100% { transform: translate(0, -50%); opacity: .55; } 50% { transform: translate(4px, -50%); opacity: 1; } }
@@ -170,10 +167,8 @@ body { min-width: 1000px; }
 .find { display: grid; grid-template-columns: minmax(0, 150px) minmax(0, 1fr); gap: 4px 20px; align-items: center; padding: 16px 0; border-bottom: 1px solid var(--rule); }
 .find .v { font-size: clamp(1.8rem, 3.6vw, 2.4rem); font-weight: 700; letter-spacing: -0.02em; line-height: 1.1; font-variant-numeric: tabular-nums; color: var(--accent); white-space: nowrap; }
 .find .v small { font-size: 0.5em; font-weight: 500; margin-left: 2px; }
-.find .v.neutral { color: var(--ink); }
 .find b { display: block; font-size: 0.96rem; }
 .find span { display: block; font-size: 0.84rem; color: var(--ink-2); line-height: 1.55; }
-.finds-cap { font-size: 0.78rem; color: var(--ink-3); margin-top: 10px; }
 /* 목표·범위 정의 그리드 */
 .defgrid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0 24px; }
 .defgrid .dg { grid-column: 1 / -1; font-size: 0.76rem; font-weight: 700; color: var(--accent); padding: 14px 0 6px; border-bottom: 2px solid var(--ink); }
@@ -189,21 +184,13 @@ body { min-width: 1000px; }
 .part p { font-size: 0.84rem; color: rgba(255,255,255,0.72); line-height: 1.6; }
 .top nav .nsep { width: 1px; align-self: center; height: 14px; background: rgba(255,255,255,0.25); margin: 0 6px; }
 .ins-grid.three { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 28px 24px; }
-.impl { margin-top: 28px; padding: 14px 18px; border-left: 3px solid var(--accent); background: var(--bg); font-size: 0.92rem; color: var(--ink-2); }
-.impl b { color: var(--accent); margin-right: 8px; }
-/* 01 결과 앞머리: 분석 기준 요약 */
+/* 결과 앞머리: 분석 기준 요약 */
 .basis { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 20px; padding: 14px 18px; margin-bottom: 20px; border: 1px solid var(--rule); border-left: 3px solid var(--accent); background: var(--bg-2, var(--bg)); }
 .basis .bl { font-size: 0.78rem; font-weight: 700; color: var(--accent); white-space: nowrap; }
 .basis dl { display: grid; grid-template-columns: 1fr 1.4fr 1.4fr 1.1fr; gap: 16px; margin: 0; }
 .basis dt { font-size: 0.72rem; color: var(--ink-3); }
 .basis dd { margin: 2px 0 0; font-size: 0.86rem; font-weight: 600; line-height: 1.45; }
 .basis a { font-size: 0.82rem; white-space: nowrap; }
-/* (구) 요약 카드 */
-.msum { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
-.msum > div { border-top: 2px solid var(--ink); padding-top: 14px; display: grid; gap: 6px; align-content: start; }
-.msum span { font-size: 0.76rem; font-weight: 700; color: var(--accent); letter-spacing: 0.04em; }
-.msum b { font-size: 1.2rem; line-height: 1.35; }
-.msum p { font-size: 0.86rem; color: var(--ink-2); }
 /* 숫자로 보는 반전 5가지 */
 .insights { padding-block: 8px 64px; }
 .ins-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px 24px; flex-wrap: wrap; margin-bottom: 18px; }
@@ -223,28 +210,6 @@ body { min-width: 1000px; }
 .ins .acts button { font: inherit; font-size: 0.82rem; background: none; border: 0; padding: 0; color: var(--ink-2); cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
 .ins .acts button:hover { color: var(--accent); }
 
-/* 프로젝트 정보 */
-.meta { border-top: 1px solid var(--rule); }
-.meta dl { margin: 0; display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); }
-.meta dl > div:nth-child(1), .meta dl > div:nth-child(3), .meta dl > div:nth-child(4) { grid-column: span 2; }
-@media (max-width: 900px) { .meta dl { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-.meta dl > div { padding: 14px; display: grid; gap: 2px; align-content: start; border-right: 1px solid var(--rule); }
-.meta dl > div:last-child { border-right: 0; }
-@media (max-width: 900px) { .meta dl > div:nth-child(3) { border-left: 0; padding-left: 0; } }
-.meta dt { font-size: 0.72rem; font-weight: 700; color: var(--ink-3); letter-spacing: 0.04em; }
-.meta dd { margin: 0; font-size: 0.86rem; color: var(--ink); }
-
-/* 흐름 띠 */
-.steps { border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); background: var(--bg-2); }
-.steps ol { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); }
-@media (max-width: 900px) { .steps ol { grid-template-columns: repeat(4, minmax(0, 1fr)); } .steps li a { border-bottom: 1px solid var(--rule); } }
-.steps li a { display: grid; gap: 2px; padding: 16px 14px; text-decoration: none; height: 100%; border-right: 1px solid var(--rule); transition: background .2s; }
-.steps li:last-child a { border-right: 0; }
-.steps li a:hover { background: var(--bg); }
-.steps li a span { font-size: 0.74rem; font-weight: 700; color: var(--accent); }
-.steps li a b { font-size: 0.94rem; }
-.steps li a small { font-size: 0.76rem; color: var(--ink-3); line-height: 1.45; }
-
 /* 섹션 */
 section.block { padding-block: 84px; scroll-margin-top: 56px; }
 section.alt { background: var(--bg-2); }
@@ -261,7 +226,6 @@ section.alt { background: var(--bg-2); }
 .sub-h { font-size: 1.2rem; font-weight: 700; margin: 0 0 14px; line-height: 1.4; }
 .sub-h small { display: block; font-size: 0.84rem; font-weight: 400; color: var(--ink-3); margin-top: 2px; }
 .gap-l { margin-top: 56px; }
-.gap-m { margin-top: 32px; }
 .note { font-size: 0.82rem; color: var(--ink-3); margin-top: 12px; line-height: 1.65; }
 .note b { color: var(--ink); }
 .panel { background: var(--bg); border: 1px solid var(--rule); padding: 24px; min-width: 0; }
@@ -271,11 +235,6 @@ section.alt { background: var(--bg-2); }
 .prose { display: grid; gap: 14px; color: var(--ink-2); max-width: 62ch; }
 .prose h3 { color: var(--ink); font-size: 1.2rem; font-weight: 700; line-height: 1.4; }
 .prose strong { color: var(--ink); }
-.callout { border-left: 3px solid var(--accent); background: var(--accent-soft); padding: 16px 18px; display: grid; gap: 6px; }
-.callout b { color: var(--accent); }
-.callout p { color: var(--ink-2); font-size: 0.92rem; }
-.callout.warn { border-left-color: var(--warn); background: var(--warn-soft); }
-.callout.warn b { color: var(--warn); }
 
 /* 표 */
 .tablewrap { overflow-x: auto; border-top: 2px solid var(--ink); }
@@ -294,13 +253,8 @@ tr.grp td { background: var(--bg-2); font-size: 0.76rem; font-weight: 700; color
 .q i { width: 9px; height: 9px; border: 1px solid var(--ink-3); display: inline-block; }
 .q i.on { background: var(--accent); border-color: var(--accent); }
 .fbox td:first-child { white-space: nowrap; width: 180px; }
-section.alt .formula { background: var(--bg); }
 
-/* 01 정의 */
-.deftable td:first-child { width: 32%; }
-.deftable td:first-child b { display: block; }
-.deftable td .en { display: block; font-size: 0.72rem; color: var(--ink-3); font-weight: 400; }
-.deftable td .plain { display: block; font-size: 0.8rem; color: var(--ink-2); margin-top: 2px; line-height: 1.55; }
+/* 정의 */
 .boundary { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 220px); gap: 16px; align-items: stretch; }
 @media (max-width: 860px) { .boundary { grid-template-columns: minmax(0, 1fr); } }
 .bx { border: 2px dashed var(--accent); padding: 34px 16px 16px; position: relative; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
@@ -318,7 +272,7 @@ section.alt .formula { background: var(--bg); }
 .out b { font-size: 0.82rem; color: var(--ink-3); }
 .out ul { margin: 0; padding-left: 1.1em; font-size: 0.82rem; color: var(--ink-2); display: grid; gap: 2px; }
 
-/* 02 데이터 대장 */
+/* 데이터 대장 */
 .reg td:nth-child(2) { white-space: nowrap; }
 .reg a { color: var(--accent); }
 .regcore td:first-child { width: 26%; } .regcore td:nth-child(2) { width: 24%; } .regcore td:last-child { width: 1%; white-space: nowrap; }
@@ -340,17 +294,8 @@ details.more summary::before { content: "+ "; }
 details.more[open] summary::before { content: "− "; }
 details.more > :not(summary) { margin-top: 14px; }
 .s3four { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-.s3rest { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 32px; }
-.s3rest li { display: grid; grid-template-columns: 28px minmax(0, 1fr); gap: 8px; padding: 9px 0; border-bottom: 1px solid var(--rule); font-size: 0.84rem; color: var(--ink-2); }
-.s3rest li b { color: var(--ink-3); font-variant-numeric: tabular-nums; }
-.s3rest li span b { color: var(--ink); }
-.mcv { width: 100%; font-size: 0.8rem; }
-.mcv td, .mcv th { padding: 7px 10px 7px 0; }
 
-/* 03 차 카드 */
-.grp-label { display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 12px; margin: 0 0 12px; }
-.grp-label b { font-size: 1rem; }
-.grp-label span { font-size: 0.84rem; color: var(--ink-3); }
+/* 차 카드 */
 .cards { display: grid; gap: 16px; }
 .cards.five { grid-template-columns: repeat(5, minmax(0, 1fr)); }
 @media (max-width: 1100px) { .cards.five { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
@@ -450,11 +395,9 @@ section.alt .s-seg { box-shadow: inset -2px 0 0 var(--bg); }
 .tip .r { display: flex; justify-content: space-between; gap: 16px; font-variant-numeric: tabular-nums; }
 .tip .tot { border-top: 1px solid rgba(127,127,127,.5); margin-top: 4px; padding-top: 4px; font-weight: 700; }
 
-/* 04 Scope 3 */
+/* Scope 3 */
 .s3grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
 @media (max-width: 900px) { .s3grid { grid-template-columns: minmax(0, 1fr); } }
-.s3col h4 { font-size: 0.86rem; font-weight: 700; color: var(--ink-3); margin-bottom: 8px; display: flex; justify-content: space-between; }
-.s3list { display: grid; gap: 6px; }
 .s3 { display: grid; grid-template-columns: 62px minmax(0, 1fr) auto; gap: 4px 12px; align-items: start; padding: 12px; border: 1px solid var(--rule); background: var(--bg); }
 .s3 .no { white-space: nowrap; font-size: 1.1rem; font-weight: 700; color: var(--ink-3); font-variant-numeric: tabular-nums; line-height: 1.3; }
 .s3 .nm { font-size: 0.92rem; font-weight: 700; line-height: 1.35; }
@@ -474,18 +417,12 @@ section.alt .s-seg { box-shadow: inset -2px 0 0 var(--bg); }
 .kpis3 .v { font-size: 1.6rem; font-weight: 700; font-variant-numeric: tabular-nums; line-height: 1.2; }
 .kpis3 .v small { font-size: 0.55em; font-weight: 500; color: var(--ink-3); }
 .kpis3 .l { font-size: 0.8rem; color: var(--ink-2); line-height: 1.45; }
-.hbar { display: grid; gap: 6px; }
 .hb { display: grid; grid-template-columns: minmax(0, 170px) minmax(0, 1fr) minmax(0, 120px); gap: 12px; align-items: center; font-size: 0.84rem; }
-.hb .tr { height: 18px; background: var(--bg-2); position: relative; }
-section.alt .hb .tr { background: var(--card); }
-.hb .fill { position: absolute; inset: 0 auto 0 0; background: var(--accent); width: 0; transition: width .9s var(--ease); }
-.hb .fill.muted { background: var(--rule-2); }
 .hb .v { text-align: right; font-variant-numeric: tabular-nums; line-height: 1.35; }
 .ticks span:first-child { transform: none; }
 .ticks span:last-child { transform: translateX(-100%); }
-.js .hbar:not(.play) .fill { width: 0 !important; }
 
-/* 05 회피배출 */
+/* 회피배출 */
 .gates { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
 @media (max-width: 860px) { .gates { grid-template-columns: minmax(0, 1fr); } }
 .gate { border: 1px solid var(--rule); background: var(--bg); padding: 18px; display: grid; gap: 8px; align-content: start; }
@@ -504,19 +441,9 @@ section.alt .hb .tr { background: var(--card); }
 .ah-num { font-size: 3.3rem; font-weight: 800; letter-spacing: -0.02em; line-height: 1.05; color: #7fb4ff; font-variant-numeric: tabular-nums; white-space: nowrap; }
 .ah-num i { font-style: normal; margin: 0 6px; color: rgba(255,255,255,0.55); font-weight: 500; }
 .ah-num small, .ah-stat small { font-size: 0.42em; font-weight: 600; margin-left: 8px; color: rgba(255,255,255,0.8); }
-.ah-sub { font-size: 0.84rem; color: rgba(255,255,255,0.72); margin-top: 10px; }
 .ah-side { display: grid; grid-template-columns: 1fr 1fr; gap: 18px 24px; position: relative; z-index: 1; }
 .ah-main { position: relative; z-index: 1; }
 .ah-stat b { font-size: 1.8rem; font-weight: 700; font-variant-numeric: tabular-nums; white-space: nowrap; }
-.ah-meter { grid-column: 1 / -1; }
-.m-tr { position: relative; height: 30px; }
-.m-sol i { position: absolute; left: 10px; top: 50%; transform: translateY(-50%); font-style: normal; font-size: 0.78rem; font-weight: 700; white-space: nowrap; color: #fff; }
-.m-axis { display: flex; justify-content: space-between; font-size: 0.72rem; color: rgba(255,255,255,0.65); margin-top: 6px; }
-.m-sol { position: absolute; inset: 0 auto 0 0; background: var(--pt-bev); transition: width 1s var(--ease); }
-.m-gap { position: absolute; top: 0; bottom: 0; background: repeating-linear-gradient(135deg, #7fb4ff 0 6px, rgba(127,180,255,0.35) 6px 12px); transform-origin: left; transition: transform .8s 1s var(--ease), opacity .4s 1s; display: flex; align-items: center; justify-content: center; }
-.m-gap em { font-style: normal; font-size: 0.74rem; font-weight: 800; color: #0b0d10; background: #fff; padding: 1px 6px; white-space: nowrap; }
-.js .avhero:not(.play) .m-sol { width: 0 !important; }
-.js .avhero:not(.play) .m-gap { transform: scaleX(0); opacity: 0; }
 .js .avhero { opacity: 0; transform: translateY(16px); transition: opacity .7s var(--ease), transform .7s var(--ease); }
 .js .avhero.play { opacity: 1; transform: none; }
 .avhero.play .ah-num { animation: ahGlow 1.6s 1.2s var(--ease) 1; }
@@ -544,32 +471,20 @@ section.alt .hb .tr { background: var(--card); }
 .js .refs:not(.play) .sb-sol { width: 0 !important; }
 .js .refs:not(.play) .sb-gap { transform: scaleX(0); opacity: 0; }
 .js .refs:not(.play) .sb-end { opacity: 0; }
-.refrow .bl .gapseg { position: absolute; top: 0; bottom: 0; background: repeating-linear-gradient(135deg, var(--accent) 0 5px, transparent 5px 10px); opacity: .55; transform-origin: left; transition: transform .7s .8s var(--ease), opacity .4s .8s; }
-.js .refs:not(.play) .gapseg { transform: scaleX(0); opacity: 0; }
 .refrow .av em { display: inline-block; font-style: normal; font-size: 0.74rem; font-weight: 700; color: #fff; background: var(--accent); padding: 1px 6px; margin-bottom: 4px; }
 @media (prefers-reduced-motion: reduce) { .js .avhero { opacity: 1; transform: none; } }
 .refrow { display: grid; grid-template-columns: minmax(0, 210px) minmax(0, 1fr) minmax(0, 130px); gap: 12px; align-items: center; padding: 12px 0; border-bottom: 1px solid var(--rule); }
 .refrow b { font-size: 0.92rem; }
 .refrow small { display: block; font-size: 0.76rem; color: var(--ink-3); }
 .refrow .bars { display: grid; gap: 4px; }
-.refrow .bl { display: grid; grid-template-columns: 84px minmax(0, 1fr); gap: 8px; align-items: center; font-size: 0.74rem; color: var(--ink-3); }
-.refrow .bl .tr { height: 12px; position: relative; }
-.refrow .bl .fill { position: absolute; inset: 0 auto 0 0; transition: width .7s var(--ease); }
-.js .refs:not(.play) .fill { width: 0 !important; }
 .refrow .av { text-align: right; }
 .refrow .av b { font-size: 1.3rem; color: var(--accent); font-variant-numeric: tabular-nums; display: block; line-height: 1.2; }
 .refrow .av small { font-size: 0.74rem; }
-.dodont { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 16px; }
-.dodont > div { padding: 16px 18px; display: grid; gap: 8px; align-content: start; border-top: 3px solid var(--warn); background: var(--bg); }
-.dodont > div.ok { border-top-color: var(--accent); }
-.dodont b { font-size: 0.84rem; }
-.dodont p { font-size: 0.92rem; color: var(--ink); line-height: 1.6; }
-.dodont small { font-size: 0.78rem; color: var(--ink-3); }
 .checks { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; border-top: 2px solid var(--ink); }
 .checks li { display: grid; grid-template-columns: 24px minmax(0, 1fr) minmax(0, 1.2fr); gap: 4px 12px; padding: 11px 0; border-bottom: 1px solid var(--rule); font-size: 0.88rem; align-items: start; }
 .checks li > span:last-child { color: var(--ink-2); }
 
-/* 06 신뢰도 */
+/* 민감도 */
 .pair { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: 28px 56px; align-items: start; }
 .pair + .pair { margin-top: 56px; padding-top: 48px; border-top: 1px solid var(--rule); }
 @media (max-width: 960px) { .pair { grid-template-columns: minmax(0, 1fr); } .pair + .pair { margin-top: 40px; padding-top: 36px; } }
@@ -584,7 +499,7 @@ section.alt .hb .tr { background: var(--card); }
 .t-base { position: absolute; top: -4px; bottom: -4px; width: 2px; background: var(--ink); margin-left: -1px; }
 .t-axis { display: grid; grid-template-columns: minmax(0, 150px) minmax(0, 1fr); gap: 12px; height: 20px; margin-top: 4px; }
 
-/* 07 결론 */
+/* 결론 */
 .verdict { display: grid; border-top: 2px solid var(--ink); }
 .verdict > div { display: grid; grid-template-columns: minmax(0, 200px) minmax(0, 1fr); gap: 6px 32px; padding-block: 20px; border-bottom: 1px solid var(--rule); }
 .verdict h3 { font-size: 1.02rem; font-weight: 700; }
@@ -602,16 +517,12 @@ section.alt .hb .tr { background: var(--card); }
 @keyframes fade { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
 .tabpanel h3 { font-size: 1.12rem; font-weight: 700; }
 
-/* 하단 요약 바 */
-
 footer { background: var(--nav); color: #c9ced6; padding-block: 56px 48px; font-size: 0.86rem; }
 footer a { color: #ffffff; }
-footer .who { font-size: 1.15rem; color: #fff; font-weight: 700; }
 footer h3 { font-size: 0.76rem; letter-spacing: 0.06em; color: #8e96a3; font-weight: 700; margin-bottom: 10px; }
 footer ol, footer ul { margin: 0; padding-left: 1.2em; display: grid; gap: 6px; }
 footer .cols { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: 36px; }
 @media (max-width: 860px) { footer .cols { grid-template-columns: minmax(0, 1fr); } }
-.fine { font-size: 0.76rem; color: #8e96a3; }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
@@ -1114,7 +1025,6 @@ const S = { ...DEF, sel: "i5_40", grp: "daily" };
 const fmt = (x, d = 1) => Number(x).toLocaleString("ko-KR", { minimumFractionDigits: d, maximumFractionDigits: d });
 const fmt0 = (x) => Math.round(x).toLocaleString("ko-KR");
 const fmtKm = (x) => x >= 10000 ? (Math.round(x / 1000) / 10).toLocaleString("ko-KR") + "만" : (Math.round(x / 100) * 100).toLocaleString("ko-KR");
-const fmtT = (x) => x >= 10000 ? (Math.round(x / 1000) / 10).toLocaleString("ko-KR") + "만 tCO₂eq" : fmt0(x) + " tCO₂eq";
 const fmtMan = (t) => t >= 1e8 ? `${Math.floor(t / 1e8)}억 ${fmt0((t % 1e8) / 1e4)}만 tCO₂eq` : t >= 1e4 ? `${fmt(t / 1e4, t >= 1e5 ? 0 : 1)}만 tCO₂eq` : fmt0(t) + " tCO₂eq";
 const shareTxt = (x) => x < 0.001 ? "0.1% 미만" : fmt(x * 100, x < 0.01 ? 1 : 0) + "%";
 const pctTxt = (x) => (Math.round(x) === 0 ? "±" : x < 0 ? "−" : "+") + fmt(Math.abs(x), 0) + "%";
@@ -1284,7 +1194,7 @@ function buildFinds() {
   }));
 }
 
-/* ---------- 01 정의 ---------- */
+/* ---------- 정의 ---------- */
 function buildDefs() {
   const g = (t) => ({ g: t });
   const r = (k, en, plain, here) => ({ k, h: `<div class="di"><b title="${en}">${k}</b><span class="plain">${plain}</span><p>${here}</p></div>` });
@@ -1325,7 +1235,7 @@ function buildRF() {
   }).join("");
 }
 
-/* ---------- 02 데이터 ---------- */
+/* ---------- 데이터 ---------- */
 function buildData() {
   const gs = DS.gasoline, em = DS.elec_market;
   const link = (d) => `<a href="${DSURL(d.uuid)}" target="_blank" rel="noopener">${d.name.split(";")[0]}</a><span class="src mono">${d.uuid}</span>`;
@@ -1372,7 +1282,7 @@ function buildData() {
   ].map(x => `<tr><td><b>${x[0]}</b></td><td class="n">${x[1]}</td><td>${x[2]}</td><td><span class="badge ${VB2[x[3]]}">${x[3]}</span></td></tr>`).join("");
 }
 
-/* ---------- 03 카드 ---------- */
+/* ---------- 카드 ---------- */
 function buildCards() {
   $("cards").innerHTML = ALL.map(id => {
     const v = V[id];
@@ -1396,7 +1306,7 @@ function updateCards(R) {
   document.querySelectorAll(".car").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.id === S.sel)));
 }
 
-/* ---------- 03 단계별 막대 ---------- */
+/* ---------- 단계별 막대 ---------- */
 function updateDetail() {
   const id = S.sel, r = life(id);
   const parts = [["차체", r.bodyOnly], ["폐차", r.eol], ["배터리", r.battery], ["휘발유 생산", r.fuel], ["전기 생산", r.elec], ["주행 배기", r.tailpipe]]
@@ -1445,7 +1355,7 @@ function buildStack() {
   $("stageLegend").innerHTML = STAGES.map(s => `<span><i style="background:var(${s.v})"></i>${s.l}</span>`).join("");
 }
 
-/* ---------- 03 누적 곡선 ---------- */
+/* ---------- 누적 곡선 ---------- */
 let lineDrawn = false;
 function drawLines() {
   const el = $("lineChart"), p = P(), ids = ORDER[S.grp];
@@ -1495,7 +1405,7 @@ function renderLines(T) {
   $("lineNote").innerHTML = `전기차의 출발점이 높은 것은 배터리를 만들 때 더 배출했기 때문입니다. ` + (notes.length ? `선이 엇갈린 뒤부터는 ${V[ev].name} 쪽이 적습니다. ${cross}에서 엇갈립니다.` : `이 조건에서는 30만 km를 달려도 ${V[ev].name} 쪽이 앞서지 못합니다.`);
 }
 
-/* ---------- 04 Scope 3 ---------- */
+/* ---------- Scope 3 ---------- */
 const CATS = [
   [1, "구매한 제품·서비스", "BMW 그룹에서 사 온 차량의 제조 배출 (원료 채굴~공장 출고)", "on", true],
   [2, "자본재", "전시장·서비스센터·물류센터 설비", "", false],
@@ -1550,8 +1460,7 @@ function updateScope() {
   $("bmwPerCar").innerHTML = `BMW 그룹 Scope 3 합계는 ${fmtMan(bg.scope3_total)}입니다. 그룹의 Cat 11을 2025년 인도 대수(${fmt0(bg.deliveries_2025)}대)로 나누면 대당 ${fmt(S3.bmw_per_vehicle_use, 1)} tCO₂eq(전 차종·전 세계 평균)로, 이 분석의 520i Cat 11 필수 범위(${fmt(per["520i"].cat11_min, 1)} tCO₂eq)와 비슷합니다. BMW 보고서의 차량 평균 배출에는 연료 생산 포함(well-to-wheel) 표시가 있어 선택 범위까지 넣었을 수 있으며, 실무라면 회사에 확인할 부분입니다.`;
 }
 
-/* ---------- 05 회피배출 ---------- */
-function buildAvoided() {}
+/* ---------- 회피배출 ---------- */
 function updateAvoided() {
   const A = avoided(), max = Math.max(...Object.values(A).map(a => Math.max(a.ref, a.solution_total))), box = $("refs");
   if (!box.children.length) box.innerHTML = Object.entries(A).map(([k, a]) => `<div class="refrow" data-ref="${k}"><div><b>${a.label}</b>${a.estimated ? ' <span class="badge w">추정</span>' : ""}<small>${a.why}</small></div>
@@ -1582,7 +1491,7 @@ function updateAvoided() {
   $("checks").innerHTML = ck.map(c => `<li><span class="mark ok" style="width:18px;height:18px">✓</span><b>${c[0]}</b><span>${c[1]}</span></li>`).join("");
 }
 
-/* ---------- 06 신뢰도 ---------- */
+/* ---------- 신뢰도 ---------- */
 function buildTornado() {
   const all = D.sensitivity.rows, base = D.sensitivity.base_saving, rows = all.slice(0, 7), rest = all.slice(7);
   const restMax = Math.max(...rest.map(r => Math.abs(r.saving_hi - r.saving_lo)));
@@ -1601,7 +1510,6 @@ function buildTornado() {
   el.querySelectorAll(".t-bar").forEach(b => hover(b, (e) => { const r = rows[+b.dataset.i]; showTip(`<b>${r.label}</b><div class="r"><span>${r.lo_txt}</span><span>차이 ${fmt(r.saving_lo)} tCO₂eq</span></div><div class="r"><span>${r.hi_txt}</span><span>차이 ${fmt(r.saving_hi)} tCO₂eq</span></div>`, e); }));
 }
 /* ---------- 결론 ---------- */
-const brk = (h) => h.replace(/(니다\.|요\.) (?=\S)/g, "$1<br>");
 function updateText(R) {
   const be1 = breakeven("i5_40", "520i");
   const tie = gridTie("i5_40", "520i");
@@ -1609,7 +1517,7 @@ function updateText(R) {
   const T = (id, o) => life(id, P(o || {})).total;
   const inv = inventory(), c11 = inv.reduce((a, r) => a + r.cat11_min, 0), all = inv.reduce((a, r) => a + r.cat11_min + r.cat1 + r.cat4 + r.cat12, 0);
   const A = avoided(), sr = D.sensitivity.rows, sLo = Math.min(...sr.map(x => x.saving_lo)), sHi = Math.max(...sr.map(x => x.saving_hi));
-  const be2 = breakeven("i5_M60", "M5"), base = FX.grid[S.set].base, noCh = T("530e", { uf: 0 });
+  const base = FX.grid[S.set].base, noCh = T("530e", { uf: 0 });
   const pc = (a, b) => { const x = (a / b - 1) * 100; return (x > 0 ? "+" : x < 0 ? "−" : "") + fmt0(Math.abs(x)) + "%"; };
   const km = (x) => isFinite(x) ? `약 ${fmtKm(x)} km` : "생애주기 안에 만회하지 못함";
   const dP = R.M5.total - R.i5_M60.total, dD = R["520i"].total - R.i5_40.total;
@@ -1718,7 +1626,7 @@ document.querySelectorAll(".tolink").forEach(a => a.addEventListener("click", ()
 });
 
 /* ---------- 시작 ---------- */
-buildFinds(); buildDefs(); buildRF(); buildData(); buildCards(); buildStack(); buildScope3(); buildAvoided(); fillStatic(); buildTornado();
+buildFinds(); buildDefs(); buildRF(); buildData(); buildCards(); buildStack(); buildScope3(); fillStatic(); buildTornado();
 renderAll();
 
 const targets = [$("stack"), $("scBars"), $("lineChart"), $("tornado"), $("finds"), $("refs"), $("avHero")];

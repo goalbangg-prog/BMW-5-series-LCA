@@ -52,7 +52,6 @@ def co2e_per_TJ(ef: dict, gwp: dict) -> float:
 # 기본은 ISO 14067이 요구하는 최신 IPCC 값(AR6 GWP100). SAR(국내 배출권거래제 지침)은 비교용
 GWP_AR6 = {"CH4": F["gwp"]["CH4_fossil"], "N2O": F["gwp"]["N2O"], "key": "ar6"}
 GWP_SAR = {"CH4": F["gwp"]["alt_SAR"]["CH4"], "N2O": F["gwp"]["alt_SAR"]["N2O"], "key": "sar"}
-GWP_AR5 = {**F["gwp"]["alt_AR5"], "key": "ar5"}
 NCV = F["ncv"]
 IP = F["ipcc2006"]
 
@@ -488,9 +487,6 @@ def main():
                    "sales": SALES, "bmw_group": bg, "bmw_per_vehicle_use": bmw_per_vehicle_use},
         "avoided": {"base": av, "life_grid": av_life},
         "avoided_refs": REFS,
-        "recycling_example": {"al_alloy": ds("al_alloy"), "al_recycled": ds("al_recycled_ingot"),
-                              "avoided_per_kg": ds("al_alloy") - ds("al_recycled_ingot"),
-                              "bmw_i5_secondary_al_claim_t": 1.2},
         "grid_bottom_up": {"value": bottom_up, "coverage": covered / g["total"]},
     }
     (OUT / "results.json").write_text(json.dumps(res, ensure_ascii=False, indent=1, default=float), encoding="utf-8")

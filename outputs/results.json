@@ -799,32 +799,6 @@
    "sar_short_old": 0.0429,
    "ar6_short": 0.04368,
    "ar6_longterm": 0
-  },
-  "al_recycled_ingot": {
-   "name": "Aluminium Ingot_Raw material of Recycle",
-   "uuid": "2d684aac-eb3b-4778-8dcc-19bbd4a02341",
-   "version": "00.00.001",
-   "data_year": 2021,
-   "unit": "kg",
-   "sar_short": 0.93115,
-   "coverage_pct": 11.0,
-   "review": "Accredited third party review",
-   "sar_short_old": 0.9297,
-   "ar6_short": 0.94821,
-   "ar6_longterm": 0.00098
-  },
-  "al_alloy": {
-   "name": "Aluminium alloy (잉곳·스크랩·합금원소 혼합)",
-   "uuid": "55751a1d-b8d1-4212-8c4f-c8f709c55e4f",
-   "version": "00.00.001",
-   "data_year": 2021,
-   "unit": "kg",
-   "sar_short": 13.3765,
-   "coverage_pct": 17.0,
-   "review": "Accredited third party review",
-   "sar_short_old": 13.3625,
-   "ar6_short": 13.82778,
-   "ar6_longterm": 0.00073
   }
  },
  "scope3": {
@@ -1057,12 +1031,6 @@
    "source": "이 분석의 520i 결과(BMW Vehicle Footprint 제조값)"
   }
  ],
- "recycling_example": {
-  "al_alloy": 13.82778,
-  "al_recycled": 0.94821,
-  "avoided_per_kg": 12.879570000000001,
-  "bmw_i5_secondary_al_claim_t": 1.2
- },
  "grid_bottom_up": {
   "value": 0.6116614837620887,
   "coverage": 0.9742620749817691
