@@ -531,12 +531,15 @@ section.alt .hb .tr { background: var(--card); }
 .avinfo .ai-warn strong { color: var(--warn); margin-right: 4px; }
 .reflg i.hatch, .legend i.hatch { background: repeating-linear-gradient(135deg, var(--accent) 0 3px, transparent 3px 6px); border: 1px solid var(--accent); }
 .reflg .lg-note { color: var(--ink-3); margin-left: auto; }
-.sb { position: relative; height: 34px; margin-right: 96px; }
+.sb { position: relative; height: 30px; margin: 30px 96px 0 0; }
 .sb-sol { position: absolute; inset: 0 auto 0 0; background: var(--pt-bev); transition: width .8s var(--ease); }
 .sb-gap { position: absolute; top: 0; bottom: 0; background: repeating-linear-gradient(135deg, var(--accent) 0 6px, rgba(0,102,204,0.25) 6px 12px); transform-origin: left; transition: transform .7s .8s var(--ease), opacity .4s .8s; }
 .sb i { position: absolute; top: 50%; transform: translateY(-50%); font-style: normal; font-size: 0.72rem; font-weight: 700; white-space: nowrap; }
 .sb-sol i { left: 10px; color: #fff; }
-.sb-gap i { left: 50%; transform: translate(-50%, -50%); color: var(--ink); background: var(--bg); padding: 0 5px; }
+.sb-br { position: absolute; bottom: calc(100% + 4px); height: 7px; border: 1.5px solid var(--accent); border-bottom: 0; transform-origin: center; transition: transform .5s 1.4s var(--ease), opacity .4s 1.4s; }
+.sb-br b { position: absolute; left: 50%; bottom: calc(100% + 3px); transform: translateX(-50%); white-space: nowrap; font-size: 0.76rem; font-weight: 700; color: var(--accent); transition: opacity .4s 1.7s; }
+.js .refs:not(.play) .sb-br { transform: scaleX(0); opacity: 0; }
+.js .refs:not(.play) .sb-br b { opacity: 0; }
 .sb-end { position: absolute; top: 50%; transform: translateY(-50%); padding-left: 8px; font-size: 0.76rem; color: var(--ink-2); white-space: nowrap; transition: opacity .4s 1.3s; }
 .js .refs:not(.play) .sb-sol { width: 0 !important; }
 .js .refs:not(.play) .sb-gap { transform: scaleX(0); opacity: 0; }
@@ -1552,12 +1555,12 @@ function buildAvoided() {}
 function updateAvoided() {
   const A = avoided(), max = Math.max(...Object.values(A).map(a => Math.max(a.ref, a.solution_total))), box = $("refs");
   if (!box.children.length) box.innerHTML = Object.entries(A).map(([k, a]) => `<div class="refrow" data-ref="${k}"><div><b>${a.label}</b>${a.estimated ? ' <span class="badge w">추정</span>' : ""}<small>${a.why}</small></div>
-    <div class="bars"><div class="sb"><span class="sb-sol" data-f="sol"><i data-f="soll"></i></span><span class="sb-gap" data-f="gap"><i data-f="gapl"></i></span><span class="sb-end" data-f="end"></span></div></div>
+    <div class="bars"><div class="sb"><span class="sb-sol" data-f="sol"><i data-f="soll"></i></span><span class="sb-gap" data-f="gap"></span><span class="sb-br" data-f="br"><b data-f="gapl"></b></span><span class="sb-end" data-f="end"></span></div></div>
     <div class="av"><small>828대 합계</small><b><span data-f="fleet"></span><span style="font-size:.6em;font-weight:500"> tCO₂eq</span></b></div></div>`).join("");
   Object.entries(A).forEach(([k, a]) => {
     const row = box.querySelector(`[data-ref="${k}"]`), q = (f) => row.querySelector(`[data-f="${f}"]`);
     const ws = a.solution_total / max * 100, wg = (a.ref - a.solution_total) / max * 100;
-    q("sol").style.width = ws + "%"; q("gap").style.left = ws + "%"; q("gap").style.width = wg + "%"; q("end").style.left = (ws + wg) + "%";
+    q("sol").style.width = ws + "%"; q("gap").style.left = ws + "%"; q("gap").style.width = wg + "%"; q("br").style.left = ws + "%"; q("br").style.width = wg + "%"; q("end").style.left = (ws + wg) + "%";
     q("soll").textContent = `i5 ${fmt(a.solution_total)} tCO₂eq`; q("gapl").textContent = `회피 ${fmt(a.per_unit)} tCO₂eq (−${fmt0(a.per_unit / a.ref * 100)}%)`; q("end").textContent = `${fmt(a.ref)} tCO₂eq`;
     setNum(q("fleet"), a.fleet, fmt0);
   });
