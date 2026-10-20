@@ -527,12 +527,17 @@ section.alt .hb .tr { background: var(--card); }
 .avhero.play .ah-num { animation: ahGlow 1.6s 1.2s var(--ease) 1; }
 @keyframes ahGlow { 0% { text-shadow: none; } 40% { text-shadow: 0 0 24px rgba(127,180,255,0.7); } 100% { text-shadow: none; } }
 .reflg { margin: 4px 0 6px; font-size: 0.78rem; }
+.avinfo { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; margin-top: 18px; }
+.avinfo > div { border-top: 2px solid var(--accent); padding-top: 10px; display: grid; gap: 4px; align-content: start; }
+.avinfo .ai-k { font-size: 0.72rem; font-weight: 700; color: var(--accent); letter-spacing: 0.03em; }
+.avinfo b { font-size: 0.9rem; line-height: 1.45; }
+.avinfo p { font-size: 0.78rem; color: var(--ink-2); line-height: 1.55; }
 .reflg i.hatch, .legend i.hatch { background: repeating-linear-gradient(135deg, var(--accent) 0 3px, transparent 3px 6px); border: 1px solid var(--accent); }
 .reflg .lg-note { color: var(--ink-3); margin-left: auto; }
-.sb { position: relative; height: 34px; margin-right: 90px; }
+.sb { position: relative; height: 34px; margin-right: 96px; }
 .sb-sol { position: absolute; inset: 0 auto 0 0; background: var(--pt-bev); transition: width .8s var(--ease); }
 .sb-gap { position: absolute; top: 0; bottom: 0; background: repeating-linear-gradient(135deg, var(--accent) 0 6px, rgba(0,102,204,0.25) 6px 12px); transform-origin: left; transition: transform .7s .8s var(--ease), opacity .4s .8s; }
-.sb i { position: absolute; top: 50%; transform: translateY(-50%); font-style: normal; font-size: 0.76rem; font-weight: 700; white-space: nowrap; }
+.sb i { position: absolute; top: 50%; transform: translateY(-50%); font-style: normal; font-size: 0.72rem; font-weight: 700; white-space: nowrap; }
 .sb-sol i { left: 10px; color: #fff; }
 .sb-gap i { left: 50%; transform: translate(-50%, -50%); color: var(--ink); background: var(--bg); padding: 0 5px; }
 .sb-end { position: absolute; top: 50%; transform: translateY(-50%); padding-left: 8px; font-size: 0.76rem; color: var(--ink-2); white-space: nowrap; transition: opacity .4s 1.3s; }
@@ -543,7 +548,7 @@ section.alt .hb .tr { background: var(--card); }
 .js .refs:not(.play) .gapseg { transform: scaleX(0); opacity: 0; }
 .refrow .av em { display: inline-block; font-style: normal; font-size: 0.74rem; font-weight: 700; color: #fff; background: var(--accent); padding: 1px 6px; margin-bottom: 4px; }
 @media (prefers-reduced-motion: reduce) { .js .avhero { opacity: 1; transform: none; } }
-.refrow { display: grid; grid-template-columns: minmax(0, 260px) minmax(0, 1fr) minmax(0, 170px); gap: 12px; align-items: center; padding: 12px 0; border-bottom: 1px solid var(--rule); }
+.refrow { display: grid; grid-template-columns: minmax(0, 210px) minmax(0, 1fr) minmax(0, 130px); gap: 12px; align-items: center; padding: 12px 0; border-bottom: 1px solid var(--rule); }
 .refrow b { font-size: 0.92rem; }
 .refrow small { display: block; font-size: 0.76rem; color: var(--ink-3); }
 .refrow .bars { display: grid; gap: 4px; }
@@ -925,17 +930,16 @@ footer .cols { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 
           <div class="ah-side">
             <div class="ah-stat"><span class="ah-k">1대당 줄어든 배출</span><b><span data-h="plo">0</span>~<span data-h="phi">0</span><small>tCO₂eq</small></b></div>
             <div class="ah-stat"><span class="ah-k">생애주기 배출 감소율</span><b><span data-h="clo">0</span>~<span data-h="chi">0</span>%</b></div>
-            <div class="ah-meter" aria-hidden="true">
-              <span class="ah-k">1대 기준 · 530e 대신 i5를 탔을 때</span>
-              <div class="m-tr"><span class="m-sol" data-h="sol"><i data-h="soll"></i></span><span class="m-gap" data-h="gap"><em data-h="gapl"></em></span></div>
-              <div class="m-axis"><span>0</span><span data-h="endl"></span></div>
-            </div>
           </div>
         </div>
-        <div class="legend reflg"><span><i style="background:var(--pt-bev)"></i>i5 eDrive40의 배출</span><span><i class="hatch"></i>회피한 배출</span><span class="lg-note">막대 전체 길이 = 대신 샀을 차의 생애주기 배출 (tCO₂eq)</span></div>
+        <div class="legend reflg"><span><i style="background:var(--pt-bev)"></i>i5 eDrive40의 배출</span><span><i class="hatch"></i>회피한 배출</span><span class="lg-note">막대 전체 = 대신 샀을 차의 1대 생애주기 배출</span></div>
         <div class="refs" id="refs"></div>
-        <p class="note" id="refRange"></p>
-        <p class="note">530e와 530i xDrive는 i5와 가격대가 같아 가장 현실적인 대안이고, 520i는 같은 차체의 기본형입니다. 이 중 <b>530e 기준이 회피배출을 가장 작게 잡은 보수적인 값</b>입니다. 530e·520i는 BMW가 공개한 제조값을 그대로 썼고, 530i xDrive는 같은 차체·같은 2.0 가솔린 계열인 520i의 제조값을 무게 비율로 보정했습니다. 벤츠 E클래스·제네시스 G80 같은 경쟁사 차량은 국내 판매 차종의 제조사 LCA가 공개되지 않아 정량 비교에서 제외했습니다. i5 구매자 중 원래 다른 전기차를 사려던 사람이 있다면, 그만큼 회피배출은 줄어듭니다.</p>
+        <div class="avinfo stg">
+          <div><span class="ai-k">기준 선택</span><b>같은 가격대 530e·530i xDrive<br>+ 기본형 520i</b><p>가장 보수적인 값은 <strong>530e 기준</strong></p></div>
+          <div><span class="ai-k">제조 데이터</span><b>530e·520i: BMW 공개값<br>530i xDrive: 520i 값 무게 보정</b><p>같은 차체·같은 2.0 가솔린 계열</p></div>
+          <div><span class="ai-k">전력 조건 (530e 기준)</span><b><span id="avG21"></span> → <span id="avGPL"></span></b><p>2021년 전력 고정 → 전력계획 반영</p></div>
+          <div><span class="ai-k">제외·주의</span><b>경쟁사(E클래스·G80) 제외</b><p>국내 판매 차종 LCA 미공개. 원래 전기차를 사려던 구매자만큼 회피배출은 감소</p></div>
+        </div>
       </div>
 
       <div class="gap-l">
@@ -1554,15 +1558,13 @@ function updateAvoided() {
   const A = avoided(), max = Math.max(...Object.values(A).map(a => Math.max(a.ref, a.solution_total))), box = $("refs");
   if (!box.children.length) box.innerHTML = Object.entries(A).map(([k, a]) => `<div class="refrow" data-ref="${k}"><div><b>${a.label}</b>${a.estimated ? ' <span class="badge w">추정</span>' : ""}<small>${a.why} · ${a.price}</small></div>
     <div class="bars"><div class="sb"><span class="sb-sol" data-f="sol"><i data-f="soll"></i></span><span class="sb-gap" data-f="gap"><i data-f="gapl"></i></span><span class="sb-end" data-f="end"></span></div></div>
-    <div class="av"><em data-f="pct"></em><b><span data-f="per"></span> tCO₂eq<span style="font-size:.6em;font-weight:500"> /대</span></b><small data-f="fleet"></small></div></div>`).join("");
+    <div class="av"><small>828대 합계</small><b><span data-f="fleet"></span><span style="font-size:.6em;font-weight:500"> tCO₂eq</span></b></div></div>`).join("");
   Object.entries(A).forEach(([k, a]) => {
     const row = box.querySelector(`[data-ref="${k}"]`), q = (f) => row.querySelector(`[data-f="${f}"]`);
     const ws = a.solution_total / max * 100, wg = (a.ref - a.solution_total) / max * 100;
     q("sol").style.width = ws + "%"; q("gap").style.left = ws + "%"; q("gap").style.width = wg + "%"; q("end").style.left = (ws + wg) + "%";
-    q("soll").textContent = `i5 ${fmt(a.solution_total)}`; q("gapl").textContent = `회피 ${fmt(a.per_unit)}`; q("end").textContent = `${a.label.replace("BMW ", "")} ${fmt(a.ref)}`;
-    q("pct").textContent = `생애주기 −${fmt0(a.per_unit / a.ref * 100)}%`;
-    setNum(q("per"), a.per_unit, x => fmt(x));
-    q("fleet").textContent = a.fleet != null ? `${fmt0(SALES.i5_all)}대 × ${fmt(a.per_unit)} = ${fmt0(a.fleet)} tCO₂eq` : "판매 대수 미산정";
+    q("soll").textContent = `i5 ${fmt(a.solution_total)} tCO₂eq`; q("gapl").textContent = `회피 ${fmt(a.per_unit)} tCO₂eq (−${fmt0(a.per_unit / a.ref * 100)}%)`; q("end").textContent = `${fmt(a.ref)} tCO₂eq`;
+    setNum(q("fleet"), a.fleet, fmt0);
   });
   const r1 = A["520i"], vals = Object.values(A).map(a => a.fleet), lo = Math.min(...vals), hi = Math.max(...vals);
   const sr = D.sensitivity.rows, sLo = Math.min(...sr.map(x => x.saving_lo)), sHi = Math.max(...sr.map(x => x.saving_hi));
@@ -1571,10 +1573,7 @@ function updateAvoided() {
   const hv = { lo: [lo, fmt0], hi: [hi, fmt0], plo: [Math.min(...pus), x => fmt(x)], phi: [Math.max(...pus), x => fmt(x)], clo: [Math.min(...pcs), fmt0], chi: [Math.max(...pcs), fmt0] };
   const hb = $("avHero");
   Object.entries(hv).forEach(([k, [v, f]]) => { const el = H(k); el._target = v; el._fmt = f; if (hb.classList.contains("play")) setNum(el, v, f); });
-  const base = A["530e"], share = base.solution_total / base.ref * 100;
-  H("sol").style.width = share + "%"; H("gap").style.left = share + "%"; H("gap").style.width = (100 - share) + "%";
-  H("soll").textContent = `i5 eDrive40 ${fmt(base.solution_total)}`; H("gapl").textContent = `회피 ${fmt(base.per_unit)} (−${fmt0(100 - share)}%)`; H("endl").textContent = `530e ${fmt(base.ref)} tCO₂eq`;
-  $("refRange").innerHTML = `전력 조건도 결과를 바꿉니다. 530e 기준으로 2021년 전력 고정이면 약 ${fmt(A21["530e"].fleet / 1e4, 1)}만, 전력계획 반영이면 약 ${fmt(APL["530e"].fleet / 1e4, 1)}만 tCO₂eq입니다.`;
+  $("avG21").textContent = `${fmt(A21["530e"].fleet / 1e4, 1)}만 tCO₂eq`; $("avGPL").textContent = `${fmt(APL["530e"].fleet / 1e4, 1)}만 tCO₂eq`;
   const ck = [
     ["비교 기준과 근거", "같은 가격대 대안(530e·530i xDrive)과 기본형(520i)을 고른 이유와 함께 제시하고, 가장 보수적인 값(530e 기준)을 밝힘"],
     ["제품 자체의 배출", `i5 eDrive40 생애주기 ${fmt(r1.solution_total)} tCO₂eq/대. 회피배출과 함께 공개`],
