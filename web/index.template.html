@@ -527,6 +527,8 @@ section.alt .hb .tr { background: var(--card); }
 .avinfo .ai-k { font-size: 0.72rem; font-weight: 700; color: var(--accent); letter-spacing: 0.03em; }
 .avinfo b { font-size: 0.9rem; line-height: 1.45; }
 .avinfo p { font-size: 0.78rem; color: var(--ink-2); line-height: 1.55; }
+.avinfo .ai-warn { color: var(--ink); }
+.avinfo .ai-warn strong { color: var(--warn); margin-right: 4px; }
 .reflg i.hatch, .legend i.hatch { background: repeating-linear-gradient(135deg, var(--accent) 0 3px, transparent 3px 6px); border: 1px solid var(--accent); }
 .reflg .lg-note { color: var(--ink-3); margin-left: auto; }
 .sb { position: relative; height: 34px; margin-right: 96px; }
@@ -931,7 +933,7 @@ footer .cols { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 
           <div><span class="ai-k">기준 선택</span><b>같은 가격대 530e·530i xDrive<br>+ 기본형 520i</b><p>가장 보수적인 값은 <strong>530e 기준</strong></p></div>
           <div><span class="ai-k">제조 데이터</span><b>530e·520i: BMW 공개값<br>530i xDrive: 520i 값 무게 보정</b><p>같은 차체·같은 2.0 가솔린 계열</p></div>
           <div><span class="ai-k">전력 조건 (530e 기준)</span><b><span id="avG21"></span> → <span id="avGPL"></span></b><p>2021년 전력 고정 → 전력계획 반영</p></div>
-          <div><span class="ai-k">제외·주의</span><b>경쟁사(E클래스·G80) 제외</b><p>국내 판매 차종 LCA 미공개. 원래 전기차를 사려던 구매자만큼 회피배출은 감소</p></div>
+          <div><span class="ai-k">제외·한계</span><b>벤츠·제네시스 제외</b><p>국내 판매 차종(E클래스·G80)의 LCA 데이터가 공개되지 않아 비교에서 뺐습니다.</p><p class="ai-warn"><strong>맹점</strong> 원래 다른 전기차를 사려던 구매자가 많을수록 실제 회피배출은 이 값보다 작아집니다.</p></div>
         </div>
       </div>
 
@@ -1549,7 +1551,7 @@ function updateScope() {
 function buildAvoided() {}
 function updateAvoided() {
   const A = avoided(), max = Math.max(...Object.values(A).map(a => Math.max(a.ref, a.solution_total))), box = $("refs");
-  if (!box.children.length) box.innerHTML = Object.entries(A).map(([k, a]) => `<div class="refrow" data-ref="${k}"><div><b>${a.label}</b>${a.estimated ? ' <span class="badge w">추정</span>' : ""}<small>${a.why} · ${a.price}</small></div>
+  if (!box.children.length) box.innerHTML = Object.entries(A).map(([k, a]) => `<div class="refrow" data-ref="${k}"><div><b>${a.label}</b>${a.estimated ? ' <span class="badge w">추정</span>' : ""}<small>${a.why}</small></div>
     <div class="bars"><div class="sb"><span class="sb-sol" data-f="sol"><i data-f="soll"></i></span><span class="sb-gap" data-f="gap"><i data-f="gapl"></i></span><span class="sb-end" data-f="end"></span></div></div>
     <div class="av"><small>828대 합계</small><b><span data-f="fleet"></span><span style="font-size:.6em;font-weight:500"> tCO₂eq</span></b></div></div>`).join("");
   Object.entries(A).forEach(([k, a]) => {
