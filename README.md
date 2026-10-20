@@ -296,6 +296,6 @@ python web/build.py            # index.html 생성
 
 <div align="center">
 
-**만든 사람:** 김수현 · 온실가스관리기사 · [포트폴리오](https://goalbangg-prog.github.io/Portfoilo-V4/)
+만든 사람 : 김수현 · [포트폴리오](https://goalbangg-prog.github.io/Portfoilo-V4/)
 
 </div>
