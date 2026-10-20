@@ -533,6 +533,28 @@ footer .cols { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation-duration: 0.001s !important; animation-delay: 0s !important; transition-duration: 0.001s !important; transition-delay: 0s !important; }
 }
+
+/* PDF로 저장 */
+.pdf-btn { font: inherit; cursor: pointer; }
+.pdf-link { font: inherit; color: #fff; background: none; border: 0; padding: 0; text-decoration: underline; cursor: pointer; }
+@page { size: 1320px 1867px; margin: 28px; }
+@media print {
+  html, body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  body { min-width: 1200px; }
+  *, *::before, *::after { transition: none !important; animation: none !important; }
+  .top, .cta, .ins .acts, #controls .seg button[aria-pressed="false"], .tabs, footer .pdf-link, #tip { display: none !important; }
+  .js .rv, .js .stg > *, .js .hero-art img, .js .hero-art .lbl { opacity: 1 !important; transform: none !important; }
+  .tabpanel[hidden] { display: grid !important; }
+  .tabpanel { break-before: page; }
+  #p-reg::before { content: "입력값 전체"; } #p-calc::before { content: "계산식"; } #p-grid::before { content: "전력"; } #p-val::before { content: "검증"; }
+  .tabpanel::before { font-size: 1.12rem; font-weight: 700; }
+  section.block { padding-block: 40px; }
+  .part { break-before: page; }
+  .ins, .card, .refrow, .gate, .s3, .avhero, .avinfo > div, tr, .verdict > div, .defgrid .di, .basis, .pair > * { break-inside: avoid; }
+  h2, h3 { break-after: avoid; }
+  details > summary { list-style: none; }
+  details > summary::-webkit-details-marker { display: none; }
+}
 </style>
 
 </head>
@@ -564,6 +586,7 @@ footer .cols { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 
         <div class="cta rv d3">
           <a class="btn" href="#result">결과부터 보기 <span class="arr" aria-hidden="true">→</span></a>
           <a class="btn ghost" href="#method">분석 방법 보기</a>
+          <button type="button" class="btn ghost pdf-btn" data-pdf>PDF로 저장</button>
         </div>
       </div>
       <div class="hero-art rv" aria-hidden="true">
@@ -956,6 +979,7 @@ footer .cols { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 
 
 <footer class="gut" id="sources">
   <div class="wrap" style="display:grid; gap:32px">
+    <div><h3>PDF</h3><button type="button" class="pdf-link" data-pdf>이 페이지를 PDF로 저장</button> · <a href="docs/BMW-5-series-LCA.pdf" download>미리 만든 PDF 내려받기</a></div>
     <div><h3>코드와 데이터</h3><a href="https://github.com/goalbangg-prog/BMW-5-series-LCA" target="_blank" rel="noopener">github.com/goalbangg-prog/BMW-5-series-LCA</a></div>
     <div class="cols">
       <div>
@@ -1675,7 +1699,24 @@ if ("IntersectionObserver" in window) {
 }
 let rt; addEventListener("resize", () => { clearTimeout(rt); rt = setTimeout(() => { renderAll(); }, 150); });
 window.__lca = { life, P, breakeven, S };
+/* ---------- PDF로 저장 ---------- */
+function preparePrint() {
+  document.querySelectorAll("details").forEach(d => { if (d.dataset.wasOpen == null) d.dataset.wasOpen = d.open ? "1" : "0"; d.open = true; });
+  document.querySelectorAll(".rv, .stg").forEach(el => el.classList.add("in"));
+  lineDrawn = true;
+  targets.forEach(el => el.classList.add("play"));
+  renderAll();
+  document.querySelectorAll("[data-h], #finds [data-f]").forEach(n => { if (n._fmt && n._target != null) { n._v = n._target; n.textContent = n._fmt(n._target); } });
+}
+function restorePrint() {
+  document.querySelectorAll("details").forEach(d => { if (d.dataset.wasOpen != null) { d.open = d.dataset.wasOpen === "1"; delete d.dataset.wasOpen; } });
+}
+addEventListener("beforeprint", preparePrint);
+addEventListener("afterprint", restorePrint);
+window.preparePrint = preparePrint;
+document.querySelectorAll("[data-pdf]").forEach(b => b.addEventListener("click", () => { preparePrint(); setTimeout(() => window.print(), 400); }));
 })();
+
 </script>
 
 </body>

@@ -5,6 +5,7 @@
 **BMW 5시리즈 전과정평가(LCA)와 Scope 3·회피배출 적용 사례**
 
 [![웹페이지](https://img.shields.io/badge/웹페이지-바로_보기-0066cc?style=for-the-badge)](https://goalbangg-prog.github.io/BMW-5-series-LCA/)
+[![PDF](https://img.shields.io/badge/PDF-내려받기-111418?style=for-the-badge)](docs/BMW-5-series-LCA.pdf)
 
 ![ISO 14040·14044](https://img.shields.io/badge/ISO-14040·14044-111418)
 ![ISO 14067](https://img.shields.io/badge/ISO-14067-111418)
@@ -270,6 +271,7 @@ flowchart LR
 index.html                 # 웹페이지 (GitHub Pages)
 img/                       # 차량 이미지
 docs/images/               # README용 화면 캡처
+docs/BMW-5-series-LCA.pdf  # 웹페이지 전체를 PDF로 저장한 파일
 data/vehicles.csv          # 차종별 입력값과 출처
 data/factors.json          # 배출계수, 국가 LCI DB 데이터셋 값, Scope 3·회피배출 입력값과 출처
 analysis/lca_model.py      # 계산 모델 (Python)
