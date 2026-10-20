@@ -1,5 +1,5 @@
 <title>5시리즈 탄소 분석</title>
-<meta name="description" content="BMW 5시리즈 다섯 차종의 전과정평가(LCA)를 국가 LCI DB 데이터셋으로 계산하고, 그 결과를 BMW 코리아의 Scope 3 산정과 회피배출 검증까지 이은 포트폴리오">
+<meta name="description" content="BMW 5시리즈 다섯 차종의 전과정평가(LCA)를 국가 LCI DB 데이터셋으로 계산하고, 그 결과를 BMW 코리아의 Scope 3 산정과 회피배출 분석까지 이은 포트폴리오">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+KR:wght@400;500;700&display=swap">
@@ -853,7 +853,7 @@ footer .cols { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 
   <section class="block gut" id="avoided">
     <div class="wrap">
       <div class="head rv">
-        <div><span class="idx">05 회피배출 검증</span><h2>"전기차로 탄소를 줄였다"<br>이 말이 성립하려면</h2></div>
+        <div><span class="idx">05 회피배출</span><h2>"전기차로 탄소를 줄였다"<br>이 말이 성립하려면</h2></div>
         <p>만약 i5가 없었다면 고객은 다른 차를 탔을 것입니다.<br>i5를 구매함으로써 온실가스를 덜 배출하는 것을 회피배출이라고 합니다.<br>WBCSD 회피배출 지침(2023)으로 BMW를 분석해보았습니다.</p>
       </div>
 
@@ -1218,7 +1218,7 @@ function buildDefs() {
   const r = (k, en, plain, here) => ({ k, h: `<div class="di"><b title="${en}">${k}</b><span class="plain">${plain}</span><p>${here}</p></div>` });
   const ROWS = [
     g("목표 (ISO 14044 4.2.2)"),
-    r("적용 목적", "Intended application", "이 결과를 어디에 쓰려는가", "한국에서 5시리즈를 고를 때 동력별 생애주기 배출을 비교하고, 그 결과를 BMW 코리아의 Scope 3 산정과 회피배출 검증에 연결"),
+    r("적용 목적", "Intended application", "이 결과를 어디에 쓰려는가", "한국에서 5시리즈를 고를 때 동력별 생애주기 배출을 비교하고, 그 결과를 BMW 코리아의 Scope 3 산정과 회피배출 분석에 연결"),
     r("수행 이유", "Reasons", "왜 새로 계산하는가", "BMW 공개 자료는 유럽 전력·유럽 시험 연비 기준이라 한국 사용 조건과 다름"),
     r("대상 독자", "Intended audience", "누가 읽는가", "LCA·기후공시 실무자, 일반 소비자 (외부 공개)"),
     r("비교 주장 공개 여부", "Comparative assertion", "제품끼리 우열을 공개적으로 말하는가", "공개 비교에 해당. ISO 14044는 이 경우 외부 전문가 패널 검토를 요구하지만, 이 분석은 검토를 받지 않아 '주장'이 아닌 '분석'으로 표현"),
